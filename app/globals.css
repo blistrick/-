@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #12181a;
+  --color-ink-soft: #454f52;
+  --color-ink-faint: #7c8688;
+
+  --color-cream: #faf7f1;
+  --color-cream-alt: #f2ede2;
+  --color-cream-deep: #ece4d3;
+
+  --color-forest: #0f3b32;
+  --color-forest-light: #1c5c4d;
+  --color-forest-dark: #0a2b25;
+  --color-mint: #e4ece6;
+
+  --color-gold: #a8874b;
+  --color-gold-light: #cbae76;
+
+  --color-border: #e2dbcb;
+  --color-border-soft: #ece6d9;
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+
+  --shadow-soft: 0 1px 2px rgba(18, 24, 26, 0.04), 0 8px 24px -12px rgba(18, 24, 26, 0.12);
+  --shadow-lift: 0 4px 8px rgba(18, 24, 26, 0.04), 0 24px 48px -16px rgba(18, 24, 26, 0.18);
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 1s ease forwards;
+  --animate-marquee: marquee 32s linear infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-forest);
+  color: var(--color-cream);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Reveal-on-scroll utility: elements start hidden, JS adds .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
