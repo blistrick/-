@@ -93,7 +93,7 @@ export function BeforeAfter({
       onPointerCancel={stopDragging}
       onKeyDown={onKeyDown}
       className={cn(
-        "group/ba relative select-none overflow-hidden bg-ink touch-pan-y",
+        "group/ba relative select-none overflow-hidden bg-ink-soft touch-pan-y",
         dragging ? "cursor-grabbing" : "cursor-grab",
         className,
       )}
@@ -132,13 +132,13 @@ export function BeforeAfter({
       {!bakedLabels ? (
         <>
           <span
-            className="pointer-events-none absolute left-3 top-3 rounded-full bg-ink/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm transition-opacity duration-300"
+            className="pointer-events-none absolute left-4 top-4 bg-ink/75 px-3.5 py-1.5 text-[9.5px] font-medium uppercase tracking-[0.26em] text-paper/90 backdrop-blur-sm transition-opacity duration-500"
             style={{ opacity: position > 14 ? 1 : 0 }}
           >
             До
           </span>
           <span
-            className="pointer-events-none absolute right-3 top-3 rounded-full bg-accent/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-sm transition-opacity duration-300"
+            className="pointer-events-none absolute right-4 top-4 bg-gold/90 px-3.5 py-1.5 text-[9.5px] font-medium uppercase tracking-[0.26em] text-paper backdrop-blur-sm transition-opacity duration-500"
             style={{ opacity: position < 86 ? 1 : 0 }}
           >
             После
@@ -148,12 +148,12 @@ export function BeforeAfter({
 
       {/* Handle */}
       <div
-        className="pointer-events-none absolute inset-y-0 w-px bg-white/90 shadow-[0_0_18px_rgba(0,0,0,0.45)]"
+        className="pointer-events-none absolute inset-y-0 w-px bg-paper/90 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
         style={{ left: `${position}%` }}
       >
         <span
           className={cn(
-            "absolute top-1/2 left-1/2 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white/95 shadow-lg transition-transform duration-300",
+            "absolute top-1/2 left-1/2 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper shadow-lg transition-transform duration-300",
             dragging ? "scale-110" : "group-hover/ba:scale-105",
           )}
         >

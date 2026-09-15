@@ -1,125 +1,173 @@
+"use client";
+
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { services, type Service } from "@/data/services";
+import { useEffect, useRef, useState } from "react";
+import { services } from "@/data/services";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const spanClass: Record<Service["span"], string> = {
-  wide: "md:col-span-2 lg:col-span-4",
-  tall: "md:col-span-1 lg:col-span-2",
-  compact: "md:col-span-1 lg:col-span-2",
-};
-
-function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const hasImage = Boolean(service.image);
-
-  return (
-    <Reveal delay={(index % 3) * 70} className={cn(spanClass[service.span], "min-w-0")}>
-      <a
-        href="#calculator"
-        className="group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-line bg-white transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1 hover:border-ink/15 hover:shadow-[0_28px_60px_-34px_rgba(11,26,43,0.45)]"
-      >
-        {hasImage ? (
-          <div
-            className={cn(
-              "relative w-full flex-1 overflow-hidden",
-              service.span === "wide" ? "min-h-[220px]" : "min-h-[190px]",
-            )}
-          >
-            <Image
-              src={service.image as string}
-              alt={service.imageAlt ?? service.title}
-              fill
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-ink/35 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            />
-          </div>
-        ) : null}
-
-        <div
-          className={cn(
-            "flex flex-col p-6 md:p-7",
-            hasImage ? "shrink-0" : "flex-1 justify-center py-9",
-          )}
-        >
-          <div>
-            <h3 className="text-[19px] font-semibold leading-snug tracking-tight text-ink md:text-[21px]">
-              {service.title}
-            </h3>
-            <p className="mt-3 text-[14.5px] leading-relaxed text-muted">
-              {service.short}
-            </p>
-          </div>
-
-          <span className="mt-6 flex items-center gap-2 text-[13px] font-semibold text-ink/55 transition-colors duration-300 group-hover:text-accent-deep">
-            Записаться
-            <ArrowUpRight
-              size={16}
-              strokeWidth={2}
-              aria-hidden="true"
-              className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </span>
-        </div>
-      </a>
-    </Reveal>
-  );
-}
-
+/**
+ * Directions read as an editorial index rather than a grid of cards.
+ * On a pointer device the hovered row previews its photo next to the cursor;
+ * on touch the same photo sits inline, so nothing depends on hover.
+ */
 export function Services() {
+  const [active, setActive] = useState<number | null>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 0, y: 0 });
+  const current = useRef({ x: 0, y: 0 });
+  const [hasPointer, setHasPointer] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() =>
+      setHasPointer(
+        window.matchMedia("(hover: hover) and (min-width: 1024px)").matches,
+      ),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!hasPointer) return;
+    let frame = 0;
+
+    const onMove = (event: MouseEvent) => {
+      target.current = { x: event.clientX, y: event.clientY };
+    };
+
+    const tick = () => {
+      // Easing the follow keeps it feeling weighted rather than twitchy.
+      current.current.x += (target.current.x - current.current.x) * 0.12;
+      current.current.y += (target.current.y - current.current.y) * 0.12;
+      if (previewRef.current) {
+        previewRef.current.style.transform = `translate3d(${current.current.x}px, ${current.current.y}px, 0)`;
+      }
+      frame = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    frame = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(frame);
+    };
+  }, [hasPointer]);
+
   return (
     <section
       id="services"
-      className="border-b border-line bg-paper-2 py-20 md:py-28"
+      className="section relative border-t border-line bg-paper"
       aria-labelledby="services-title"
     >
       <div className="shell">
         <SectionHeading
+          index="02"
           eyebrow="Направления лечения"
-          title={
-            <span id="services-title">
-              Полный цикл стоматологии
-              <br className="hidden sm:block" /> в одной клинике
-            </span>
-          }
-          description="От профилактического осмотра до тотальной имплантации. Врачи разных специализаций ведут пациента вместе, поэтому план лечения не приходится собирать по частям."
+          id="services-title"
+          lines={["Полный цикл", "стоматологии"]}
+          lede="От профилактического осмотра до тотальной имплантации. Врачи разных специализаций ведут пациента вместе, поэтому план лечения не приходится собирать по частям."
           action={
-            <a href="#prices" className="btn btn-ghost">
+            <a href="#prices" className="btn btn-outline">
               Смотреть цены
             </a>
           }
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-6">
+        <ul className="mt-20 border-t border-line">
           {services.map((service, index) => (
-            <ServiceCard key={service.slug} service={service} index={index} />
-          ))}
+            <Reveal key={service.slug} delay={(index % 6) * 60} as="li">
+              <a
+                href="#calculator"
+                onMouseEnter={() => setActive(index)}
+                onMouseLeave={() => setActive((v) => (v === index ? null : v))}
+                onFocus={() => setActive(index)}
+                onBlur={() => setActive((v) => (v === index ? null : v))}
+                className="group grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-6 border-b border-line py-8 transition-colors duration-700 hover:border-gold md:grid-cols-[4rem_minmax(0,1fr)_minmax(0,22rem)_3rem] md:items-center md:gap-x-10 md:py-9"
+              >
+                <span
+                  aria-hidden="true"
+                  className="numeral text-[13px] text-gold transition-opacity duration-500 group-hover:opacity-60"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-          {/* Closing tile keeps the bento grid complete */}
-          <Reveal delay={140} className="md:col-span-1 lg:col-span-2">
-            <div className="flex h-full flex-col justify-between gap-10 rounded-[26px] bg-ink p-7 text-white">
-              <div>
-                <h3 className="text-[19px] font-semibold leading-snug tracking-tight md:text-[21px]">
-                  Не знаете, с чего начать?
+                <h3
+                  className={cn(
+                    "display text-[clamp(1.5rem,3.6vw,2.5rem)] leading-tight text-ink transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    "md:group-hover:translate-x-3",
+                  )}
+                >
+                  {service.title}
                 </h3>
-                <p className="mt-3 text-[14.5px] leading-relaxed text-white/55">
-                  Приходите на профилактический осмотр — он бесплатный. Разберём
-                  снимки и составим план лечения.
+
+                {/* Inline photo for touch, where there is no hover preview */}
+                <span className="col-span-2 mt-5 block md:hidden">
+                  <span className="relative block aspect-16/10 w-full overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.imageAlt}
+                      fill
+                      loading="lazy"
+                      sizes="100vw"
+                      className="object-cover"
+                    />
+                  </span>
+                </span>
+
+                <p className="col-span-2 mt-4 text-[14px] font-light leading-relaxed text-muted md:col-span-1 md:mt-0">
+                  {service.short}
                 </p>
-              </div>
-              <a href="#calculator" className="btn btn-light w-full">
-                Получить план лечения
+
+                <span
+                  aria-hidden="true"
+                  className="hidden justify-self-end text-ink/30 transition-all duration-700 group-hover:translate-x-1 group-hover:text-gold md:block"
+                >
+                  <svg width="26" height="9" viewBox="0 0 26 9" fill="none">
+                    <path
+                      d="M0 4.5h24M20.5 1 24 4.5 20.5 8"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                    />
+                  </svg>
+                </span>
               </a>
-            </div>
-          </Reveal>
-        </div>
+            </Reveal>
+          ))}
+        </ul>
       </div>
+
+      {/* Cursor-following preview */}
+      {hasPointer ? (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed left-0 top-0 z-30 hidden lg:block"
+          ref={previewRef}
+        >
+          <div
+            className={cn(
+              "relative -ml-[13rem] -mt-[9rem] h-[17rem] w-[13rem] overflow-hidden transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              active === null
+                ? "scale-95 opacity-0"
+                : "scale-100 opacity-100",
+            )}
+          >
+            {services.map((service, index) => (
+              <Image
+                key={service.slug}
+                src={service.image}
+                alt=""
+                fill
+                sizes="240px"
+                className={cn(
+                  "object-cover transition-opacity duration-500",
+                  active === index ? "opacity-100" : "opacity-0",
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

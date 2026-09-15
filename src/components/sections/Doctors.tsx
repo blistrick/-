@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Plus } from "lucide-react";
 import { doctors, type Doctor } from "@/data/doctors";
+import { cn } from "@/lib/utils";
 import { Modal } from "@/components/ui/Modal";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -14,61 +14,57 @@ export function Doctors() {
   return (
     <section
       id="doctors"
-      className="bg-ink py-20 text-white md:py-28"
+      className="section bg-ink text-paper"
       aria-labelledby="doctors-title"
     >
       <div className="shell">
         <SectionHeading
+          index="06"
           tone="dark"
           eyebrow="Команда специалистов"
-          title={<span id="doctors-title">Врачи клиники STATUS</span>}
-          description="Терапевты, хирурги-имплантологи, ортопеды и ортодонты работают в одной команде: сложный случай ведут несколько специалистов под контролем главного врача."
+          id="doctors-title"
+          lines={["Врачи", "клиники STATUS"]}
+          lede="Терапевты, хирурги-имплантологи, ортопеды и ортодонты работают в одной команде: сложный случай ведут несколько специалистов под контролем главного врача."
         />
 
-        <ul className="mt-14 grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
+        <ul className="mt-20 grid grid-cols-2 gap-x-6 gap-y-16 lg:grid-cols-4 lg:gap-x-10">
           {doctors.map((doctor, index) => {
             const hasDetails = Boolean(doctor.skills?.length);
 
             return (
-              <Reveal key={doctor.slug} delay={(index % 4) * 70} as="li">
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-white/8 bg-ink-800">
-                  <div className="relative aspect-4/5 w-full overflow-hidden">
-                    <Image
-                      src={doctor.photo}
-                      alt={`${doctor.name} — ${doctor.role}, стоматология STATUS Dental Center в Алматы`}
-                      fill
-                      loading="lazy"
-                      sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 22vw"
-                      className="object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-800 to-transparent"
-                    />
+              <Reveal key={doctor.slug} delay={(index % 4) * 90} as="li">
+                <div className="group relative flex h-full flex-col">
+                  <Reveal variant="image" delay={(index % 4) * 90 + 120}>
+                    <div className="relative aspect-3/4 w-full overflow-hidden bg-ink-soft">
+                      <Image
+                        src={doctor.photo}
+                        alt={`${doctor.name} — ${doctor.role}, стоматология STATUS Dental Center в Алматы`}
+                        fill
+                        loading="lazy"
+                        sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 22vw"
+                        className="object-cover object-top transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                      />
+                      {doctor.lead ? (
+                        <span
+                          className="absolute left-0 top-0 bg-gold px-4 py-2 text-[9.5px] font-medium uppercase text-paper"
+                          style={{ letterSpacing: "0.24em" }}
+                        >
+                          Главный врач
+                        </span>
+                      ) : null}
+                    </div>
+                  </Reveal>
 
-                    {doctor.lead ? (
-                      <span className="absolute bottom-3 left-4 rounded-full bg-accent px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.13em] text-white">
-                        Главный врач
-                      </span>
-                    ) : null}
-
-                    {hasDetails ? (
-                      <span
-                        aria-hidden="true"
-                        className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-ink/40 text-white backdrop-blur-sm transition-all duration-500 group-hover:border-accent group-hover:bg-accent"
-                      >
-                        <Plus size={15} strokeWidth={2} />
-                      </span>
-                    ) : null}
-                  </div>
-
-                  <div className="flex flex-1 flex-col px-5 pb-6 pt-1">
-                    <h3 className="text-[16px] font-semibold leading-snug tracking-tight text-white md:text-[17px]">
+                  <div className="mt-6 flex flex-1 flex-col border-t border-line-dark pt-5">
+                    <h3 className="display text-[clamp(1.1rem,1.7vw,1.35rem)] leading-tight text-paper">
                       {hasDetails ? (
                         <button
                           type="button"
                           onClick={() => setActive(doctor)}
-                          className="text-left transition-colors before:absolute before:inset-0 before:content-[''] hover:text-accent"
+                          className={cn(
+                            "text-left transition-colors duration-500 hover:text-gold",
+                            "before:absolute before:inset-0 before:content-['']",
+                          )}
                         >
                           {doctor.name}
                         </button>
@@ -76,10 +72,10 @@ export function Doctors() {
                         doctor.name
                       )}
                     </h3>
-                    <p className="mt-2 text-[13px] leading-snug text-white/50">
+                    <p className="mt-2.5 text-[12.5px] font-light leading-snug text-paper/50">
                       {doctor.role}
                     </p>
-                    <p className="mt-auto pt-3 text-[12px] text-accent">
+                    <p className="mt-auto pt-4 text-[11px] font-medium uppercase text-gold" style={{ letterSpacing: "0.16em" }}>
                       {doctor.experience ?? " "}
                     </p>
                   </div>
@@ -89,69 +85,68 @@ export function Doctors() {
           })}
         </ul>
 
-        <Reveal delay={120}>
-          <div className="mt-12 flex flex-col items-start gap-5 rounded-[26px] border border-white/10 p-7 sm:flex-row sm:items-center sm:justify-between md:p-9">
-            <p className="max-w-lg text-[15px] leading-relaxed text-white/60 md:text-[16px]">
+        <Reveal delay={140}>
+          <div className="mt-20 flex flex-col items-start gap-8 border-t border-line-dark pt-12 sm:flex-row sm:items-center sm:justify-between">
+            <p className="lede max-w-lg text-paper/60">
               Не знаете, к какому специалисту записаться? Администратор подберёт
               врача под вашу ситуацию.
             </p>
-            <a href="#calculator" className="btn btn-accent shrink-0">
+            <a href="#calculator" className="btn btn-light shrink-0">
               Подобрать врача
             </a>
           </div>
         </Reveal>
       </div>
 
-      {/* Doctor detail */}
       <Modal
         open={Boolean(active)}
         onClose={() => setActive(null)}
         label={active ? active.name : "Врач"}
       >
         {active ? (
-          <div className="grid max-h-[88vh] overflow-y-auto sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <div className="relative aspect-4/5 w-full bg-ink sm:aspect-auto sm:min-h-[420px]">
+          <div className="grid max-h-[88vh] overflow-y-auto bg-paper sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+            <div className="relative aspect-3/4 w-full bg-ink sm:aspect-auto sm:min-h-[460px]">
               <Image
                 src={active.photo}
                 alt={`${active.name} — ${active.role}`}
                 fill
-                sizes="(max-width: 640px) 100vw, 360px"
+                sizes="(max-width: 640px) 100vw, 380px"
                 className="object-cover object-top"
               />
             </div>
 
-            <div className="p-6 md:p-9">
-              {active.lead ? (
-                <p className="eyebrow text-accent-deep">Главный врач клиники</p>
-              ) : (
-                <p className="eyebrow text-muted">Специалист клиники</p>
-              )}
+            <div className="p-8 md:p-14">
+              <span
+                className="text-[10.5px] font-medium uppercase text-gold"
+                style={{ letterSpacing: "0.26em" }}
+              >
+                {active.lead ? "Главный врач клиники" : "Специалист клиники"}
+              </span>
 
-              <h3 className="display mt-3 text-[clamp(1.4rem,3.2vw,1.9rem)] text-ink">
+              <h3 className="display mt-5 text-[clamp(1.6rem,3.4vw,2.3rem)] leading-tight text-ink">
                 {active.name}
               </h3>
-              <p className="mt-3 text-[15px] text-muted">{active.role}</p>
+              <p className="mt-4 text-[15px] font-light text-muted">{active.role}</p>
               {active.experience ? (
-                <p className="mt-1.5 text-[15px] font-semibold text-accent-deep">
+                <p className="mt-1.5 text-[13px] font-medium uppercase text-gold" style={{ letterSpacing: "0.16em" }}>
                   {active.experience}
                 </p>
               ) : null}
 
               {active.skills?.length ? (
-                <div className="mt-7 border-t border-line pt-6">
-                  <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-ink/60">
+                <div className="mt-10">
+                  <p
+                    className="text-[10.5px] font-medium uppercase text-muted"
+                    style={{ letterSpacing: "0.26em" }}
+                  >
                     {active.skillsTitle}
                   </p>
-                  <ul className="mt-4 flex flex-col gap-3">
+                  <ul className="mt-6 flex flex-col border-t border-line">
                     {active.skills.map((skill) => (
                       <li
                         key={skill}
-                        className="flex gap-3 text-[14.5px] leading-relaxed text-ink/80"
+                        className="border-b border-line py-4 text-[14.5px] font-light leading-relaxed text-ink/80"
                       >
-                        <span
-                          aria-hidden="true"
-                          className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                        />
                         {skill}
                       </li>
                     ))}
@@ -162,7 +157,7 @@ export function Doctors() {
               <a
                 href="#calculator"
                 onClick={() => setActive(null)}
-                className="btn btn-primary mt-8 w-full sm:w-auto"
+                className="btn btn-solid mt-12 w-full sm:w-auto"
               >
                 Записаться к врачу
               </a>

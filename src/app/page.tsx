@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { StructuredData } from "@/components/seo/StructuredData";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Calculator } from "@/components/sections/Calculator";
 import { Cases } from "@/components/sections/Cases";
 import { Contact } from "@/components/sections/Contact";
@@ -13,6 +14,7 @@ import { Prices } from "@/components/sections/Prices";
 import { Reviews } from "@/components/sections/Reviews";
 import { Services } from "@/components/sections/Services";
 import { Technology } from "@/components/sections/Technology";
+import { Manifesto } from "@/components/sections/Manifesto";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { WhyStatus } from "@/components/sections/WhyStatus";
 
@@ -20,9 +22,11 @@ export default function HomePage() {
   return (
     <>
       <StructuredData />
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
+        <Manifesto />
         <TrustSection />
         <Services />
         <WhyStatus />

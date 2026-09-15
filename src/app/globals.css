@@ -1,23 +1,35 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   STATUS Dental Center — design tokens.
-   Deep navy ink + warm bone paper + brand rose accent.
+   STATUS Dental Center — design system.
+
+   Direction from the ui-ux-pro-max design pass: near-monochrome warm
+   base, antique gold as the only metal, Cormorant display over
+   Montserrat UI, spacious rhythm, slow motion. The brand rose survives
+   in the logo mark only, so it reads as a signature rather than a
+   theme colour.
 ------------------------------------------------------------------ */
 @theme {
-  --color-ink: #0b1a2b;
-  --color-ink-800: #122840;
-  --color-ink-700: #1c3a56;
-  --color-paper: #fbfaf8;
-  --color-paper-2: #f3f0eb;
-  --color-line: #e7e2da;
-  --color-muted: #5b6b7d;
-  --color-accent: #e8629b;
-  --color-accent-deep: #b93c72;
-  --color-accent-soft: #fdeef5;
+  --color-ink: #0c0a09;
+  --color-ink-soft: #1c1917;
+  --color-ink-mute: #44403c;
+  --color-paper: #faf8f4;
+  --color-paper-2: #f1ece4;
+  --color-line: #e0d9ce;
+  --color-line-dark: #2a2724;
+  --color-muted: #57534e;
+  --color-gold: #9c7c4a;
+  --color-gold-deep: #8a6c3e;
+  --color-gold-soft: #f0e7d8;
+  --color-rose: #e8629b;
 
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
+  --font-display: var(--font-cormorant), var(--font-montserrat), "Cormorant Garamond",
+    Georgia, serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Spacious scale (density 2/10) */
+  --space-section: clamp(6rem, 12vw, 11rem);
 }
 
 @layer base {
@@ -27,7 +39,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 88px;
+    scroll-padding-top: 96px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -35,7 +47,9 @@
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv01";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
     overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -47,138 +61,183 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-gold);
     outline-offset: 3px;
-    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
   }
 }
 
 @layer components {
-  /* Page shell ---------------------------------------------------- */
+  /* Shell ---------------------------------------------------------- */
   .shell {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1320px;
     margin-inline: auto;
-    padding-inline: 20px;
+    padding-inline: 22px;
   }
 
   @media (min-width: 768px) {
     .shell {
-      padding-inline: 40px;
+      padding-inline: 48px;
     }
   }
 
   @media (min-width: 1280px) {
     .shell {
-      padding-inline: 56px;
+      padding-inline: 72px;
     }
   }
 
-  /* Typography ---------------------------------------------------- */
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  /* Typography ----------------------------------------------------- */
   .display {
-    font-weight: 700;
-    letter-spacing: -0.035em;
+    font-family: var(--font-display);
+    font-weight: 400;
     line-height: 0.98;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
+  .display-italic {
+    font-style: italic;
+    font-weight: 300;
+  }
+
   .eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
   }
 
-  /* Buttons ------------------------------------------------------- */
+  .numeral {
+    font-family: var(--font-display);
+    font-variant-numeric: lining-nums tabular-nums;
+    font-weight: 300;
+  }
+
+  .lede {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* Rules ---------------------------------------------------------- */
+  .rule {
+    height: 1px;
+    background-color: var(--color-line);
+  }
+
+  .rule-dark {
+    height: 1px;
+    background-color: var(--color-line-dark);
+  }
+
+  /* Buttons -------------------------------------------------------- */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 15px;
+    gap: 12px;
+    border-radius: 2px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     line-height: 1;
-    padding: 17px 28px;
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-    white-space: nowrap;
+    padding: 21px 34px;
+    min-height: 56px;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .btn:active {
-    transform: scale(0.975);
-  }
-
-  .btn-primary {
+  .btn-solid {
     background-color: var(--color-ink);
-    color: #fff;
-    box-shadow: 0 10px 30px -14px rgba(11, 26, 43, 0.75);
+    color: var(--color-paper);
   }
 
-  .btn-primary:hover {
-    background-color: var(--color-ink-700);
-    box-shadow: 0 18px 40px -16px rgba(11, 26, 43, 0.65);
+  .btn-solid:hover {
+    background-color: var(--color-gold-deep);
   }
 
-  .btn-accent {
-    background-color: var(--color-accent);
-    color: #fff;
-    box-shadow: 0 10px 30px -14px rgba(232, 98, 155, 0.85);
-  }
-
-  .btn-accent:hover {
-    background-color: var(--color-accent-deep);
-  }
-
-  .btn-ghost {
-    border: 1px solid rgba(11, 26, 43, 0.16);
+  .btn-outline {
+    border: 1px solid rgba(12, 10, 9, 0.22);
     color: var(--color-ink);
-    background-color: transparent;
   }
 
-  .btn-ghost:hover {
+  .btn-outline:hover {
+    background-color: var(--color-ink);
     border-color: var(--color-ink);
-    background-color: rgba(11, 26, 43, 0.04);
-  }
-
-  .btn-ghost-light {
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #fff;
-    background-color: transparent;
-  }
-
-  .btn-ghost-light:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-paper);
   }
 
   .btn-light {
-    background-color: #fff;
+    background-color: var(--color-paper);
     color: var(--color-ink);
   }
 
   .btn-light:hover {
-    background-color: var(--color-paper-2);
+    background-color: var(--color-gold-soft);
   }
 
-  /* Surfaces ------------------------------------------------------ */
-  .card {
-    background-color: #fff;
-    border: 1px solid var(--color-line);
-    border-radius: 24px;
+  .btn-outline-light {
+    border: 1px solid rgba(250, 248, 244, 0.28);
+    color: var(--color-paper);
   }
 
-  .hairline {
-    border-color: var(--color-line);
+  .btn-outline-light:hover {
+    background-color: var(--color-paper);
+    border-color: var(--color-paper);
+    color: var(--color-ink);
   }
 
-  /* Reveal animation ---------------------------------------------- */
+  /* Link with a gold underline that draws in ----------------------- */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Motion --------------------------------------------------------- */
+
+  /* Fade and lift. Slow by design: fast motion reads cheap. */
   .reveal {
     opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(26px);
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
@@ -188,34 +247,62 @@
     transform: none;
   }
 
-  /* Horizontal scrollers ------------------------------------------ */
+  /* Image uncovers itself from the bottom edge. The mask sits on a child so
+     the observed element keeps a non-zero intersection rectangle. */
+  .reveal-image-mask {
+    display: block;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
 
-  /* Edge-to-edge carousel whose first card lines up with the page grid.
+  .reveal-image[data-visible="true"] .reveal-image-mask {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Heading lines rise out of a mask, one after another. */
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .reveal-line > span {
+    display: block;
+    transform: translateY(110%);
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-line[data-visible="true"] > span {
+    transform: none;
+  }
+
+  /* Edge-to-edge carousel whose first item lines up with the page grid.
      scroll-padding matches the gutter so snapping never eats it. */
   .edge-scroller {
     display: flex;
-    gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
     scroll-snap-type: x proximity;
-    padding-inline: 20px;
-    scroll-padding-inline: 20px;
+    padding-inline: 22px;
+    scroll-padding-inline: 22px;
   }
 
   @media (min-width: 768px) {
     .edge-scroller {
-      padding-inline: 40px;
-      scroll-padding-inline: 40px;
+      padding-inline: 48px;
+      scroll-padding-inline: 48px;
     }
   }
 
   @media (min-width: 1280px) {
     .edge-scroller {
-      padding-inline: max(56px, calc((100vw - 1280px) / 2 + 56px));
-      scroll-padding-inline: max(56px, calc((100vw - 1280px) / 2 + 56px));
+      padding-inline: max(72px, calc((100vw - 1320px) / 2 + 72px));
+      scroll-padding-inline: max(72px, calc((100vw - 1320px) / 2 + 72px));
     }
   }
 
+  /* Utilities ------------------------------------------------------ */
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -224,6 +311,17 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* Paper grain. Sits above the background, below the content. */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -231,9 +329,12 @@
     scroll-behavior: auto;
   }
 
-  .reveal {
+  .reveal,
+  .reveal-image-mask,
+  .reveal-line > span {
     opacity: 1;
     transform: none;
+    clip-path: none;
     transition: none;
   }
 

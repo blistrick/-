@@ -27,7 +27,7 @@ export function WhatsAppButton() {
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setShown(window.scrollY > 520);
+    const onScroll = () => setShown(window.scrollY > 600);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -40,16 +40,15 @@ export function WhatsAppButton() {
       rel="noopener noreferrer"
       aria-label="Написать в WhatsApp"
       className={cn(
-        "group fixed bottom-7 right-7 z-40 hidden items-center gap-3 rounded-full bg-[#25D366] py-4 pl-4 pr-5 text-white shadow-[0_16px_40px_-14px_rgba(37,211,102,0.85)] transition-all duration-500 md:flex",
+        "group fixed bottom-10 right-10 z-40 hidden h-16 w-16 items-center justify-center",
+        "border border-paper/20 bg-ink text-paper transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "hover:border-gold hover:bg-gold md:flex",
         shown
           ? "pointer-events-auto translate-y-0 opacity-100"
-          : "pointer-events-none translate-y-5 opacity-0",
+          : "pointer-events-none translate-y-6 opacity-0",
       )}
     >
-      <WhatsAppGlyph />
-      <span className="max-w-0 overflow-hidden whitespace-nowrap text-[14px] font-semibold opacity-0 transition-all duration-500 group-hover:max-w-[160px] group-hover:opacity-100">
-        Написать в WhatsApp
-      </span>
+      <WhatsAppGlyph size={22} />
     </a>
   );
 }

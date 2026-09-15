@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
 import { clinic } from "@/data/clinic";
 import { navItems } from "@/data/nav";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -27,9 +26,7 @@ export function Header() {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen]);
@@ -37,46 +34,47 @@ export function Header() {
   return (
     <>
       <a
-        href="#services"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white"
+        href="#manifesto"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[200] focus:bg-ink focus:px-6 focus:py-4 focus:text-[12px] focus:uppercase focus:tracking-[0.14em] focus:text-paper"
       >
         Перейти к содержанию
       </a>
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500",
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow] duration-700",
           scrolled
-            ? "bg-paper/85 shadow-[0_1px_0_rgba(11,26,43,0.08)] backdrop-blur-xl"
+            ? "bg-paper/92 shadow-[0_1px_0_rgba(12,10,9,0.08)] backdrop-blur-xl"
             : "bg-transparent",
         )}
       >
         <div
           className={cn(
-            "shell flex items-center justify-between transition-[height] duration-500",
-            scrolled ? "h-[68px]" : "h-[84px] md:h-[96px]",
+            "shell flex items-center justify-between transition-[height] duration-700",
+            scrolled ? "h-[74px]" : "h-[96px] md:h-[116px]",
           )}
         >
           <a
             href="#top"
             aria-label="STATUS Dental Center — на главную"
-            className="transition-opacity hover:opacity-70"
+            className="transition-opacity duration-500 hover:opacity-60"
           >
             <Logo tone={scrolled ? "dark" : "light"} compact={scrolled} />
           </a>
 
-          <nav aria-label="Основная навигация" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
+          <nav aria-label="Основная навигация" className="hidden xl:block">
+            <ul className="flex items-center gap-10">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     className={cn(
-                      "relative inline-flex items-center rounded-full px-4 py-2.5 text-[14px] font-medium transition-colors duration-300",
+                      "link-underline text-[11px] font-medium uppercase transition-colors duration-500",
                       scrolled
-                        ? "text-ink/70 hover:bg-ink/5 hover:text-ink"
-                        : "text-white/75 hover:bg-white/10 hover:text-white",
+                        ? "text-ink/70 hover:text-ink"
+                        : "text-paper/70 hover:text-paper",
                     )}
+                    style={{ letterSpacing: "0.2em" }}
                   >
                     {item.label}
                   </a>
@@ -85,114 +83,134 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-8">
             <a
               href={clinic.phone.href}
               className={cn(
-                "hidden items-center gap-2 text-[14px] font-semibold tracking-tight transition-colors xl:flex",
-                scrolled ? "text-ink hover:text-accent-deep" : "text-white hover:text-accent",
+                "link-underline hidden text-[13px] font-light tracking-[0.04em] transition-colors duration-500 lg:block",
+                scrolled ? "text-ink" : "text-paper",
               )}
             >
-              <Phone size={15} strokeWidth={2} aria-hidden="true" />
               {clinic.phone.display}
             </a>
 
             <a
               href="#calculator"
               className={cn(
-                "btn hidden h-11 px-6 text-[14px] sm:inline-flex",
-                scrolled ? "btn-primary" : "btn-light",
+                "btn hidden h-12 min-h-0 px-7 py-0 text-[11px] sm:inline-flex",
+                scrolled ? "btn-solid" : "btn-outline-light",
               )}
             >
               Записаться
             </a>
 
+            {/* Two-rule burger reads quieter than a three-bar icon */}
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label="Открыть меню"
               aria-expanded={menuOpen}
-              className={cn(
-                "grid h-11 w-11 place-items-center rounded-full border transition-colors lg:hidden",
-                scrolled
-                  ? "border-ink/12 text-ink hover:bg-ink/5"
-                  : "border-white/25 text-white hover:bg-white/10",
-              )}
+              className="group flex h-12 w-12 flex-col items-center justify-center gap-[7px] xl:hidden"
             >
-              <Menu size={20} strokeWidth={1.7} aria-hidden="true" />
+              <span
+                className={cn(
+                  "block h-px w-7 transition-all duration-500",
+                  scrolled ? "bg-ink" : "bg-paper",
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-px w-7 transition-all duration-500 group-hover:w-4",
+                  scrolled ? "bg-ink" : "bg-paper",
+                )}
+              />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* Full-screen menu */}
       <div
         className={cn(
-          "fixed inset-0 z-[90] lg:hidden",
+          "fixed inset-0 z-[90] xl:hidden",
           menuOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
         aria-hidden={!menuOpen}
       >
         <div
           className={cn(
-            "absolute inset-0 bg-ink transition-opacity duration-500",
+            "absolute inset-0 bg-ink transition-opacity duration-700",
             menuOpen ? "opacity-100" : "opacity-0",
           )}
         />
 
         <div
           className={cn(
-            "relative flex h-full flex-col transition-all duration-500",
-            menuOpen ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0",
+            "relative flex h-full flex-col transition-opacity duration-500",
+            menuOpen ? "opacity-100" : "opacity-0",
           )}
         >
-          <div className="shell flex h-[84px] shrink-0 items-center justify-between">
+          <div className="shell flex h-[96px] shrink-0 items-center justify-between">
             <Logo tone="light" />
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
               aria-label="Закрыть меню"
-              className="grid h-11 w-11 place-items-center rounded-full border border-white/25 text-white"
+              className="grid h-12 w-12 place-items-center"
             >
-              <X size={20} strokeWidth={1.7} aria-hidden="true" />
+              <span className="relative block h-5 w-5">
+                <span className="absolute left-0 top-1/2 block h-px w-5 rotate-45 bg-paper" />
+                <span className="absolute left-0 top-1/2 block h-px w-5 -rotate-45 bg-paper" />
+              </span>
             </button>
           </div>
 
           <nav
             aria-label="Мобильная навигация"
-            className="shell flex-1 overflow-y-auto pb-10"
+            className="shell flex-1 overflow-y-auto pb-12"
           >
-            <ul className="mt-6 flex flex-col">
+            <ul className="mt-4 flex flex-col">
               {navItems.map((item, index) => (
-                <li key={item.href} className="border-b border-white/10">
+                <li key={item.href} className="border-b border-line-dark">
                   <a
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-baseline gap-4 py-5 text-[26px] font-semibold tracking-tight text-white transition-colors hover:text-accent"
+                    className={cn(
+                      "flex items-baseline gap-6 py-6 transition-all duration-700",
+                      menuOpen
+                        ? "translate-y-0 opacity-100"
+                        : "translate-y-4 opacity-0",
+                    )}
+                    style={{ transitionDelay: `${120 + index * 70}ms` }}
                   >
-                    <span className="text-[11px] font-mono text-white/30">
-                      0{index + 1}
+                    <span className="numeral text-[13px] text-gold">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    {item.label}
+                    <span className="display text-[32px] text-paper">
+                      {item.label}
+                    </span>
                   </a>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-9 flex flex-col gap-3">
+            <div className="mt-12 flex flex-col gap-3">
               <a
                 href="#calculator"
                 onClick={() => setMenuOpen(false)}
-                className="btn btn-accent w-full"
+                className="btn btn-light w-full"
               >
                 Записаться на консультацию
               </a>
-              <a href={clinic.phone.href} className="btn btn-ghost-light w-full">
+              <a
+                href={clinic.phone.href}
+                className="btn btn-outline-light w-full"
+              >
                 {clinic.phone.display}
               </a>
             </div>
 
-            <p className="mt-8 text-[13px] leading-relaxed text-white/45">
+            <p className="mt-10 text-[13px] font-light leading-relaxed text-paper/45">
               {clinic.address.full}
               <br />
               {clinic.hours.short}

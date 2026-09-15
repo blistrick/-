@@ -1,21 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
+
+type Variant = "fade" | "image" | "line";
 
 type RevealProps = {
   children: ReactNode;
-  /** Stagger in milliseconds. */
+  /** Stagger in milliseconds. Keep groups to roughly eight items. */
   delay?: number;
+  variant?: Variant;
   className?: string;
   as?: ElementType;
 };
 
+const variantClass: Record<Variant, string> = {
+  fade: "reveal",
+  image: "reveal-image",
+  line: "reveal-line",
+};
+
 /**
- * Fade-and-lift on first scroll into view.
- * One shared observer per element, disconnected as soon as it fires.
+ * Plays one entrance animation the first time an element scrolls into view,
+ * then disconnects. `line` expects a single <span> child so the text can rise
+ * out of its own mask.
  */
-export function Reveal({ children, delay = 0, className, as }: RevealProps) {
+export function Reveal({
+  children,
+  delay = 0,
+  variant = "fade",
+  className,
+  as,
+}: RevealProps) {
   const Tag = (as ?? "div") as ElementType;
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -36,7 +58,7 @@ export function Reveal({ children, delay = 0, className, as }: RevealProps) {
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
     );
 
     observer.observe(node);
@@ -46,11 +68,50 @@ export function Reveal({ children, delay = 0, className, as }: RevealProps) {
   return (
     <Tag
       ref={ref}
-      className={cn("reveal", className)}
+      className={cn(variantClass[variant], className)}
       data-visible={visible ? "true" : "false"}
       style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
     >
-      {children}
+      {variant === "image" ? (
+        <span className="reveal-image-mask">{children}</span>
+      ) : (
+        children
+      )}
     </Tag>
+  );
+}
+
+/**
+ * Splits a heading into masked lines that rise in sequence.
+ * Lines are authored explicitly so the break points stay art-directed.
+ */
+export function RevealLines({
+  lines,
+  className,
+  lineClassName,
+  step = 110,
+  as: Tag = "span",
+  ...rest
+}: {
+  lines: ReactNode[];
+  className?: string;
+  lineClassName?: string;
+  step?: number;
+  as?: ElementType;
+} & Omit<React.HTMLAttributes<HTMLElement>, "children">) {
+  const Wrapper = Tag as ElementType;
+  return (
+    <Wrapper className={className} {...rest}>
+      {lines.map((line, index) => (
+        <Reveal
+          key={index}
+          variant="line"
+          delay={index * step}
+          className={lineClassName}
+        >
+          <span>{line}</span>
+        </Reveal>
+      ))}
+    </Wrapper>
   );
 }

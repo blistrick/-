@@ -1,13 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Cormorant, Montserrat } from "next/font/google";
 import { clinic } from "@/data/clinic";
 import "./globals.css";
 
-const manrope = Manrope({
+/** Display face. Used large; never for body copy. */
+const cormorant = Cormorant({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-manrope",
+  variable: "--font-cormorant",
+});
+
+/** Interface face. Light weights carry the luxury register. */
+const montserrat = Montserrat({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
+  variable: "--font-montserrat",
 });
 
 const title =
@@ -17,10 +27,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(clinic.site),
-  title: {
-    default: title,
-    template: "%s | STATUS Dental Center",
-  },
+  title: { default: title, template: "%s | STATUS Dental Center" },
   description,
   keywords: [
     "стоматология Алматы",
@@ -43,11 +50,7 @@ export const metadata: Metadata = {
     title,
     description,
   },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
+  twitter: { card: "summary_large_image", title, description },
   robots: {
     index: true,
     follow: true,
@@ -57,7 +60,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b1a2b",
+  themeColor: "#0c0a09",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -68,7 +71,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={manrope.variable}>
+    <html lang="ru" className={`${cormorant.variable} ${montserrat.variable}`}>
       <body>{children}</body>
     </html>
   );

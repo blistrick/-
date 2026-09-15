@@ -1,15 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Info } from "lucide-react";
 import { priceGroups } from "@/data/prices";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-function formatPrice(value: string) {
-  return value === "0" ? "0 ₸" : `${value} ₸`;
-}
+const formatPrice = (value: string) => (value === "0" ? "0 ₸" : `${value} ₸`);
 
 export function Prices() {
   const [activeId, setActiveId] = useState(priceGroups[0].id);
@@ -23,122 +20,111 @@ export function Prices() {
   return (
     <section
       id="prices"
-      className="border-b border-line bg-paper py-20 md:py-28"
+      className="section border-t border-line bg-paper-2"
       aria-labelledby="prices-title"
     >
       <div className="shell">
         <SectionHeading
+          index="07"
           eyebrow="Стоимость лечения"
-          title={<span id="prices-title">Цены на лечение зубов в Алматы</span>}
-          description="Прайс клиники без скрытых платежей. Точная стоимость определяется после диагностики и фиксируется в плане лечения."
+          id="prices-title"
+          lines={["Цены на лечение", "зубов в Алматы"]}
+          lede="Прайс клиники без скрытых платежей. Точная стоимость определяется после диагностики и фиксируется в плане лечения."
           action={
-            <a href="#calculator" className="btn btn-primary">
+            <a href="#calculator" className="btn btn-solid">
               Получить план лечения
             </a>
           }
         />
 
-        {/* Category tabs */}
-        <Reveal delay={100}>
-          <div
-            role="tablist"
-            aria-label="Категории услуг"
-            className="no-scrollbar mt-12 -mx-5 flex gap-2 overflow-x-auto px-5 md:mx-0 md:flex-wrap md:px-0"
-          >
-            {priceGroups.map((item) => {
-              const isActive = item.id === activeId;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  id={`price-tab-${item.id}`}
-                  aria-selected={isActive}
-                  aria-controls={`price-panel-${item.id}`}
-                  onClick={() => {
-                    setActiveId(item.id);
-                    setExpanded(false);
-                  }}
-                  className={cn(
-                    "shrink-0 rounded-full border px-5 py-2.5 text-[13.5px] font-medium transition-all duration-300",
-                    isActive
-                      ? "border-ink bg-ink text-white"
-                      : "border-ink/12 text-muted hover:border-ink/30 hover:text-ink",
-                  )}
-                >
-                  {item.title}
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        {/* Price list */}
-        <Reveal delay={140}>
-          <div
-            role="tabpanel"
-            id={`price-panel-${group.id}`}
-            aria-labelledby={`price-tab-${group.id}`}
-            className="mt-10 overflow-hidden rounded-[26px] border border-line bg-white"
-          >
-            <ul>
-              {rows.map((item, index) => (
-                <li
-                  key={`${item.name}-${index}`}
-                  className={cn(
-                    "flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-6 py-5 transition-colors duration-300 hover:bg-paper-2/60 md:px-8",
-                    index > 0 && "border-t border-line",
-                  )}
-                >
-                  <span className="max-w-[440px] text-[15px] leading-snug text-ink/85">
-                    {item.name}
-                  </span>
-                  <span
+        <div className="mt-20 grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]">
+          {/* Categories as a vertical index */}
+          <Reveal className="min-w-0">
+            <div
+              role="tablist"
+              aria-label="Категории услуг"
+              aria-orientation="vertical"
+              className="no-scrollbar -mx-[22px] flex gap-8 overflow-x-auto px-[22px] lg:mx-0 lg:flex-col lg:gap-0 lg:px-0"
+            >
+              {priceGroups.map((item) => {
+                const isActive = item.id === activeId;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    id={`price-tab-${item.id}`}
+                    aria-selected={isActive}
+                    aria-controls={`price-panel-${item.id}`}
+                    onClick={() => {
+                      setActiveId(item.id);
+                      setExpanded(false);
+                    }}
                     className={cn(
-                      "whitespace-nowrap text-[16px] font-semibold tabular-nums tracking-tight",
-                      item.price === "0" ? "text-accent-deep" : "text-ink",
+                      "shrink-0 whitespace-nowrap text-left text-[12px] font-medium uppercase transition-colors duration-500 lg:border-t lg:border-line lg:py-5 lg:first:border-t-0",
+                      isActive
+                        ? "text-ink lg:border-gold"
+                        : "text-muted hover:text-ink",
                     )}
+                    style={{ letterSpacing: "0.2em" }}
                   >
-                    {formatPrice(item.price)}
-                  </span>
-                </li>
-              ))}
-            </ul>
+                    {item.title}
+                  </button>
+                );
+              })}
+            </div>
+          </Reveal>
 
-            {rest.length > 0 ? (
-              <div className="border-t border-line px-6 py-5 md:px-8">
+          {/* Typographic price table */}
+          <Reveal delay={140} className="min-w-0">
+            <div
+              role="tabpanel"
+              id={`price-panel-${group.id}`}
+              aria-labelledby={`price-tab-${group.id}`}
+            >
+              <ul className="border-t border-line">
+                {rows.map((item, index) => (
+                  <li
+                    key={`${item.name}-${index}`}
+                    className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-b border-line py-5 transition-colors duration-500 hover:border-gold"
+                  >
+                    <span className="min-w-0 max-w-[30rem] text-[15px] font-light leading-snug text-ink/85">
+                      {item.name}
+                    </span>
+                    <span
+                      className={cn(
+                        "numeral whitespace-nowrap text-[19px]",
+                        item.price === "0" ? "text-gold" : "text-ink",
+                      )}
+                    >
+                      {formatPrice(item.price)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {rest.length > 0 ? (
                 <button
                   type="button"
                   onClick={() => setExpanded((value) => !value)}
                   aria-expanded={expanded}
-                  className="text-[14px] font-semibold text-ink/60 transition-colors hover:text-accent-deep"
+                  className="link-underline mt-8 text-[11px] font-medium uppercase text-ink/60 transition-colors duration-500 hover:text-ink"
+                  style={{ letterSpacing: "0.2em" }}
                 >
                   {expanded
                     ? "Свернуть список"
-                    : `Показать все цены раздела «${group.title}» (+${rest.length})`}
+                    : `Показать все цены раздела (+${rest.length})`}
                 </button>
-              </div>
-            ) : null}
-          </div>
-        </Reveal>
+              ) : null}
 
-        <Reveal delay={60}>
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start">
-            <p className="flex flex-1 items-start gap-3 rounded-2xl bg-paper-2 px-5 py-4 text-[13.5px] leading-relaxed text-muted">
-              <Info
-                size={16}
-                strokeWidth={1.8}
-                aria-hidden="true"
-                className="mt-0.5 shrink-0 text-accent-deep"
-              />
-              <span>
+              <p className="mt-12 max-w-2xl border-l border-gold pl-6 text-[13.5px] font-light leading-relaxed text-muted">
                 Точная стоимость определяется после диагностики.
                 {group.note ? ` ${group.note}` : ""} Рассрочку до 24 месяцев от
                 Kaspi можно оформить прямо в клинике.
-              </span>
-            </p>
-          </div>
-        </Reveal>
+              </p>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

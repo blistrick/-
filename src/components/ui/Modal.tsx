@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -81,22 +80,22 @@ export function Modal({ open, onClose, label, children }: Props) {
         type="button"
         aria-label="Закрыть окно"
         onClick={onClose}
-        className="fixed inset-0 h-full w-full cursor-default bg-ink/70 backdrop-blur-sm"
+        className="fixed inset-0 h-full w-full cursor-default bg-ink/80 backdrop-blur-sm"
         style={{ animation: "fadeIn 260ms ease-out both" }}
       />
 
       <div
         ref={panelRef}
-        className="relative z-10 w-full max-w-4xl overflow-hidden rounded-t-[28px] bg-paper shadow-2xl sm:rounded-[28px]"
+        className="relative z-10 w-full max-w-5xl overflow-hidden bg-paper shadow-2xl"
         style={{ animation: "panelIn 420ms cubic-bezier(0.22,1,0.36,1) both" }}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Закрыть"
-          className="absolute right-4 top-4 z-20 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-ink shadow-md backdrop-blur transition hover:bg-white"
+          className="absolute right-5 top-5 z-20 grid h-12 w-12 place-items-center bg-paper/90 text-ink backdrop-blur transition-colors duration-500 hover:bg-ink hover:text-paper"
         >
-          <X size={19} strokeWidth={1.8} aria-hidden="true" />
+          <span aria-hidden="true" className="relative block h-4 w-4"><span className="absolute left-0 top-1/2 block h-px w-4 rotate-45 bg-current" /><span className="absolute left-0 top-1/2 block h-px w-4 -rotate-45 bg-current" /></span>
         </button>
         {children}
       </div>

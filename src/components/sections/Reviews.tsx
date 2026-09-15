@@ -1,137 +1,132 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
+import { useState } from "react";
 import { reviews } from "@/data/content";
 import { clinic } from "@/data/clinic";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 
+function Arrow({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg width="26" height="9" viewBox="0 0 26 9" fill="none" aria-hidden="true">
+      <g
+        transform={direction === "left" ? "rotate(180 13 4.5)" : undefined}
+        stroke="currentColor"
+        strokeWidth="1"
+      >
+        <path d="M0 4.5h24M20.5 1 24 4.5 20.5 8" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * One review at a time, set as a pull-quote. A carousel of cards reads as
+ * filler; a single large quote reads as a statement.
+ */
 export function Reviews() {
-  const trackRef = useRef<HTMLUListElement>(null);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
+  const [index, setIndex] = useState(0);
+  const review = reviews[index];
 
-  const sync = useCallback(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    setAtStart(track.scrollLeft <= 4);
-    setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    sync();
-    const track = trackRef.current;
-    if (!track) return;
-    track.addEventListener("scroll", sync, { passive: true });
-    window.addEventListener("resize", sync);
-    return () => {
-      track.removeEventListener("scroll", sync);
-      window.removeEventListener("resize", sync);
-    };
-  }, [sync]);
-
-  const scrollBy = (direction: 1 | -1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.querySelector("li");
-    const step = card ? card.clientWidth + 20 : track.clientWidth * 0.8;
-    track.scrollBy({ left: step * direction, behavior: "smooth" });
-  };
+  const go = (delta: number) =>
+    setIndex((v) => (v + delta + reviews.length) % reviews.length);
 
   return (
     <section
-      className="border-b border-line bg-paper py-20 md:py-28"
+      className="section border-t border-line bg-paper"
       aria-labelledby="reviews-title"
     >
       <div className="shell">
-        <SectionHeading
-          eyebrow="Отзывы пациентов"
-          title={<span id="reviews-title">Самая лучшая похвала — ваши здоровые зубы</span>}
-          description={
-            <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="inline-flex items-center gap-1" aria-hidden="true">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star
-                    key={index}
-                    size={15}
-                    strokeWidth={0}
-                    className="fill-accent text-accent"
-                  />
-                ))}
-              </span>
-              <span className="font-semibold text-ink">
-                {clinic.rating.value} — рейтинг клиники в {clinic.rating.source}
-              </span>
-              <span>· отзывы опубликованы на сайте клиники</span>
+        <Reveal>
+          <div className="flex items-baseline gap-5">
+            <span aria-hidden="true" className="numeral text-[15px] text-gold">
+              09
             </span>
-          }
-          action={
-            <div className="flex gap-2.5">
-              <button
-                type="button"
-                onClick={() => scrollBy(-1)}
-                disabled={atStart}
-                aria-label="Предыдущий отзыв"
-                className="grid h-12 w-12 place-items-center rounded-full border border-ink/12 text-ink transition enabled:hover:border-ink enabled:hover:bg-ink enabled:hover:text-white disabled:opacity-30"
+            <span className="eyebrow text-muted">Отзывы пациентов</span>
+            <span aria-hidden="true" className="hidden h-px flex-1 bg-line sm:block" />
+            <span
+              className="text-[11px] font-medium uppercase text-muted"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              {clinic.rating.value} в {clinic.rating.source}
+            </span>
+          </div>
+        </Reveal>
+
+        <h2 id="reviews-title" className="sr-only">
+          Отзывы пациентов клиники STATUS Dental Center
+        </h2>
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-20">
+          <Reveal delay={120}>
+            <figure>
+              {/* key restarts the fade whenever the quote changes */}
+              <blockquote
+                key={index}
+                className="display text-[clamp(1.5rem,3.6vw,2.6rem)] leading-[1.28] text-ink"
+                style={{ animation: "quoteIn 700ms cubic-bezier(0.22,1,0.36,1) both" }}
               >
-                <ArrowLeft size={18} strokeWidth={1.7} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollBy(1)}
-                disabled={atEnd}
-                aria-label="Следующий отзыв"
-                className="grid h-12 w-12 place-items-center rounded-full border border-ink/12 text-ink transition enabled:hover:border-ink enabled:hover:bg-ink enabled:hover:text-white disabled:opacity-30"
-              >
-                <ArrowRight size={18} strokeWidth={1.7} aria-hidden="true" />
-              </button>
+                «{review.text}»
+              </blockquote>
+
+              <figcaption className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-line pt-7">
+                <span className="text-[15px] font-medium text-ink">
+                  {review.name}
+                </span>
+                <span
+                  className="text-[11px] font-light uppercase text-muted"
+                  style={{ letterSpacing: "0.18em" }}
+                >
+                  {review.date} · отзыв с сайта клиники
+                </span>
+              </figcaption>
+            </figure>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <div className="flex items-center gap-8">
+              <span className="numeral text-[15px] text-muted">
+                {String(index + 1).padStart(2, "0")}
+                <span className="text-ink/25"> / {String(reviews.length).padStart(2, "0")}</span>
+              </span>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => go(-1)}
+                  aria-label="Предыдущий отзыв"
+                  className={cn(
+                    "grid h-14 w-14 place-items-center border border-ink/15 text-ink",
+                    "transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-paper",
+                  )}
+                >
+                  <Arrow direction="left" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(1)}
+                  aria-label="Следующий отзыв"
+                  className={cn(
+                    "grid h-14 w-14 place-items-center border border-ink/15 text-ink",
+                    "transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-paper",
+                  )}
+                >
+                  <Arrow direction="right" />
+                </button>
+              </div>
             </div>
-          }
-        />
+          </Reveal>
+        </div>
       </div>
 
-      <Reveal delay={80}>
-        <ul
-          ref={trackRef}
-          className="edge-scroller no-scrollbar mt-14 pb-2"
-        >
-          {reviews.map((review) => (
-            <li
-              key={`${review.name}-${review.date}`}
-              className="flex w-[82vw] shrink-0 snap-start flex-col rounded-[26px] border border-line bg-white p-7 sm:w-[400px] md:p-8"
-            >
-              <Quote
-                size={26}
-                strokeWidth={1.4}
-                aria-hidden="true"
-                className="text-accent/45"
-              />
-
-              <p className="mt-5 flex-1 text-[14.5px] leading-relaxed text-ink/80">
-                {review.text}
-              </p>
-
-              <div className="mt-7 flex items-center gap-3.5 border-t border-line pt-6">
-                <span
-                  aria-hidden="true"
-                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent-soft text-[15px] font-bold text-accent-deep"
-                >
-                  {review.name.charAt(0)}
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-[14.5px] font-semibold tracking-tight text-ink">
-                    {review.name}
-                  </p>
-                  <p className="mt-0.5 text-[12.5px] text-muted">
-                    {review.date} · отзыв с сайта клиники
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Reveal>
+      <style>{`
+        @keyframes quoteIn {
+          from { opacity: 0; transform: translateY(14px) }
+          to { opacity: 1; transform: none }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          @keyframes quoteIn { from { opacity: 1 } to { opacity: 1 } }
+        }
+      `}</style>
     </section>
   );
 }
