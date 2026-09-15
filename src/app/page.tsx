@@ -10,6 +10,7 @@ import { Contact } from "@/components/sections/Contact";
 import { Doctors } from "@/components/sections/Doctors";
 import { Faq } from "@/components/sections/Faq";
 import { Hero } from "@/components/sections/Hero";
+import { ImageBand } from "@/components/sections/ImageBand";
 import { Prices } from "@/components/sections/Prices";
 import { Reviews } from "@/components/sections/Reviews";
 import { Services } from "@/components/sections/Services";
@@ -30,6 +31,7 @@ export default function HomePage() {
         <TrustSection />
         <Services />
         <WhyStatus />
+        <ImageBand />
         <Technology />
         <Cases />
         <Doctors />

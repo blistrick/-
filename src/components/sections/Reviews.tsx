@@ -33,7 +33,7 @@ export function Reviews() {
 
   return (
     <section
-      className="section border-t border-line bg-paper"
+      className="section border-t border-line-dark bg-ink"
       aria-labelledby="reviews-title"
     >
       <div className="shell">
@@ -42,10 +42,10 @@ export function Reviews() {
             <span aria-hidden="true" className="numeral text-[15px] text-gold">
               09
             </span>
-            <span className="eyebrow text-muted">Отзывы пациентов</span>
-            <span aria-hidden="true" className="hidden h-px flex-1 bg-line sm:block" />
+            <span className="eyebrow text-paper/55">Отзывы пациентов</span>
+            <span aria-hidden="true" className="hidden h-px flex-1 bg-line-dark sm:block" />
             <span
-              className="text-[11px] font-medium uppercase text-muted"
+              className="text-[11px] font-medium uppercase text-paper/55"
               style={{ letterSpacing: "0.2em" }}
             >
               {clinic.rating.value} в {clinic.rating.source}
@@ -63,18 +63,18 @@ export function Reviews() {
               {/* key restarts the fade whenever the quote changes */}
               <blockquote
                 key={index}
-                className="display text-[clamp(1.5rem,3.6vw,2.6rem)] leading-[1.28] text-ink"
+                className="display text-[clamp(1.5rem,3.6vw,2.6rem)] leading-[1.28] text-paper"
                 style={{ animation: "quoteIn 700ms cubic-bezier(0.22,1,0.36,1) both" }}
               >
                 «{review.text}»
               </blockquote>
 
-              <figcaption className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-line pt-7">
-                <span className="text-[15px] font-medium text-ink">
+              <figcaption className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-line-dark pt-7">
+                <span className="text-[15px] font-medium text-paper">
                   {review.name}
                 </span>
                 <span
-                  className="text-[11px] font-light uppercase text-muted"
+                  className="text-[11px] font-light uppercase text-paper/55"
                   style={{ letterSpacing: "0.18em" }}
                 >
                   {review.date} · отзыв с сайта клиники
@@ -85,9 +85,9 @@ export function Reviews() {
 
           <Reveal delay={220}>
             <div className="flex items-center gap-8">
-              <span className="numeral text-[15px] text-muted">
+              <span className="numeral text-[15px] text-paper/55">
                 {String(index + 1).padStart(2, "0")}
-                <span className="text-ink/25"> / {String(reviews.length).padStart(2, "0")}</span>
+                <span className="text-paper/25"> / {String(reviews.length).padStart(2, "0")}</span>
               </span>
               <div className="flex gap-4">
                 <button
@@ -95,8 +95,8 @@ export function Reviews() {
                   onClick={() => go(-1)}
                   aria-label="Предыдущий отзыв"
                   className={cn(
-                    "grid h-14 w-14 place-items-center border border-ink/15 text-ink",
-                    "transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-paper",
+                    "grid h-14 w-14 place-items-center border border-paper/15 text-paper",
+                    "transition-colors duration-500 hover:border-paper hover:bg-paper hover:text-ink",
                   )}
                 >
                   <Arrow direction="left" />
@@ -106,8 +106,8 @@ export function Reviews() {
                   onClick={() => go(1)}
                   aria-label="Следующий отзыв"
                   className={cn(
-                    "grid h-14 w-14 place-items-center border border-ink/15 text-ink",
-                    "transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-paper",
+                    "grid h-14 w-14 place-items-center border border-paper/15 text-paper",
+                    "transition-colors duration-500 hover:border-paper hover:bg-paper hover:text-ink",
                   )}
                 >
                   <Arrow direction="right" />

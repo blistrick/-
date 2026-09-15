@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { technologies } from "@/data/content";
 import { Reveal } from "@/components/ui/Reveal";
@@ -53,11 +54,12 @@ export function Technology() {
 
   return (
     <section
-      className="section border-t border-line bg-paper-2"
+      className="section border-t border-line-dark bg-ink-soft"
       aria-labelledby="tech-title"
     >
       <div className="shell">
         <SectionHeading
+          tone="dark"
           index="04"
           eyebrow="Технологии"
           id="tech-title"
@@ -70,7 +72,7 @@ export function Technology() {
                 onClick={() => scrollBy(-1)}
                 disabled={atStart}
                 aria-label="Предыдущая технология"
-                className="grid h-14 w-14 place-items-center border border-ink/15 text-ink transition-colors duration-500 enabled:hover:border-ink enabled:hover:bg-ink enabled:hover:text-paper disabled:opacity-25"
+                className="grid h-14 w-14 place-items-center border border-paper/15 text-paper transition-colors duration-500 enabled:hover:border-paper enabled:hover:bg-paper enabled:hover:text-ink disabled:opacity-25"
               >
                 <Arrow direction="left" />
               </button>
@@ -79,7 +81,7 @@ export function Technology() {
                 onClick={() => scrollBy(1)}
                 disabled={atEnd}
                 aria-label="Следующая технология"
-                className="grid h-14 w-14 place-items-center border border-ink/15 text-ink transition-colors duration-500 enabled:hover:border-ink enabled:hover:bg-ink enabled:hover:text-paper disabled:opacity-25"
+                className="grid h-14 w-14 place-items-center border border-paper/15 text-paper transition-colors duration-500 enabled:hover:border-paper enabled:hover:bg-paper enabled:hover:text-ink disabled:opacity-25"
               >
                 <Arrow direction="right" />
               </button>
@@ -96,19 +98,36 @@ export function Technology() {
           {technologies.map((tech, index) => (
             <li
               key={tech.name}
-              className="group w-[78vw] shrink-0 snap-start border-t border-line pt-8 sm:w-[340px]"
+              className="group w-[78vw] shrink-0 snap-start sm:w-[380px]"
             >
-              <div className="flex items-baseline justify-between gap-6">
-                <span className="eyebrow text-gold">{tech.tag}</span>
-                <span aria-hidden="true" className="numeral text-[13px] text-ink/25">
+              <div className="relative aspect-4/5 w-full overflow-hidden bg-ink">
+                <Image
+                  src={tech.image}
+                  alt={tech.imageAlt}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 640px) 78vw, 380px"
+                  className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"
+                />
+                <span className="absolute left-5 top-5 bg-ink/70 px-3 py-1.5 backdrop-blur-sm">
+                  <span className="eyebrow text-gold">{tech.tag}</span>
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="numeral absolute right-5 top-5 text-[13px] text-paper/60"
+                >
                   {String(index + 1).padStart(2, "0")}
                 </span>
+                <h3 className="absolute inset-x-5 bottom-5 display text-[clamp(1.35rem,2.2vw,1.75rem)] leading-tight text-paper">
+                  {tech.name}
+                </h3>
               </div>
 
-              <h3 className="display mt-10 text-[clamp(1.45rem,2.4vw,1.9rem)] leading-tight text-ink">
-                {tech.name}
-              </h3>
-              <p className="mt-5 text-[14.5px] font-light leading-relaxed text-muted">
+              <p className="mt-6 text-[14.5px] font-light leading-relaxed text-paper/55">
                 {tech.text}
               </p>
             </li>

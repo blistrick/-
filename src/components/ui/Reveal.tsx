@@ -105,6 +105,7 @@ export function RevealLines({
       {lines.map((line, index) => (
         <Reveal
           key={index}
+          as="span"
           variant="line"
           delay={index * step}
           className={lineClassName}

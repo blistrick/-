@@ -10,9 +10,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const INITIAL_COUNT = 6;
 
-function Meta({ item, tone = "light" }: { item: CaseStudy; tone?: "light" | "dark" }) {
+function Meta({ item, tone = "dark" }: { item: CaseStudy; tone?: "light" | "dark" }) {
   if (!item.duration && !item.warranty) return null;
-  const dark = tone === "dark";
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-2">
@@ -20,7 +19,7 @@ function Meta({ item, tone = "light" }: { item: CaseStudy; tone?: "light" | "dar
         <span
           className={cn(
             "text-[11px] font-light uppercase",
-            dark ? "text-paper/55" : "text-muted",
+            tone === "dark" ? "text-paper/55" : "text-muted",
           )}
           style={{ letterSpacing: "0.16em" }}
         >
@@ -56,11 +55,12 @@ export function Cases() {
   return (
     <section
       id="cases"
-      className="section border-t border-line bg-paper"
+      className="section border-t border-line-dark bg-ink"
       aria-labelledby="cases-title"
     >
       <div className="shell">
         <SectionHeading
+          tone="dark"
           index="05"
           eyebrow="Результаты лечения"
           id="cases-title"
@@ -84,7 +84,7 @@ export function Cases() {
                   aria-pressed={isActive}
                   className={cn(
                     "link-underline shrink-0 pb-1 text-[11.5px] font-medium uppercase transition-colors duration-500",
-                    isActive ? "text-ink" : "text-muted hover:text-ink",
+                    isActive ? "text-paper" : "text-paper/55 hover:text-paper",
                   )}
                   style={{ letterSpacing: "0.2em" }}
                 >
@@ -101,16 +101,17 @@ export function Cases() {
           </div>
         </Reveal>
 
-        <div className="mt-16 grid gap-x-10 gap-y-20 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-16 grid gap-x-12 gap-y-24 md:grid-cols-2">
           {visible.map((item, index) => (
-            <Reveal key={item.slug} delay={(index % 3) * 90}>
+            <Reveal key={item.slug} delay={(index % 2) * 120}>
               <article className="group flex h-full flex-col">
-                <Reveal variant="image" delay={(index % 3) * 90 + 120}>
+                <Reveal variant="image" delay={(index % 2) * 120 + 140}>
                   <BeforeAfter
                     slug={item.slug}
                     alt={item.title}
                     bakedLabels={item.bakedLabels}
                     className="aspect-2/1 w-full"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </Reveal>
 
@@ -121,10 +122,10 @@ export function Cases() {
                   >
                     {item.category}
                   </span>
-                  <h3 className="display mt-4 text-[clamp(1.35rem,2.2vw,1.7rem)] leading-tight text-ink">
+                  <h3 className="display mt-5 text-[clamp(1.5rem,2.6vw,2rem)] leading-tight text-paper">
                     {item.title}
                   </h3>
-                  <p className="mt-4 line-clamp-3 text-[14px] font-light leading-relaxed text-muted">
+                  <p className="mt-4 line-clamp-3 text-[14px] font-light leading-relaxed text-paper/55">
                     {item.summary}
                   </p>
                   <Meta item={item} />
@@ -132,7 +133,7 @@ export function Cases() {
                   <button
                     type="button"
                     onClick={() => setActive(item)}
-                    className="link-underline mt-auto self-start pt-8 text-[11px] font-medium uppercase text-ink/60 transition-colors duration-500 hover:text-ink"
+                    className="link-underline mt-auto self-start pt-8 text-[11px] font-medium uppercase text-paper/60 transition-colors duration-500 hover:text-paper"
                     style={{ letterSpacing: "0.2em" }}
                   >
                     Подробнее о случае
@@ -149,7 +150,7 @@ export function Cases() {
               <button
                 type="button"
                 onClick={() => setExpanded(true)}
-                className="btn btn-outline"
+                className="btn btn-outline-light"
               >
                 Показать все работы ({filtered.length})
               </button>
@@ -198,7 +199,7 @@ export function Cases() {
                 </ul>
               ) : null}
 
-              <Meta item={active} />
+              <Meta item={active} tone="light" />
 
               <div className="mt-12 flex flex-col gap-4 sm:flex-row">
                 <a

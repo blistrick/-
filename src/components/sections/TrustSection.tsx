@@ -6,11 +6,12 @@ export function TrustSection() {
   return (
     <section
       id="about"
-      className="section border-t border-line bg-paper-2"
+      className="section border-t border-line-dark bg-ink-soft"
       aria-labelledby="trust-title"
     >
       <div className="shell">
         <SectionHeading
+          tone="dark"
           index="01"
           eyebrow="Почему нам доверяют"
           id="trust-title"
@@ -22,7 +23,7 @@ export function TrustSection() {
         <ol className="mt-20 grid gap-x-16 md:grid-cols-2">
           {advantages.map((item, index) => (
             <Reveal key={item.title} delay={(index % 4) * 90} as="li">
-              <div className="group grid grid-cols-[auto_minmax(0,1fr)] gap-x-7 border-t border-line py-9 transition-colors duration-700 hover:border-gold md:py-11">
+              <div className="group grid grid-cols-[auto_minmax(0,1fr)] gap-x-7 border-t border-line-dark py-9 transition-colors duration-700 hover:border-gold md:py-11">
                 <span
                   aria-hidden="true"
                   className="numeral pt-1 text-[14px] text-gold"
@@ -30,10 +31,10 @@ export function TrustSection() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="display text-[clamp(1.35rem,2.3vw,1.7rem)] leading-tight text-ink">
+                  <h3 className="display text-[clamp(1.35rem,2.3vw,1.7rem)] leading-tight text-paper">
                     {item.title}
                   </h3>
-                  <p className="mt-4 max-w-md text-[14.5px] font-light leading-relaxed text-muted">
+                  <p className="mt-4 max-w-md text-[14.5px] font-light leading-relaxed text-paper/55">
                     {item.text}
                   </p>
                 </div>

@@ -57,24 +57,25 @@ export function Services() {
   return (
     <section
       id="services"
-      className="section relative border-t border-line bg-paper"
+      className="section relative border-t border-line-dark bg-ink"
       aria-labelledby="services-title"
     >
       <div className="shell">
         <SectionHeading
+          tone="dark"
           index="02"
           eyebrow="Направления лечения"
           id="services-title"
           lines={["Полный цикл", "стоматологии"]}
           lede="От профилактического осмотра до тотальной имплантации. Врачи разных специализаций ведут пациента вместе, поэтому план лечения не приходится собирать по частям."
           action={
-            <a href="#prices" className="btn btn-outline">
+            <a href="#prices" className="btn btn-outline-light">
               Смотреть цены
             </a>
           }
         />
 
-        <ul className="mt-20 border-t border-line">
+        <ul className="mt-20 border-t border-line-dark">
           {services.map((service, index) => (
             <Reveal key={service.slug} delay={(index % 6) * 60} as="li">
               <a
@@ -83,18 +84,18 @@ export function Services() {
                 onMouseLeave={() => setActive((v) => (v === index ? null : v))}
                 onFocus={() => setActive(index)}
                 onBlur={() => setActive((v) => (v === index ? null : v))}
-                className="group grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-6 border-b border-line py-8 transition-colors duration-700 hover:border-gold md:grid-cols-[4rem_minmax(0,1fr)_minmax(0,22rem)_3rem] md:items-center md:gap-x-10 md:py-9"
+                className="group grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-6 border-b border-line-dark py-8 transition-colors duration-700 hover:border-gold md:grid-cols-[4rem_minmax(0,1fr)_minmax(0,22rem)_3rem] md:items-center md:gap-x-10 md:py-9"
               >
                 <span
                   aria-hidden="true"
-                  className="numeral text-[13px] text-gold transition-opacity duration-500 group-hover:opacity-60"
+                  className="numeral text-[13px] text-gold transition-opacity duration-500 group-hover:opacity-70"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
                 <h3
                   className={cn(
-                    "display text-[clamp(1.5rem,3.6vw,2.5rem)] leading-tight text-ink transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    "display text-[clamp(1.5rem,3.6vw,2.5rem)] leading-tight text-paper transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
                     "md:group-hover:translate-x-3",
                   )}
                 >
@@ -115,13 +116,13 @@ export function Services() {
                   </span>
                 </span>
 
-                <p className="col-span-2 mt-4 text-[14px] font-light leading-relaxed text-muted md:col-span-1 md:mt-0">
+                <p className="col-span-2 mt-4 text-[14px] font-light leading-relaxed text-paper/55 md:col-span-1 md:mt-0">
                   {service.short}
                 </p>
 
                 <span
                   aria-hidden="true"
-                  className="hidden justify-self-end text-ink/30 transition-all duration-700 group-hover:translate-x-1 group-hover:text-gold md:block"
+                  className="hidden justify-self-end text-paper/25 transition-all duration-700 group-hover:translate-x-1 group-hover:text-gold md:block"
                 >
                   <svg width="26" height="9" viewBox="0 0 26 9" fill="none">
                     <path
