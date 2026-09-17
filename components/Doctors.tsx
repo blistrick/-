@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 import Reveal from "./Reveal";
+import Tilt from "./Tilt";
 import { doctors, type Doctor } from "@/lib/data";
 
 export default function Doctors() {
@@ -27,19 +28,21 @@ export default function Doctors() {
                 onClick={() => setActive(doc)}
                 className="group block w-full text-left"
               >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-cream-alt">
-                  <Image
-                    src={doc.photo}
-                    alt={doc.name}
-                    fill
-                    sizes="(min-width: 1024px) 24vw, (min-width: 640px) 32vw, 46vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <Plus className="h-4 w-4" strokeWidth={1.75} />
-                  </span>
-                </div>
+                <Tilt max={10} className="rounded-3xl">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-cream-alt">
+                    <Image
+                      src={doc.photo}
+                      alt={doc.name}
+                      fill
+                      sizes="(min-width: 1024px) 24vw, (min-width: 640px) 32vw, 46vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <Plus className="h-4 w-4" strokeWidth={1.75} />
+                    </span>
+                  </div>
+                </Tilt>
                 <h3 className="mt-4 font-display text-base leading-snug text-ink sm:text-lg">
                   {doc.name}
                 </h3>

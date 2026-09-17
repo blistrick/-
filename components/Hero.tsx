@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Phone, Star } from "lucide-react";
 import { clinic } from "@/lib/data";
+import Hero3D from "@/components/three/Hero3D";
+import CountUp from "@/components/CountUp";
 
 export default function Hero() {
   return (
@@ -73,13 +74,15 @@ export default function Hero() {
           <div className="mt-10 grid grid-cols-3 gap-4 border-t border-border-soft pt-6 pb-20 sm:pb-0 sm:max-w-md">
             <div>
               <div className="flex items-center gap-1 font-display text-2xl text-ink">
-                {clinic.rating.value}
+                <CountUp value={5} decimals={1} />
                 <Star className="h-4 w-4 fill-gold text-gold" />
               </div>
               <div className="mt-1 text-xs text-ink-faint">Рейтинг на {clinic.rating.source}</div>
             </div>
             <div>
-              <div className="font-display text-2xl text-ink">3+ года</div>
+              <div className="font-display text-2xl text-ink">
+                <CountUp value={3} suffix="+ года" />
+              </div>
               <div className="mt-1 text-xs text-ink-faint">Гарантия на услуги</div>
             </div>
             <div>
@@ -95,15 +98,8 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
           className="relative lg:col-span-6 xl:col-span-6"
         >
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] shadow-lift sm:max-w-lg lg:ml-auto lg:max-w-none">
-            <Image
-              src="/images/clinic/treatment-chair.jpeg"
-              alt="Приём в клинике STATUS Dental Center"
-              fill
-              priority
-              sizes="(min-width: 1024px) 46vw, 90vw"
-              className="object-cover"
-            />
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md sm:max-w-lg lg:ml-auto lg:max-w-none">
+            <Hero3D />
           </div>
 
           <div className="absolute -bottom-6 -left-4 w-[13rem] rounded-2xl border border-border-soft bg-cream/95 p-4 shadow-lift backdrop-blur sm:-left-8 sm:w-56 sm:p-5">

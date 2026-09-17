@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
+import Tilt from "./Tilt";
 import { technologies } from "@/lib/data";
 
 export default function Technology() {
@@ -54,23 +55,25 @@ export default function Technology() {
               delay={i * 0.06}
               className="w-[80%] shrink-0 snap-start sm:w-[46%] lg:w-[30%]"
             >
-              <div className="group h-full overflow-hidden rounded-3xl border border-border-soft bg-cream-alt/40">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={tech.image}
-                    alt={tech.title}
-                    fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+              <Tilt max={5} className="group h-full">
+                <div className="h-full overflow-hidden rounded-3xl border border-border-soft bg-cream-alt/40">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={tech.image}
+                      alt={tech.title}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-display text-lg text-ink">{tech.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                      {tech.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-display text-lg text-ink">{tech.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                    {tech.description}
-                  </p>
-                </div>
-              </div>
+              </Tilt>
             </Reveal>
           ))}
         </div>

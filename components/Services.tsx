@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "./Reveal";
+import Tilt from "./Tilt";
 import { services } from "@/lib/data";
 
 export default function Services() {
@@ -29,34 +30,36 @@ export default function Services() {
               delay={(i % 3) * 0.08}
               className={i === 0 ? "sm:col-span-2" : ""}
             >
-              <a
-                href="#calculator"
-                className={`group relative flex h-full flex-col justify-end overflow-hidden rounded-3xl border border-border-soft bg-ink ${
-                  i === 0 ? "min-h-[20rem]" : "min-h-[18rem]"
-                }`}
-              >
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover opacity-70 transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
-                <div className="relative flex items-start justify-between gap-4 p-6">
-                  <div>
-                    <h3 className="font-display text-xl text-cream sm:text-2xl">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 max-w-xs text-sm leading-relaxed text-cream/75">
-                      {service.description}
-                    </p>
+              <Tilt max={6} glare className="h-full">
+                <a
+                  href="#calculator"
+                  className={`group relative flex h-full flex-col justify-end overflow-hidden rounded-3xl border border-border-soft bg-ink ${
+                    i === 0 ? "min-h-[20rem]" : "min-h-[18rem]"
+                  }`}
+                >
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover opacity-70 transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+                  <div className="relative flex items-start justify-between gap-4 p-6">
+                    <div>
+                      <h3 className="font-display text-xl text-cream sm:text-2xl">
+                        {service.title}
+                      </h3>
+                      <p className="mt-2 max-w-xs text-sm leading-relaxed text-cream/75">
+                        {service.description}
+                      </p>
+                    </div>
+                    <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream/30 text-cream transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:border-cream">
+                      <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
+                    </span>
                   </div>
-                  <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream/30 text-cream transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:border-cream">
-                    <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
-                  </span>
-                </div>
-              </a>
+                </a>
+              </Tilt>
             </Reveal>
           ))}
         </div>
