@@ -442,6 +442,7 @@ p { margin: 0; }
 .form__success-mark { width: 96px; height: 74px; color: var(--primary); margin-bottom: 12px; }
 .form__success h3 { font-size: 32px; }
 .form__success p { color: var(--ink-70); }
+.form__success-wa { margin-top: 16px; }
 
 /* ---------- Contacts ---------- */
 .contacts { display: grid; grid-template-columns: .9fr 1.1fr; gap: 80px; align-items: stretch; }

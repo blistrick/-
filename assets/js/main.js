@@ -149,7 +149,7 @@
     if (!name || digits.length < 11) return;
 
     const text = `Здравствуйте! Хочу записаться в Doctor+.\nИмя: ${name}\nТелефон: ${form.phone.value}\nУслуга: ${form.service.value}`;
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    form.querySelector('.form__success-wa').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
     form.querySelector('.form__success').hidden = false;
   });
 
