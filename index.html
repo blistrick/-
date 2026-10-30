@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Детейлинг-студия в Алматы: защитная плёнка PPF, керамика, полировка и химчистка. Рассрочка Kaspi 0-0-12, бесплатный осмотр.">
+<meta property="og:title" content="Steppe Shield — детейлинг в Алматы">
+<meta property="og:description" content="Плёнка от щебня, керамика от пыли и реагентов. Калькулятор цены в тенге и рассрочка Kaspi.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0c0f12">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Steppe Shield — детейлинг в Алматы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: одностраничный лендинг студии; тёмная «асфальтовая» основа, красный акцент, как у лака спорткара и золото как у флага, сдержанно */
+:root{
+  --bg:#0c0f12; --bg2:#12161b; --panel:#171c22; --line:#262d36;
+  --fg:#eef1f4; --muted:#97a1ad; --sky:#e5323b; --sun:#f2c335; --ok:#4fd19a;
+  --f-d:"Unbounded","Arial Black",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-b);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+.in{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(56px,8vw,104px)}
+.eyebrow{font:500 12px var(--f-m);letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+h1,h2,h3{font-family:var(--f-d);font-weight:700;text-wrap:balance;margin:0}
+h2{font-size:clamp(26px,3.6vw,42px);line-height:1.1;margin-top:12px}
+.lede{color:var(--muted);max-width:60ch;margin:14px 0 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 15px var(--f-b);padding:14px 22px;border-radius:10px;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-main{background:var(--sky);color:#ffffff}
+.btn-main:hover{background:#f05a62}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--muted)}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+.mono{font-family:var(--f-m);font-variant-numeric:tabular-nums}
+
+/* top + nav */
+.top{border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.top .in{display:flex;justify-content:space-between;gap:16px;padding-block:8px;flex-wrap:wrap}
+.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.lang span{padding:1px 8px}.lang .on{background:var(--panel);color:var(--fg)}
+nav.main{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(12,15,18,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav.main .in{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:14px}
+.logo{font:700 17px var(--f-d);letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg,var(--sky),#4a0d12,var(--sky));box-shadow:inset 0 0 0 4px var(--bg)}
+.links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+.links a{text-decoration:none}.links a:hover{color:var(--fg)}
+@media (max-width:900px){.links{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(40px,6vw,80px) clamp(48px,7vw,88px);position:relative;overflow:hidden;isolation:isolate}
+/* фон героя: видео из Motion + прожектор за курсором и размытое свечение (идея из 21st.dev Marketing Hero) */
+.hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero-bg video{width:100%;height:100%;object-fit:cover;opacity:.5}
+.sweep{position:absolute;inset:0;overflow:hidden}
+.sweep::before{content:"";position:absolute;top:-50%;bottom:-50%;width:22%;left:-30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07) 40%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.07) 60%,transparent);transform:rotate(18deg);animation:sweep 9s ease-in-out infinite}
+.sweep::after{content:"";position:absolute;left:-10%;right:-10%;top:58%;height:1px;background:linear-gradient(90deg,transparent,var(--sky) 50%,transparent);opacity:.55;transform:rotate(-6deg);box-shadow:0 0 18px 2px rgba(229,50,59,.5)}
+@keyframes sweep{0%{left:-30%}60%,100%{left:120%}}
+@media (prefers-reduced-motion:reduce){.sweep::before{animation:none;left:40%}}
+.hero-bg::before{content:"";position:absolute;top:-180px;left:8%;width:min(900px,90%);height:380px;background:linear-gradient(90deg,#7a0f17,var(--sky) 50%,#3a3d45);filter:blur(140px);opacity:.35}
+.hero-bg::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(520px circle at var(--mx,30%) var(--my,40%),rgba(229,50,59,.13),transparent 60%),
+  linear-gradient(90deg,var(--bg) 0%,rgba(12,15,18,.75) 45%,rgba(12,15,18,.35) 100%),
+  linear-gradient(0deg,var(--bg) 0%,transparent 30%)}
+.pill{display:inline-flex;flex-wrap:wrap;align-items:center;border:1px solid var(--line);background:rgba(23,28,34,.7);border-radius:999px;padding:4px 6px;font-size:13px;color:var(--muted);backdrop-filter:blur(8px);margin-bottom:6px}
+.pill span{padding:4px 10px;white-space:nowrap}
+.pill span+span{border-left:1px solid var(--line)}
+.pill b{color:var(--fg);font-weight:600;margin-right:4px}
+@media (max-width:480px){.pill span:nth-child(3){display:none}}
+.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
+.hero h1{font-size:clamp(30px,4.2vw,52px);line-height:1.03;margin:16px 0 20px}
+.hero h1 em{font-style:normal;color:var(--sky)}
+.hero .lede{font-size:18px;margin-bottom:28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:28px;margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.trust b{display:block;font:700 22px var(--f-d)}
+.trust span{font-size:13px;color:var(--muted)}
+@media (max-width:900px){.hero .in{grid-template-columns:1fr}}
+@media (max-width:480px){.trust{grid-template-columns:1fr 1fr;gap:18px}}
+
+.ba{position:relative;aspect-ratio:5/4;max-width:100%;border-radius:16px;overflow:hidden;user-select:none;border:1px solid var(--line)}
+.ba .l{position:absolute;inset:0}
+.ba .after{background:
+  linear-gradient(118deg,transparent 28%,rgba(255,255,255,.6) 35%,rgba(255,255,255,.1) 40%,transparent 44%),
+  linear-gradient(118deg,transparent 55%,rgba(255,140,140,.16) 59%,transparent 64%),
+  radial-gradient(130% 100% at 25% 0%,#4a4d55 0%,#17191d 45%,#05080a 100%)}
+.ba .before{background:
+  repeating-radial-gradient(circle at 38% 42%,rgba(255,255,255,.075) 0 1px,transparent 1px 6px),
+  repeating-radial-gradient(circle at 72% 68%,rgba(255,255,255,.06) 0 1px,transparent 1px 8px),
+  radial-gradient(circle at 60% 30%,rgba(210,190,150,.25) 0 2px,transparent 3px) 0 0/38px 41px,
+  radial-gradient(130% 100% at 25% 0%,#4a5257 0%,#262a2d 50%,#121315 100%);
+  filter:saturate(.5) contrast(.85);clip-path:inset(0 calc(100% - var(--pos,52%)) 0 0)}
+.ba .h{position:absolute;top:0;bottom:0;left:var(--pos,52%);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
+.ba .h::after{content:"";position:absolute;top:50%;left:50%;width:40px;height:40px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.5);
+  background-image:linear-gradient(90deg,transparent 13px,#0c0f12 13px 15px,transparent 15px 25px,#0c0f12 25px 27px,transparent 27px)}
+.ba .tag{position:absolute;top:14px;font:500 11px var(--f-m);letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:6px}
+.ba .tl{left:14px}.ba .tr{right:14px;color:var(--sky)}
+.ba .read{position:absolute;left:14px;right:14px;bottom:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 12px var(--f-m);color:#d6dde3}
+.ba .read span{background:rgba(0,0,0,.6);padding:6px 10px;border-radius:6px}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cap{font-size:13px;color:var(--muted);margin-top:10px}
+
+/* climate */
+.climate{background:var(--bg2);border-block:1px solid var(--line)}
+.cl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cl{background:var(--bg2);padding:28px;display:grid;gap:12px;align-content:start}
+.cl .k{font:500 28px var(--f-d);color:var(--sun)}
+.cl h3{font-size:17px}
+.cl p{margin:0;color:var(--muted);font-size:15px}
+.cl .fix{font-size:14px;color:var(--fg);border-top:1px dashed var(--line);padding-top:12px}
+.cl .fix b{color:var(--sky);font-weight:600}
+@media (max-width:860px){.cl-grid{grid-template-columns:1fr}}
+
+/* packages */
+.pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.pk{border:1px solid var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px;background:var(--panel)}
+.pk{transition:transform .35s ease,box-shadow .35s ease}
+.pk:hover{transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(0,0,0,.8)}
+/* популярный комплекс: вращающаяся градиентная рамка (идея из 21st.dev Glowing Pricing Tiers) */
+.pk.hot{position:relative;border:0;padding:30px;overflow:hidden;isolation:isolate;background:transparent}
+.pk.hot::before{content:"";position:absolute;inset:-60%;z-index:-2;background:conic-gradient(from 0deg,#4a0d12,var(--sky) 20%,#ffb3b6 28%,var(--sky) 36%,#4a0d12 60%,#4a0d12);animation:spin 6s linear infinite}
+.pk.hot::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:14px;background:linear-gradient(180deg,#24141a,var(--panel) 45%)}
+.pk.hot:hover{box-shadow:0 0 50px -12px rgba(229,50,59,.55)}
+.pk.hot:hover::before{animation-duration:1.6s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pk.hot::before{animation:none}.pk,.pk:hover{transform:none;transition:none}}
+.pk .badge{align-self:flex-start;font:500 11px var(--f-m);letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:6px;background:var(--sky);color:#ffffff}
+.pk .for{color:var(--muted);font-size:14px;margin:6px 0 0}
+.pk .pr{font:700 30px var(--f-d)}
+.pk .pr small{display:block;font:400 13px var(--f-b);color:var(--muted);margin-top:4px}
+.pk ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:15px}
+.pk li{display:flex;gap:10px}
+.pk li::before{content:"";flex:none;width:14px;height:14px;margin-top:5px;border-radius:4px;border:1.5px solid var(--sky);background:linear-gradient(var(--sky),var(--sky)) center/6px 6px no-repeat}
+.pk .btn{margin-top:auto;justify-content:center}
+@media (max-width:960px){.pk-grid{grid-template-columns:1fr}}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.box{border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,32px);background:var(--panel);min-width:0}
+.q{margin-bottom:26px}
+.q > span{display:block;font:500 12px var(--f-m);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--bg2);color:var(--fg);border-radius:10px;padding:12px;text-align:left;font:600 15px var(--f-b);cursor:pointer}
+.seg button small{display:block;font:400 12px var(--f-b);color:var(--muted);margin-top:2px}
+.seg button[aria-pressed="true"]{border-color:var(--sky);background:rgba(229,50,59,.1)}
+.chk{display:grid;gap:8px}
+.chk label{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);background:var(--bg2);border-radius:10px;padding:12px 14px;cursor:pointer}
+.chk label:has(input:checked){border-color:var(--sky);background:rgba(229,50,59,.08)}
+.chk .nm{display:flex;gap:12px;align-items:center}
+.chk input{accent-color:var(--sky);width:18px;height:18px}
+.chk .p{font-family:var(--f-m);font-size:14px;color:var(--muted);white-space:nowrap}
+@media (max-width:520px){.seg{grid-template-columns:1fr}}
+.res{display:flex;flex-direction:column;gap:18px;position:sticky;top:90px;align-self:start}
+.res .t{font:700 clamp(30px,4vw,40px) var(--f-d);font-variant-numeric:tabular-nums;line-height:1.1}
+.rline{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-top:1px solid var(--line);font-size:15px}
+.rline span:first-child{color:var(--muted)}
+.kaspi{background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:14px 16px;font-size:14px}
+.kaspi b{color:var(--sun);font-family:var(--f-m);font-size:17px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}.res{position:static}}
+
+/* cases */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:8px 14px;font:500 14px var(--f-b);cursor:pointer}
+.filters button[aria-pressed="true"]{color:var(--fg);border-color:var(--fg)}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.case{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+.sw{aspect-ratio:16/10;max-width:100%;position:relative;background:
+  linear-gradient(120deg,transparent 30%,rgba(255,255,255,.45) 37%,transparent 43%),
+  radial-gradient(140% 120% at 20% 0%,var(--c1),var(--c2) 55%,#050607 100%)}
+.sw.matte{background:radial-gradient(140% 120% at 20% 0%,var(--c1),var(--c2) 60%,#050607 100%)}
+.sw .t{position:absolute;left:12px;top:12px;font:500 11px var(--f-m);letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.55);padding:5px 9px;border-radius:6px}
+.sw .city{position:absolute;right:12px;top:12px;font-size:12px;background:rgba(0,0,0,.55);padding:4px 9px;border-radius:6px}
+.case .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.case h3{font-size:17px}
+.case p{margin:0;color:var(--muted);font-size:14px}
+.case dl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.case dt{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.case dd{margin:0;font:500 14px var(--f-m);font-variant-numeric:tabular-nums}
+@media (max-width:960px){.cases{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.cases{grid-template-columns:1fr}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;counter-reset:s}
+.step{border-top:2px solid var(--line);padding-top:18px;display:grid;gap:8px;align-content:start}
+.step::before{counter-increment:s;content:"0" counter(s);font:500 13px var(--f-m);color:var(--sky)}
+.step h3{font-size:15px}
+.step p{margin:0;color:var(--muted);font-size:14px}
+@media (max-width:960px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* reviews */
+.rv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.r{border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:12px;align-content:start;background:var(--panel)}
+.r .stars{color:var(--sun);letter-spacing:2px}
+.r p{margin:0;font-size:15px}
+.r .who{font-size:13px;color:var(--muted)}
+.demo{font:500 10px var(--f-m);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:2px 6px;border-radius:4px;justify-self:start}
+@media (max-width:900px){.rv{grid-template-columns:1fr}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:40px}
+details{border-bottom:1px solid var(--line);padding-block:18px}
+summary{cursor:pointer;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";color:var(--sky);font-family:var(--f-m);font-size:20px;line-height:1}
+details[open] summary::after{content:"−"}
+details p{margin:10px 0 0;color:var(--muted);max-width:62ch}
+@media (max-width:860px){.faq{grid-template-columns:1fr;gap:12px}}
+
+/* contacts */
+.contact{background:var(--bg2);border-top:1px solid var(--line)}
+.ct{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+.ct .rows{display:grid;gap:0}
+.ct .row{display:flex;justify-content:space-between;gap:16px;padding-block:14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.ct .row span:first-child{color:var(--muted)}
+.form{display:grid;gap:12px}
+.form input,.form select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--fg);border-radius:10px;padding:13px 14px;font:400 15px var(--f-b)}
+.form .ok{color:var(--ok);font-size:14px;min-height:1.4em;margin:0}
+@media (max-width:860px){.ct{grid-template-columns:1fr}}
+footer{padding-block:28px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;background:#25d366;color:#05210f;font:600 14px var(--f-b);padding:13px 18px;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.45);display:flex;gap:8px;align-items:center}
+.wa::before{content:"";width:9px;height:9px;border-radius:50%;background:#05210f}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="in">
+  <span>Алматы, пр. Аль-Фараби · ежедневно 9:00–21:00 · бокс с подогревом</span>
+  <div class="lang" aria-label="Язык сайта"><span class="on">РУС</span><span>ҚАЗ</span></div>
+</div></div>
+
+<nav class="main"><div class="in">
+  <a class="logo" href="#top"><i></i>STEPPE&nbsp;SHIELD</a>
+  <div class="links"><a href="#uslugi">Комплексы</a><a href="#calc">Калькулятор</a><a href="#raboty">Работы</a><a href="#process">Как работаем</a><a href="#faq">Вопросы</a></div>
+  <a class="btn btn-main" href="#kontakty">Записаться</a>
+</div></nav>
+
+<header class="hero" id="top">
+<div class="hero-bg" id="heroBg"><div class="sweep"></div></div>
+<div class="in">
+  <div>
+    <div class="pill"><span><b>1 400+</b>машин</span><span><b>4,9</b>в 2ГИС</span><span><b>10 лет</b>гарантия на плёнку</span></div>
+    <div class="eyebrow">Детейлинг-студия · Алматы</div>
+    <h1>Кузов, который переживёт трассу <em>Алматы&nbsp;— Астана</em></h1>
+    <p class="lede">Защитная плёнка от щебня, керамика от пыли и реагентов, восстановительная полировка. Перед работой бесплатно замеряем толщину ЛКП на каждой детали.</p>
+    <div class="cta">
+      <a class="btn btn-main" href="#calc">Рассчитать стоимость</a>
+      <a class="btn btn-ghost" href="#raboty">Смотреть работы</a>
+    </div>
+    <div class="trust">
+      <div><b>0-0-12</b><span>рассрочка Kaspi</span></div>
+      <div><b>20 мин</b><span>бесплатный осмотр</span></div>
+      <div><b>+22 °C</b><span>в боксе зимой</span></div>
+    </div>
+  </div>
+  <div>
+    <div class="ba" id="ba">
+      <div class="l after"></div><div class="l before"></div><div class="h"></div>
+      <span class="tag tl">До</span><span class="tag tr">После</span>
+      <div class="read"><span>ЛКП: 118 → 112 мкм</span><span>блеск: 41 → 89 GU</span></div>
+      <input type="range" id="baRange" min="0" max="100" value="52" aria-label="Сравнить кузов до и после полировки">
+    </div>
+    <p class="cap">Toyota Land Cruiser 300, капот. Полировка в 2 этапа и керамика. Потяните ползунок.</p>
+  </div>
+</div></header>
+
+<section class="climate"><div class="in">
+  <div class="head"><div><div class="eyebrow">Почему это важно здесь</div><h2>Три вещи, которые съедают краску в Казахстане</h2></div></div>
+  <div class="cl-grid">
+    <div class="cl"><div class="k">Щебень</div><h3>Трассы и ремонт дорог</h3><p>На скорости 110 км/ч камень от фуры оставляет скол до металла. Капот и бампер получают больше всего.</p><div class="fix">Решение: <b>плёнка PPF 190 мкм</b> на зоны риска</div></div>
+    <div class="cl"><div class="k">Пыль</div><h3>Степь, ветер, песок</h3><p>Абразивная пыль и мойки «щёткой» за год превращают лак в паутинку из микроцарапин.</p><div class="fix">Решение: <b>полировка + керамика 9H</b>, грязь не цепляется</div></div>
+    <div class="cl"><div class="k">−35&nbsp;°C</div><h3>Зима и реагенты</h3><p>В Астане перепады от −35 до +5 °C и соль на дорогах. Реагенты разъедают пороги, диски и хром.</p><div class="fix">Решение: <b>керамика на диски и пороги</b>, мойка без щёток</div></div>
+  </div>
+</div></section>
+
+<section id="uslugi"><div class="in">
+  <div class="head"><div><div class="eyebrow">Комплексы</div><h2>Готовые решения под ваш маршрут</h2><p class="lede">Цены указаны для седана. Для кроссовера и внедорожника итог считает калькулятор ниже.</p></div></div>
+  <div class="pk-grid">
+    <div class="pk">
+      <div><h3>Город</h3><p class="for">Для ежедневной езды по Алматы</p></div>
+      <div class="pr mono">от 290 000 ₸<small>1 день · ≈ 24 200 ₸/мес в рассрочку</small></div>
+      <ul><li>Детейлинг-мойка и очистка от битума</li><li>Полировка в 1 этап</li><li>Керамика 1 слой, 1,5 года</li><li>Обработка дисков</li></ul>
+      <a class="btn btn-ghost" href="#kontakty">Выбрать «Город»</a>
+    </div>
+    <div class="pk hot">
+      <span class="badge">Берут чаще всего</span>
+      <div><h3>Трасса</h3><p class="for">Для поездок между городами</p></div>
+      <div class="pr mono">от 620 000 ₸<small>3 дня · ≈ 51 700 ₸/мес в рассрочку</small></div>
+      <ul><li>PPF на капот, бампер, фары, крылья, зеркала</li><li>Керамика 2 слоя на остальной кузов</li><li>Антидождь на лобовое стекло</li><li>Бесплатный осмотр через 6 месяцев</li></ul>
+      <a class="btn btn-main" href="#kontakty">Выбрать «Трасса»</a>
+    </div>
+    <div class="pk">
+      <div><h3>Полная защита</h3><p class="for">Для новых и дорогих машин</p></div>
+      <div class="pr mono">от 1 750 000 ₸<small>6 дней · ≈ 145 800 ₸/мес в рассрочку</small></div>
+      <ul><li>PPF на весь кузов, глянец или мат</li><li>Керамика поверх плёнки</li><li>Химчистка и защита кожи салона</li><li>Гарантия на плёнку 10 лет</li></ul>
+      <a class="btn btn-ghost" href="#kontakty">Выбрать «Полную»</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="calc" style="background:var(--bg2);border-block:1px solid var(--line)"><div class="in">
+  <div class="head"><div><div class="eyebrow">Калькулятор</div><h2>Узнайте цену за 30 секунд</h2><p class="lede">Итог предварительный. Точную сумму назовём после замера толщиномером, обычно она отличается не больше чем на 10%.</p></div></div>
+  <div class="calc">
+    <div class="box">
+      <div class="q"><span>Класс автомобиля</span>
+        <div class="seg" id="cls">
+          <button type="button" aria-pressed="true" data-k="1">Седан<small>Camry, Elantra, K5</small></button>
+          <button type="button" aria-pressed="false" data-k="1.2">Кроссовер<small>RAV4, Tucson, Tiggo 8</small></button>
+          <button type="button" aria-pressed="false" data-k="1.45">Внедорожник<small>LC 300, LX 600, L9</small></button>
+        </div></div>
+      <div class="q" style="margin-bottom:0"><span>Услуги</span>
+        <div class="chk" id="svc">
+          <label><span class="nm"><input type="checkbox" id="s-wash" data-p="12000" data-d="0.25" checked>Детейлинг-мойка</span><span class="p">12 000 ₸</span></label>
+          <label><span class="nm"><input type="checkbox" id="s-pol" data-p="120000" data-d="1">Полировка в 2 этапа</span><span class="p">120 000 ₸</span></label>
+          <label><span class="nm"><input type="checkbox" id="s-cer" data-p="180000" data-d="1" checked>Керамика 2 слоя</span><span class="p">180 000 ₸</span></label>
+          <label><span class="nm"><input type="checkbox" id="s-ppf" data-p="450000" data-d="2">PPF на зоны риска</span><span class="p">450 000 ₸</span></label>
+          <label><span class="nm"><input type="checkbox" id="s-full" data-p="1400000" data-d="5">PPF на весь кузов</span><span class="p">1 400 000 ₸</span></label>
+          <label><span class="nm"><input type="checkbox" id="s-in" data-p="55000" data-d="0.5">Химчистка салона</span><span class="p">55 000 ₸</span></label>
+        </div></div>
+    </div>
+    <div class="box res" aria-live="polite">
+      <div><div class="eyebrow">Итого, предварительно</div><div class="t" id="tot">192 000 ₸</div></div>
+      <div>
+        <div class="rline"><span>Класс</span><span id="rCls">Седан</span></div>
+        <div class="rline"><span>Услуг выбрано</span><span class="mono" id="rN">2</span></div>
+        <div class="rline"><span>Срок работ</span><span id="rD">1 день</span></div>
+      </div>
+      <div class="kaspi">Рассрочка Kaspi 0-0-12:<br><b id="kas">16 000 ₸</b> в месяц, без переплаты</div>
+      <a class="btn btn-main" href="#kontakty" style="justify-content:center">Записаться с этим расчётом</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="raboty"><div class="in">
+  <div class="head">
+    <div><div class="eyebrow">Портфолио</div><h2>Работы этого сезона</h2></div>
+    <div class="filters" id="flt">
+      <button type="button" aria-pressed="true" data-f="all">Все</button>
+      <button type="button" aria-pressed="false" data-f="ppf">Плёнка</button>
+      <button type="button" aria-pressed="false" data-f="cer">Керамика</button>
+      <button type="button" aria-pressed="false" data-f="pol">Полировка</button>
+      <button type="button" aria-pressed="false" data-f="in">Салон</button>
+    </div>
+  </div>
+  <div class="cases" id="cases">
+    <article class="case" data-t="ppf"><div class="sw matte" style="--c1:#7d8790;--c2:#2b3136"><span class="t">PPF · мат</span><span class="city">Алматы</span></div>
+      <div class="body"><h3>Toyota Land Cruiser 300</h3><p>Новая машина из салона. Весь кузов в матовую плёнку, чтобы глянцевый белый стал «сатиновым» и не боялся щебня.</p>
+      <dl><div><dt>Срок</dt><dd>6 дней</dd></div><div><dt>Плёнка</dt><dd>190 мкм</dd></div><div><dt>Сумма</dt><dd>2,1 млн ₸</dd></div></dl></div></article>
+    <article class="case" data-t="cer pol"><div class="sw" style="--c1:#5a5f66;--c2:#16181b"><span class="t">Полировка + керамика</span><span class="city">Астана</span></div>
+      <div class="body"><h3>Lexus LX 600</h3><p>После двух зим и щёточных моек на чёрном лаке была паутинка. Полировка сняла 6 мкм, керамика закрыла поры.</p>
+      <dl><div><dt>Срок</dt><dd>2 дня</dd></div><div><dt>Блеск</dt><dd>+46 GU</dd></div><div><dt>Сумма</dt><dd>430 000 ₸</dd></div></dl></div></article>
+    <article class="case" data-t="ppf"><div class="sw" style="--c1:#5e8fb0;--c2:#18303f"><span class="t">PPF · зоны риска</span><span class="city">Алматы</span></div>
+      <div class="body"><h3>Zeekr 001</h3><p>Электромобиль для поездок в Капчагай. Плёнка на капот, бампер, фары и крылья, вырезано по лекалам без снятия деталей.</p>
+      <dl><div><dt>Срок</dt><dd>3 дня</dd></div><div><dt>Плёнка</dt><dd>190 мкм</dd></div><div><dt>Сумма</dt><dd>540 000 ₸</dd></div></dl></div></article>
+    <article class="case" data-t="pol"><div class="sw" style="--c1:#c9cdd2;--c2:#4d535a"><span class="t">Полировка</span><span class="city">Шымкент</span></div>
+      <div class="body"><h3>Toyota Camry 75</h3><p>Подготовка к продаже. Убрали голограммы после автомойки и мелкие царапины у ручек, машину продали за неделю.</p>
+      <dl><div><dt>Срок</dt><dd>1 день</dd></div><div><dt>Снято</dt><dd>4 мкм</dd></div><div><dt>Сумма</dt><dd>120 000 ₸</dd></div></dl></div></article>
+    <article class="case" data-t="in"><div class="sw matte" style="--c1:#b49a7c;--c2:#3b3026"><span class="t">Салон</span><span class="city">Алматы</span></div>
+      <div class="body"><h3>Li Auto L9</h3><p>Семейный кроссовер с бежевой кожей. Химчистка, удаление пятен от детского кресла, защитный состав на сиденья.</p>
+      <dl><div><dt>Срок</dt><dd>8 часов</dd></div><div><dt>Сидений</dt><dd>6</dd></div><div><dt>Сумма</dt><dd>95 000 ₸</dd></div></dl></div></article>
+    <article class="case" data-t="cer"><div class="sw" style="--c1:#8a2b2b;--c2:#2a0d0f"><span class="t">Керамика</span><span class="city">Караганда</span></div>
+      <div class="body"><h3>Hyundai Palisade</h3><p>Перед зимой: керамика на кузов, диски и пороги от реагентов. Через 4 месяца на осмотре гидрофоб держится.</p>
+      <dl><div><dt>Срок</dt><dd>1 день</dd></div><div><dt>Слоёв</dt><dd>2</dd></div><div><dt>Сумма</dt><dd>260 000 ₸</dd></div></dl></div></article>
+  </div>
+</div></section>
+
+<section id="process" style="background:var(--bg2);border-block:1px solid var(--line)"><div class="in">
+  <div class="head"><div><div class="eyebrow">Как работаем</div><h2>Пять шагов от осмотра до выдачи</h2></div></div>
+  <div class="steps">
+    <div class="step"><h3>Осмотр и замер</h3><p>Толщиномер на каждой детали, фото дефектов. Бесплатно, 20 минут.</p></div>
+    <div class="step"><h3>Мойка и очистка</h3><p>Двухфазная мойка, снятие битума, металлических вкраплений и глины.</p></div>
+    <div class="step"><h3>Коррекция ЛКП</h3><p>Полировка под лампами. Снимаем минимум лака, контролируем каждые 2 мкм.</p></div>
+    <div class="step"><h3>Защита</h3><p>Плёнка или керамика в чистом боксе при +22 °C, круглый год.</p></div>
+    <div class="step"><h3>Выдача и уход</h3><p>Показываем результат при дневном свете и даём памятку по мойке.</p></div>
+  </div>
+</div></section>
+
+<section><div class="in">
+  <div class="head"><div><div class="eyebrow">Отзывы</div><h2>Что пишут в 2ГИС</h2></div><span class="demo">Примеры для макета</span></div>
+  <div class="rv">
+    <div class="r"><div class="stars">★★★★★</div><p>Поклеили плёнку на передок перед поездкой в Астану. Туда-обратно 2 400 км, на капоте ни одного скола.</p><div class="who">Владелец Toyota RAV4 · Алматы</div></div>
+    <div class="r"><div class="stars">★★★★★</div><p>Понравилось, что сначала всё замерили и показали на фото, где лак тонкий. Ничего лишнего не навязывали.</p><div class="who">Владелец Kia K5 · Алматы</div></div>
+    <div class="r"><div class="stars">★★★★★</div><p>Оформил «Трассу» в рассрочку Kaspi прямо на месте. Машину забрал через 3 дня, как и обещали.</p><div class="who">Владелец Chery Tiggo 8 Pro · Конаев</div></div>
+  </div>
+</div></section>
+
+<section id="faq" style="background:var(--bg2);border-block:1px solid var(--line)"><div class="in faq">
+  <div><div class="eyebrow">Вопросы</div><h2>Частые вопросы</h2></div>
+  <div>
+    <details open><summary>Можно ли оплатить в рассрочку?</summary><p>Да, через Kaspi на 3, 6 или 12 месяцев без переплаты. Также принимаем Kaspi QR, Halyk и наличные.</p></details>
+    <details><summary>Сколько держится керамика?</summary><p>От 1,5 до 3 лет в зависимости от состава и числа слоёв. Через 6 месяцев приглашаем на бесплатный осмотр.</p></details>
+    <details><summary>Когда можно мыть машину после покрытия?</summary><p>Через 7 дней после керамики и через 3 дня после плёнки. Только бесконтактная или ручная мойка, без щёток.</p></details>
+    <details><summary>Работаете зимой?</summary><p>Да. Бокс отапливается до +22 °C, а машину перед работой прогреваем, чтобы составы легли правильно.</p></details>
+    <details><summary>Даёте гарантию на плёнку?</summary><p>Да, до 10 лет от производителя на пожелтение и отслоение, плюс 1 год нашей гарантии на монтаж.</p></details>
+  </div>
+</div></section>
+
+<section class="contact" id="kontakty"><div class="in">
+  <div class="head"><div><div class="eyebrow">Запись</div><h2>Приезжайте на бесплатный осмотр</h2></div></div>
+  <div class="ct">
+    <div class="box rows">
+      <div class="row"><span>Адрес</span><span>Алматы, пр. Аль-Фараби (пример)</span></div>
+      <div class="row"><span>Телефон и WhatsApp</span><span class="mono">+7 700 000 00 00</span></div>
+      <div class="row"><span>Instagram</span><span>@steppe.shield</span></div>
+      <div class="row"><span>График</span><span>ежедневно 9:00–21:00</span></div>
+      <div class="row" style="border:0"><span>Оплата</span><span>Kaspi, Halyk, наличные</span></div>
+    </div>
+    <form class="box form" id="form">
+      <input id="f-name" placeholder="Ваше имя" required value="Ерлан">
+      <input id="f-phone" placeholder="+7 7__ ___ __ __" required value="+7 701 234 56 78">
+      <select id="f-car" aria-label="Автомобиль"><option>Toyota Camry 75</option><option>Toyota Land Cruiser 300</option><option>Hyundai Tucson</option><option>Другой</option></select>
+      <button class="btn btn-main" type="submit" style="justify-content:center">Отправить заявку</button>
+      <p class="ok" id="ok"></p>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="in"><span>© 2026 Steppe Shield · Детейлинг в Алматы</span><span>Демо-макет: название, цены, кейсы и отзывы приведены как примеры</span></div></footer>
+
+<a class="wa" href="#kontakty">WhatsApp</a>
+
+<script>
+const hero=document.getElementById('top'),hbg=document.getElementById('heroBg');
+hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();
+  hbg.style.setProperty('--mx',(e.clientX-r.left)+'px');hbg.style.setProperty('--my',(e.clientY-r.top)+'px')});
+const ba=document.getElementById('ba'),rg=document.getElementById('baRange');
+rg.addEventListener('input',()=>ba.style.setProperty('--pos',rg.value+'%'));
+
+const nf=n=>Math.round(n).toLocaleString('ru-RU').replace(/ /g,' ')+' ₸';
+const round=n=>Math.round(n/1000)*1000;
+function days(d){if(d<1)return Math.round(d*8)+' часов';const n=Math.ceil(d);return n+(n===1?' день':n<5?' дня':' дней')}
+function calc(){
+  const c=document.querySelector('#cls [aria-pressed=true]');const k=+c.dataset.k;
+  let sum=0,d=0,n=0;
+  document.querySelectorAll('#svc input:checked').forEach(i=>{sum+=+i.dataset.p*k;d+=+i.dataset.d;n++});
+  sum=round(sum);
+  document.getElementById('tot').textContent=nf(sum);
+  document.getElementById('rCls').textContent=c.firstChild.textContent.trim();
+  document.getElementById('rN').textContent=n;
+  document.getElementById('rD').textContent=n?days(d):'—';
+  document.getElementById('kas').textContent=nf(Math.ceil(sum/12/100)*100);
+  document.querySelectorAll('#svc .p').forEach(p=>{const i=p.parentElement.querySelector('input');p.textContent=nf(round(+i.dataset.p*k))});
+}
+document.getElementById('cls').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#cls button').forEach(x=>x.setAttribute('aria-pressed',x===b));calc()});
+document.getElementById('svc').addEventListener('change',calc);
+calc();
+
+document.getElementById('flt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#flt button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const f=b.dataset.f;document.querySelectorAll('#cases .case').forEach(c=>c.hidden=f!=='all'&&!c.dataset.t.split(' ').includes(f))});
+
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();
+  document.getElementById('ok').textContent='Это демо: на настоящем сайте заявка уйдёт вам в WhatsApp или Telegram.'});
+</script>
+</body>
+</html>
