@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amore — именные изделия из бархата</title>
+<meta name="description" content="Именные сумки, косметички и наборы из бархата с вышивкой. Сделано в Казахстане, доставка по всему миру.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@300;400;500;600;700&family=Marck+Script&display=swap">
+<style>
+/* Бренд Amore: слоновая кость, пудровая роза, коралловое сердце из логотипа, пастельный казахский орнамент.
+   Раскладка: герой = 3D-конфигуратор (текст | сцена 360° | настройки), ниже коллекция, заказы, шаги. */
+:root{
+  --ivory:#fbf7f2; --ivory2:#f4ece3; --paper:#fffdfa; --ink:#2b2224; --muted:#7d6f6f; --line:#eadfd5;
+  --rose:#d9766a; --rose2:#f6dcd6; --blush:#fbeae6; --gold:#c9a46a;
+  --f-d:"Cormorant Garamond",Georgia,serif; --f-b:"Manrope",system-ui,sans-serif; --f-s:"Marck Script",cursive;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ivory);color:var(--ink);font:15px/1.6 var(--f-b);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.in{max-width:1320px;margin:0 auto;padding-inline:max(16px,3vw)}
+h1,h2,h3{font-family:var(--f-d);font-weight:500;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(34px,4.2vw,56px);line-height:1}
+h2 em,h1 em{font-style:italic;color:var(--rose)}
+.ey{font:600 11px var(--f-b);letter-spacing:.26em;text-transform:uppercase;color:var(--rose)}
+
+.concept{background:var(--ink);color:#e9dcd6;font-size:12px;text-align:center;padding:7px 16px;letter-spacing:.04em}
+.topbar{border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.topbar .in{display:flex;justify-content:center;gap:28px;padding-block:9px;flex-wrap:wrap}
+.topbar span::before{content:"♡ ";color:var(--rose)}
+
+nav.main{position:sticky;top:0;z-index:20;background:rgba(251,247,242,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav.main .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:14px;gap:16px}
+.nl{display:flex;gap:26px;font-size:13.5px;color:var(--muted)}
+.nl a{text-decoration:none}.nl a:hover{color:var(--ink)}
+.logo{display:flex;flex-direction:column;align-items:center;text-decoration:none;line-height:1}
+.logo b{font:300 30px var(--f-b);letter-spacing:.2em;color:var(--rose);display:flex;align-items:center;padding-left:.2em}
+.logo b svg{width:.86em;height:.86em;margin:0 .06em}
+.logo small{font:400 9px var(--f-b);letter-spacing:.16em;color:var(--muted);margin-top:4px}
+.nr{display:flex;justify-content:flex-end;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:999px;padding:13px 22px;font:600 14px var(--f-b);cursor:pointer;text-decoration:none;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.rose{background:var(--rose);color:#fff}
+.btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.btn svg{width:18px;height:18px}
+@media(max-width:900px){.nl{display:none}nav.main .in{grid-template-columns:auto 1fr}.logo{align-items:flex-start}.nr .btn span{display:none}}
+
+/* ---------- HERO / CONFIGURATOR ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(70% 60% at 50% 45%,#fff 0%,var(--ivory) 60%,var(--ivory2) 100%)}
+.hero .in{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr) minmax(0,370px);gap:24px;align-items:center;padding-block:28px 40px;min-height:min(820px,calc(100vh - 110px))}
+.intro h1{font-size:clamp(44px,4.6vw,72px);line-height:.95;margin:16px 0 18px}
+.intro p{color:var(--muted);margin:0 0 26px;max-width:34ch}
+.facts{display:grid;gap:14px;margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.facts div{display:flex;align-items:baseline;gap:12px}
+.facts b{font:500 34px/1 var(--f-d);min-width:110px}
+.facts span{font-size:13px;color:var(--muted)}
+
+.stage{position:relative;height:clamp(460px,68vh,700px);min-width:0}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
+.stage canvas:active{cursor:grabbing}
+.orn{position:absolute;left:50%;top:46%;width:min(620px,96%);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.5}
+.orn svg{width:100%;height:100%;animation:slow 120s linear infinite}
+@keyframes slow{to{transform:rotate(360deg)}}
+.ring{position:absolute;left:50%;bottom:7%;width:min(440px,80%);transform:translateX(-50%);pointer-events:none}
+.ring svg{width:100%;height:auto;display:block}
+.badge360{position:absolute;left:50%;bottom:calc(7% - 14px);transform:translateX(-50%);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:600 12px var(--f-b);letter-spacing:.08em;display:flex;gap:8px;align-items:center;white-space:nowrap;box-shadow:0 8px 24px -14px rgba(80,40,40,.35)}
+.badge360 i{font-style:normal;color:var(--rose)}
+.pname{position:absolute;left:0;right:0;top:10px;text-align:center;pointer-events:none}
+.pname b{display:block;font:500 italic 30px var(--f-d)}
+.pname span{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+
+.panel{background:rgba(255,253,250,.82);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:28px;padding:22px;display:grid;gap:18px;box-shadow:0 30px 60px -40px rgba(80,40,40,.35)}
+.grp > label,.grp > .lab{display:flex;justify-content:space-between;font:600 11px var(--f-b);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.grp .lab em{font:500 italic 15px var(--f-d);letter-spacing:0;text-transform:none;color:var(--ink)}
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pr{border:1px solid var(--line);background:var(--paper);border-radius:16px;padding:6px 4px 8px;cursor:pointer;display:grid;justify-items:center;gap:2px;font:500 11px/1.2 var(--f-b);color:var(--ink);transition:border-color .2s,transform .2s}
+.pr img{width:100%;aspect-ratio:1;object-fit:contain}
+.pr .ph{width:100%;aspect-ratio:1}
+.pr[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.pr:hover{transform:translateY(-2px)}
+.sw{display:flex;gap:9px;flex-wrap:wrap}
+.sw button{width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;position:relative;box-shadow:inset 0 -6px 10px rgba(0,0,0,.18),inset 0 4px 8px rgba(255,255,255,.35),0 0 0 1px rgba(0,0,0,.06)}
+.sw button[aria-pressed="true"]::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--ink)}
+.sw.th button{width:28px;height:28px}
+.name{position:relative}
+.name input{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:16px;padding:12px 16px;font:400 28px var(--f-s);color:var(--ink)}
+.name small{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg button{border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:8px;cursor:pointer;font-size:13px;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.seg .s1{font:400 19px var(--f-s)}.seg .s2{font:500 italic 18px var(--f-d)}
+.opts{display:grid;gap:8px}
+.chk{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:10px 14px;cursor:pointer;font-size:13.5px}
+.chk input{accent-color:var(--rose);width:17px;height:17px;margin:0 10px 0 0}
+.chk span{display:flex;align-items:center}
+.chk b{font-weight:600;white-space:nowrap}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px dashed var(--line)}
+.total span{font-size:13px;color:var(--muted)}
+.total b{font:500 34px var(--f-d);font-variant-numeric:lining-nums tabular-nums}
+.kaspi{font-size:12px;color:var(--muted);margin-top:-10px}
+.panel .btn{width:100%;padding:15px}
+.wa{background:#25d366;color:#06301a}
+@media(max-width:1180px){.hero .in{grid-template-columns:minmax(0,1fr) minmax(0,360px)}.intro{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end}.intro .facts{margin:0;border:0;padding:0}}
+@media(max-width:820px){.hero .in{grid-template-columns:1fr;gap:6px;padding-top:18px}.intro{grid-template-columns:1fr}.intro p,.intro .facts{display:none}.intro h1{font-size:38px;margin:8px 0 0}.stage{height:min(62vh,500px)}.topbar span:nth-child(n+2){display:none}.concept{font-size:11px}}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(64px,8vw,110px)}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.sh p{color:var(--muted);max-width:44ch;margin:0}
+.coll{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:26px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 30px 50px -34px rgba(80,40,40,.45)}
+.card .im{aspect-ratio:1/1;background:radial-gradient(70% 70% at 50% 45%,#fff,var(--ivory2));display:grid;place-items:center}
+.card .im img{width:92%;height:92%;object-fit:contain}
+.card .tx{padding:18px 20px 20px;display:grid;gap:6px;flex:1}
+.card h3{font-size:26px;line-height:1.05}
+.card p{margin:0;color:var(--muted);font-size:13.5px}
+.card .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px;gap:8px}
+.card .row b{font:500 24px var(--f-d)}
+.card .row button{border:1px solid var(--ink);background:none;border-radius:999px;padding:8px 14px;font:600 12.5px var(--f-b);cursor:pointer}
+@media(max-width:1000px){.coll{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.coll{grid-template-columns:1fr}}
+
+.orders{background:var(--blush)}
+.og{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.oc{background:var(--paper);border-radius:26px;overflow:hidden;display:flex;flex-direction:column}
+.oc .im{aspect-ratio:4/3;background:radial-gradient(70% 70% at 50% 50%,#fff,#f3e3de);display:grid;place-items:center;position:relative}
+.oc .im img{width:86%;height:86%;object-fit:contain}
+.oc .tag{position:absolute;left:14px;top:14px;background:var(--paper);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600}
+.oc .tx{padding:20px 22px 24px;display:grid;gap:8px}
+.oc h3{font-size:24px}
+.oc p{margin:0;color:var(--muted);font-size:14px}
+.oc .pr2{font:500 20px var(--f-d)}
+.kfw{background:var(--ink);color:#f3e6e1;justify-content:space-between;padding:30px}
+.kfw .ey{color:#f0a99f}
+.kfw h3{font-size:34px;line-height:1.05;margin:14px 0}
+.kfw p{color:#bfaea9}
+.kfw ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
+.kfw li{border-top:1px solid rgba(255,255,255,.14);padding-top:12px;font-size:14px}
+.kfw li b{display:block;font:500 italic 22px var(--f-d);color:#fff}
+@media(max-width:1000px){.og{grid-template-columns:1fr}}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.st{padding:28px 24px 0 0;display:grid;gap:10px;align-content:start}
+.st .n{font:500 italic 54px/1 var(--f-d);color:var(--rose2);-webkit-text-stroke:1px var(--rose)}
+.st h3{font-size:25px}
+.st p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr;gap:20px}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+.cta{border-radius:36px;background:linear-gradient(120deg,#2b2224,#4a2f31);color:#fff;padding:clamp(32px,6vw,72px);display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center;position:relative;overflow:hidden}
+.cta h2{color:#fff}
+.cta p{color:#d9c6c0;margin:16px 0 0;max-width:46ch}
+.cta .r{display:grid;gap:12px;justify-items:start}
+.cta .num{font:500 30px var(--f-d)}
+.cta::after{content:"Amore";position:absolute;right:-20px;bottom:-60px;font:400 220px/1 var(--f-s);color:rgba(255,255,255,.05);pointer-events:none}
+@media(max-width:860px){.cta{grid-template-columns:1fr}}
+footer{padding-block:34px;color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.orn svg{animation:none}.card,.btn,.pr{transition:none}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<div class="concept">Концепт нового сайта для Amore · демонстрационный макет</div>
+<div class="topbar"><div class="in"><span>Изготовим за 3–5 дней в Актау</span><span>Доставка по всему Казахстану и миру</span><span>27 000+ заказов</span></div></div>
+
+<nav class="main"><div class="in">
+  <div class="nl"><a href="#make">Конструктор</a><a href="#collection">Коллекция</a><a href="#orders">Заказы клиентов</a><a href="#how">Как заказать</a></div>
+  <a class="logo" href="#make" aria-label="Amore"><b>AM<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20.5s-8-4.9-8-11A4.5 4.5 0 0 1 12 6.8a4.5 4.5 0 0 1 8 2.7c0 6.1-8 11-8 11z"/></svg>RE</b><small>made in KZ</small></a>
+  <div class="nr"><a class="btn dark" href="#make"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/></svg><span>Создать именной подарок</span></a></div>
+</div></nav>
+
+<header class="hero" id="make"><div class="in">
+  <div class="intro">
+    <div>
+      <div class="ey">Именные изделия из бархата</div>
+      <h1>Подарок, на&nbsp;котором <em>её&nbsp;имя</em></h1>
+      <p>Выберите изделие, цвет бархата и нитку, впишите имя и сразу посмотрите вышивку со всех сторон. Шьём вручную в Актау.</p>
+    </div>
+    <div class="facts">
+      <div><b>27 000+</b><span>заказов по Казахстану и миру</span></div>
+      <div><b>3–5 дней</b><span>на пошив и вышивку</span></div>
+      <div><b>KFW</b><span>партнёр Kazakhstan Fashion Week</span></div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="orn" id="orn"></div>
+    <div class="ring"><svg viewBox="0 0 440 70" fill="none"><ellipse cx="220" cy="35" rx="214" ry="29" stroke="#d9766a" stroke-opacity=".35" stroke-dasharray="2 6"/><path d="M40 52 q-18 -10 -6 -24" stroke="#d9766a" stroke-width="1.5"/><path d="M30 30 l4 -3 l2 5" stroke="#d9766a" stroke-width="1.5"/><path d="M400 18 q18 10 6 24" stroke="#d9766a" stroke-width="1.5"/><path d="M410 40 l-4 3 l-2 -5" stroke="#d9766a" stroke-width="1.5"/></svg></div>
+    <div class="badge360"><i>360°</i> потяните, чтобы покрутить</div>
+    <div class="pname"><b id="pTitle">Спортивная сумка</b><span id="pSub">бархат · 45 × 25 см</span></div>
+    <div class="loading" id="loading">Загружаем 3D…</div>
+    <canvas id="c" aria-label="3D-модель изделия, можно вращать"></canvas>
+  </div>
+
+  <aside class="panel" aria-label="Настройка изделия">
+    <div class="grp"><div class="lab">Изделие</div><div class="prods" id="prods"></div></div>
+    <div class="grp"><div class="lab">Бархат <em id="colName">Морская волна</em></div><div class="sw" id="colors"></div></div>
+    <div class="grp"><div class="lab">Нитка <em id="thName">Белая</em></div><div class="sw th" id="threads"></div></div>
+    <div class="grp"><label for="nameIn">Имя для вышивки</label><div class="name"><input id="nameIn" value="Saya" maxlength="12" autocomplete="off"><small id="cnt">4/12</small></div></div>
+    <div class="grp"><div class="seg" id="fonts"><button type="button" class="s1" aria-pressed="true" data-f="script">Рукописный</button><button type="button" class="s2" aria-pressed="false" data-f="serif">Классика</button></div></div>
+    <div class="opts">
+      <label class="chk"><span><input type="checkbox" id="heart">Сердечко после имени</span><b>+ 0 ₸</b></label>
+      <label class="chk"><span><input type="checkbox" id="mini" checked>Мини-набор: маска + резинка</span><b>+ 6 000 ₸</b></label>
+    </div>
+    <div class="total"><span>Итого</span><b id="total">36 990 ₸</b></div>
+    <div class="kaspi" id="kaspi">или 3 083 ₸ × 12 мес в рассрочку Kaspi</div>
+    <a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-1-5-3.9-5.2-4.1-.1-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.8 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg>Заказать в WhatsApp</a>
+  </aside>
+</div></header>
+
+<section id="collection"><div class="in">
+  <div class="sh"><div><div class="ey">Коллекция</div><h2 style="margin-top:14px">Каждое изделие — <em>с именем</em></h2></div><p>Нажмите «Настроить», и изделие откроется в 3D-конструкторе наверху.</p></div>
+  <div class="coll" id="coll"></div>
+</div></section>
+
+<section class="orders" id="orders"><div class="in">
+  <div class="sh"><div><div class="ey">Заказы клиентов</div><h2 style="margin-top:14px">Малая часть заказов <em>за эту неделю</em></h2></div><p>Модели собраны в нашем 3D-конструкторе по реальным заказам из Instagram @theamore_kz.</p></div>
+  <div class="og">
+    <article class="oc"><div class="im"><span class="tag">Алматы</span><img id="o1" alt="Голубая бархатная сумка с вышивкой Saya"></div><div class="tx"><h3>Заказ Аружан</h3><p>Спортивная сумка и мини-набор на подарок, голубой бархат, белая вышивка «Saya».</p><div class="pr2">30 990 ₸ + 6 000 ₸</div></div></article>
+    <article class="oc"><div class="im"><span class="tag">Астана</span><img id="o2" alt="Молочная косметичка с розовой вышивкой Bota"></div><div class="tx"><h3>Заказ Боты</h3><p>Именной набор из молочного бархата, розовая вышивка «Bota» с сердечком.</p><div class="pr2">Именной набор</div></div></article>
+    <article class="oc kfw"><div><div class="ey">Партнёрства</div><h3>Нас выбирают для показов</h3><p>Именные изделия Amore были на подиумах и в подарочных наборах моделей.</p></div><ul><li><b>Kazakhstan Fashion Week</b>Актау, партнёры показа</li><li><b>Brilliant Fashion Show</b>Алматы, партнёры показа</li></ul></article>
+  </div>
+</div></section>
+
+<section id="how"><div class="in">
+  <div class="sh"><div><div class="ey">Как заказать</div><h2 style="margin-top:14px">Четыре шага до <em>подарка</em></h2></div></div>
+  <div class="steps">
+    <div class="st"><div class="n">1</div><h3>Соберите в 3D</h3><p>Изделие, цвет бархата, нитка и имя. Сразу видно, как будет выглядеть.</p></div>
+    <div class="st"><div class="n">2</div><h3>Отправьте в WhatsApp</h3><p>Заказ уходит менеджеру уже готовым сообщением, ничего не нужно объяснять.</p></div>
+    <div class="st"><div class="n">3</div><h3>Оплатите удобно</h3><p>Kaspi, перевод или рассрочка. Пришлём фото вышивки до отправки.</p></div>
+    <div class="st"><div class="n">4</div><h3>Получите подарок</h3><p>Пошив 3–5 дней, доставка по Казахстану и в другие страны.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="in">
+  <div class="cta">
+    <div><div class="ey" style="color:#f0a99f">Свадьба · девичник · день рождения</div><h2 style="margin-top:14px">Оптовые наборы <em style="color:#f0a99f">для подружек невесты</em></h2><p>Сделаем одинаковые наборы с разными именами для всей команды. Пришлите список имён, а мы покажем макет каждого.</p></div>
+    <div class="r"><span style="color:#d9c6c0;font-size:13px">WhatsApp</span><span class="num">+7 775 359 50 65</span><a class="btn rose" href="#make">Собрать набор</a></div>
+  </div>
+  <footer><span>Amore · Made in Kazakhstan · Актау · Instagram @theamore_kz</span><span>Концепт сайта. Цены, кроме указанных в заказах клиентов, примерные</span></footer>
+</div></section>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ---------- data ---------- */
+const PRODUCTS = {
+  duffel:   {name:'Спортивная сумка', short:'Сумка',      price:30990, sub:'бархат · 45 × 25 см', desc:'Вместительная, на молнии, с длинными ручками. Для спортзала и поездок.'},
+  pouch:    {name:'Косметичка',       short:'Косметичка', price:14990, sub:'стёганый бархат · 24 × 17 см', desc:'Стёганая, мягкая, держит форму. Помещается вся косметика.'},
+  mask:     {name:'Маска для сна',    short:'Маска',      price:3990,  sub:'бархат · мягкая резинка', desc:'Нежный бархат, не давит на глаза. Отличный мини-подарок.'},
+  scrunchie:{name:'Резинка для волос',short:'Резинка',    price:2490,  sub:'бархат · объёмная', desc:'Объёмная бархатная резинка, не тянет и не путает волосы.'},
+};
+const COLORS = [
+  {n:'Морская волна', c:'#174d70'},{n:'Молочный', c:'#efe5d4'},{n:'Пудра', c:'#e3aea7'},
+  {n:'Бордо', c:'#6c1824'},{n:'Шоколад', c:'#5a3a2c'},{n:'Шалфей', c:'#93a88e'},
+];
+const THREADS = [{n:'Белая', c:'#ffffff'},{n:'Розовая', c:'#f08aaf'},{n:'Золотая', c:'#d6b06a'},{n:'Графит', c:'#2a2628'}];
+const state = {product:'duffel', color:0, thread:0, name:'Saya', font:'script', heart:false, mini:true};
+
+/* ---------- textures ---------- */
+const SRGB = THREE.SRGBColorSpace;
+function canvasTex(w,h,draw,repeat){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);if(repeat){t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(...repeat)}return t}
+const fabric = canvasTex(256,256,(x,w,h)=>{const d=x.createImageData(w,h);for(let i=0;i<d.data.length;i+=4){const v=232+Math.random()*23;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}x.putImageData(d,0,0)},[5,5]); fabric.colorSpace=SRGB;
+const quilt = canvasTex(512,8,(x,w)=>{const g=x.createLinearGradient(0,0,w/8,0);g.addColorStop(0,'#000');g.addColorStop(.12,'#bbb');g.addColorStop(.5,'#fff');g.addColorStop(.88,'#bbb');g.addColorStop(1,'#000');x.fillStyle=g;for(let i=0;i<8;i++){x.save();x.translate(i*w/8,0);x.fillRect(0,0,w/8,8);x.restore()}},[1,1]);
+const shadowTex = canvasTex(256,256,(x)=>{const g=x.createRadialGradient(128,128,0,128,128,128);g.addColorStop(0,'rgba(70,35,35,.42)');g.addColorStop(.55,'rgba(70,35,35,.14)');g.addColorStop(1,'rgba(70,35,35,0)');x.fillStyle=g;x.fillRect(0,0,256,256)});
+
+function embroideryTex(text,thread,font,heart){
+  return canvasTex(1024,320,(x,w,h)=>{
+    const label=(text||'').trim()||'Имя', full=heart?label+' ♥':label;
+    let size=200; const set=()=>x.font=font==='script'?`${size}px "Marck Script"`:`italic 600 ${size}px "Cormorant Garamond"`;
+    set(); while(x.measureText(full).width>940&&size>60){size-=6;set()}
+    x.textAlign='center';x.textBaseline='middle';
+    x.shadowColor='rgba(0,0,0,.45)';x.shadowBlur=5;x.shadowOffsetY=4;x.fillStyle=thread;x.fillText(full,w/2,h/2+8);
+    x.shadowColor='transparent';x.globalCompositeOperation='source-atop';
+    x.lineWidth=1.6;x.strokeStyle='rgba(0,0,0,.16)';for(let i=-h;i<w;i+=6){x.beginPath();x.moveTo(i,0);x.lineTo(i+h*.6,h);x.stroke()}
+    x.strokeStyle='rgba(255,255,255,.22)';for(let i=-h+3;i<w;i+=6){x.beginPath();x.moveTo(i,0);x.lineTo(i+h*.6,h);x.stroke()}
+  });
+}
+
+/* ---------- materials ---------- */
+const white=new THREE.Color('#ffffff');
+function velvet(hex,bump){const col=new THREE.Color(hex);return new THREE.MeshPhysicalMaterial({color:col,map:fabric,roughness:.92,sheen:.75,sheenRoughness:.55,sheenColor:col.clone().lerp(white,.32),envMapIntensity:.55,bumpMap:bump||null,bumpScale:bump?3:0})}
+const metal=new THREE.MeshStandardMaterial({color:'#d8d2c8',metalness:1,roughness:.28});
+function embMat(tex){tex.colorSpace=SRGB;tex.anisotropy=8;return new THREE.MeshStandardMaterial({map:tex,transparent:true,roughness:.5,bumpMap:tex,bumpScale:3,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-4})}
+
+/* ---------- geometry helpers ---------- */
+const V=THREE.Vector3, clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function bentPlane(w,h,R,off,rf){const g=new THREE.PlaneGeometry(w,h,80,16),p=g.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),r=rf?rf(x):R,th=p.getY(i)/r+off;p.setXYZ(i,x,r*Math.sin(th),r*Math.cos(th))}g.computeVertexNormals();return g}
+function roundedBox(w,h,d,r,taper){const g=new THREE.BoxGeometry(w,h,d,40,30,24),p=g.attributes.position,n=g.attributes.normal,hw=w/2-r,hh=h/2-r,hd=d/2-r,v=new V(),c=new V(),k=new V();
+  for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);c.set(clamp(v.x,-hw,hw),clamp(v.y,-hh,hh),clamp(v.z,-hd,hd));k.copy(v).sub(c);if(k.lengthSq()<1e-9)k.set(0,0,1);k.normalize();v.copy(c).addScaledVector(k,r);
+    const s=1-taper*((v.y+h/2)/h);v.x*=s;p.setXYZ(i,v.x,v.y,v.z);n.setXYZ(i,k.x,k.y,k.z)}return g}
+
+/* ---------- products ---------- */
+function addEmb(g,mesh){g.userData.emb=mesh;g.add(mesh)}
+function buildDuffel(o){const g=new THREE.Group(),R=.82,L=2.5,m=velvet(o.color),m2=velvet(new THREE.Color(o.color).multiplyScalar(.9).getHex());
+  const puff=x=>R*(1+.07*Math.cos(Math.PI*x/L));const bg=new THREE.CylinderGeometry(R,R,L,110,40,false),bp=bg.attributes.position;for(let i=0;i<bp.count;i++){const y=bp.getY(i);if(Math.abs(Math.abs(y)-L/2)<1e-4&&Math.hypot(bp.getX(i),bp.getZ(i))<1e-4)continue;const k=puff(y)/R,rr=Math.hypot(bp.getX(i),bp.getZ(i));if(rr>1e-4){bp.setX(i,bp.getX(i)*k);bp.setZ(i,bp.getZ(i)*k)}}bg.computeVertexNormals();const body=new THREE.Mesh(bg,m);body.rotation.z=-Math.PI/2;g.add(body);
+  for(const s of[-1,1]){const p=new THREE.Mesh(new THREE.TorusGeometry(R,.045,16,110),m2);p.rotation.y=Math.PI/2;p.position.x=s*L/2;g.add(p)}
+  for(const sx of[-.62,.62]){const ring=new THREE.Mesh(new THREE.TorusGeometry(puff(sx)+.03,.055,16,140),m2);ring.rotation.y=Math.PI/2;ring.position.x=sx;g.add(ring);
+    const cv=new THREE.CatmullRomCurve3([new V(sx,.5,.7),new V(sx,1.05,.66),new V(sx,1.5,.25),new V(sx,1.55,-.05),new V(sx,1.3,-.5),new V(sx,.5,-.7)]);g.add(new THREE.Mesh(new THREE.TubeGeometry(cv,90,.062,16,false),m2))}
+  const zip=new THREE.Mesh(new THREE.BoxGeometry(L*.9,.035,.09),metal);zip.position.y=R*1.07+.012;g.add(zip);
+  const pull=new THREE.Mesh(new THREE.BoxGeometry(.05,.16,.035),metal);pull.position.set(L*.42,R*1.05+.02,.07);pull.rotation.x=.5;g.add(pull);
+  addEmb(g,new THREE.Mesh(bentPlane(1.1,.37,R,-.12,x=>puff(x)+.008),embMat(o.tex)));
+  g.userData.bottom=-R*1.07;g.userData.lift=-.35;return g}
+function buildPouch(o){const g=new THREE.Group(),w=2,h=1.35,d=.95;const m=velvet(o.color,quilt);
+  const body=new THREE.Mesh(roundedBox(w,h,d,.34,.14),m);g.add(body);
+  const zip=new THREE.Mesh(new THREE.BoxGeometry(w*.66,.03,.07),metal);zip.position.y=h/2+.005;g.add(zip);
+  const tab=new THREE.Mesh(new THREE.TorusGeometry(.08,.025,10,30),velvet(o.color));tab.position.set(w*.38,h/2-.02,.0);tab.rotation.y=Math.PI/2;g.add(tab);
+  const e=new THREE.Mesh(new THREE.PlaneGeometry(1.25,.39),embMat(o.tex));e.position.set(0,-.08,d/2+.006);addEmb(g,e);
+  g.userData.bottom=-h/2;g.userData.lift=-.05;return g}
+function buildMask(o){const g=new THREE.Group(),m=velvet(o.color);const s=new THREE.Shape();
+  s.moveTo(0,.44);s.bezierCurveTo(.4,.56,1.05,.62,1.13,.2);s.bezierCurveTo(1.19,-.2,.95,-.52,.6,-.52);s.bezierCurveTo(.3,-.52,.18,-.24,0,-.24);s.bezierCurveTo(-.18,-.24,-.3,-.52,-.6,-.52);s.bezierCurveTo(-.95,-.52,-1.19,-.2,-1.13,.2);s.bezierCurveTo(-1.05,.62,-.4,.56,0,.44);
+  const geo=new THREE.ExtrudeGeometry(s,{depth:.1,bevelEnabled:true,bevelThickness:.09,bevelSize:.08,bevelSegments:8,curveSegments:80});geo.center();
+  const mask=new THREE.Mesh(geo,m);g.add(mask);
+  const band=new THREE.Mesh(new THREE.TorusGeometry(1.12,.07,14,120,Math.PI),velvet(new THREE.Color(o.color).multiplyScalar(.9).getHex()));band.rotation.x=Math.PI/2;band.rotation.z=Math.PI;band.scale.set(1,.62,1);band.position.set(0,.05,-.02);g.add(band);
+  const e=new THREE.Mesh(new THREE.PlaneGeometry(1,.31),embMat(o.tex));e.position.set(0,.13,.142);addEmb(g,e);
+  g.rotation.x=-.12;g.userData.bottom=-.62;g.userData.lift=.1;return g}
+function buildScrunchie(o){const g=new THREE.Group(),m=velvet(o.color);const geo=new THREE.TorusGeometry(.72,.3,48,260),p=geo.attributes.position,v=new V(),c=new V();
+  for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);const u=Math.atan2(v.y,v.x);c.set(Math.cos(u)*.72,Math.sin(u)*.72,0);const f=1+.2*Math.sin(u*22)+.05*Math.sin(u*7);v.sub(c).multiplyScalar(f).add(c);p.setXYZ(i,v.x,v.y,v.z)}geo.computeVertexNormals();
+  const t=new THREE.Mesh(geo,m);g.add(t);g.rotation.x=-.55;g.userData.bottom=-.95;g.userData.lift=.15;g.userData.noEmb=true;return g}
+const BUILD={duffel:buildDuffel,pouch:buildPouch,mask:buildMask,scrunchie:buildScrunchie};
+function make(type,opt){const tex=embroideryTex(opt.name,opt.thread,opt.font,opt.heart);return BUILD[type]({color:opt.color,tex})}
+
+/* ---------- main scene ---------- */
+const canvas=document.getElementById('c'),stage=document.getElementById('stage');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.95;renderer.outputColorSpace=SRGB;
+const scene=new THREE.Scene();
+function lights(sc,r){sc.environment=new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(r),.04).texture;
+  const k=new THREE.DirectionalLight(0xffffff,2.2);k.position.set(4,6,3);const f=new THREE.DirectionalLight(0xfff1e8,.6);f.position.set(-3,1,5);sc.add(f);sc.add(k);const rim=new THREE.DirectionalLight(0xffe2dc,1.6);rim.position.set(-4,2.5,-3.5);sc.add(rim);sc.add(new THREE.HemisphereLight(0xfff6f0,0xe8d8d0,.5))}
+lights(scene,renderer);
+const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,2.4,7.4);
+const controls=new OrbitControls(camera,canvas);controls.enableZoom=false;controls.enablePan=false;controls.enableDamping=true;controls.dampingFactor=.07;
+controls.autoRotate=true;controls.autoRotateSpeed=2.4;controls.minPolarAngle=.95;controls.maxPolarAngle=1.75;controls.target.set(0,.3,0);
+let idle;controls.addEventListener('start',()=>{controls.autoRotate=false;clearTimeout(idle)});controls.addEventListener('end',()=>{idle=setTimeout(()=>controls.autoRotate=true,3500)});
+const shadow=new THREE.Mesh(new THREE.PlaneGeometry(4.2,2.4),new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}));shadow.rotation.x=-Math.PI/2;scene.add(shadow);
+const holder=new THREE.Group();scene.add(holder);
+function resize(){const r=stage.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.position.z=camera.aspect<.8?11:8.4;camera.updateProjectionMatrix()}
+new ResizeObserver(resize).observe(stage);resize();
+
+let current=null,anim=null;
+function opts(){return{color:COLORS[state.color].c,thread:THREADS[state.thread].c,name:state.name,font:state.font,heart:state.heart}}
+function placeShadow(g){shadow.position.y=g.userData.bottom+g.userData.lift-.01}
+function swapProduct(){const next=make(state.product,opts());next.position.y=next.userData.lift;next.scale.setScalar(.001);
+  anim={t:0,old:current,next};}
+function refreshEmb(){if(!current||!current.userData.emb)return;const m=current.userData.emb.material;m.map.dispose();const t=embroideryTex(state.name,THREADS[state.thread].c,state.font,state.heart);t.colorSpace=SRGB;t.anisotropy=8;m.map=t;m.bumpMap=t;m.needsUpdate=true}
+function refreshColor(){if(!current)return;const hex=COLORS[state.color].c;const fresh=make(state.product,opts());fresh.position.copy(current.position);fresh.rotation.y=current.rotation.y;holder.remove(current);holder.add(fresh);current=fresh;fresh.scale.setScalar(.96);anim={t:.999,old:null,next:fresh,pulse:true}}
+const ease=t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
+const clock=new THREE.Clock();
+function loop(){const dt=Math.min(clock.getDelta(),.05);
+  if(anim){anim.t+=dt*2.6;
+    if(anim.pulse){current.scale.setScalar(Math.min(1,.96+(anim.t-1)*.4));if(current.scale.x>=1){current.scale.setScalar(1);anim=null}}
+    else if(anim.t<.5&&anim.old){anim.old.scale.setScalar(1-anim.t*2);anim.old.rotation.y+=dt*6}
+    else{if(anim.old){holder.remove(anim.old);anim.old=null}if(!anim.added){holder.add(anim.next);current=anim.next;placeShadow(current);anim.added=true;anim.t=.5}
+      const k=Math.min(1,(anim.t-.5)*2);current.scale.setScalar(Math.max(.001,ease(k)));current.rotation.y=(1-k)*-1.4;if(k>=1)anim=null}}
+  if(current){current.position.y=current.userData.lift+Math.sin(clock.elapsedTime*1.3)*.035;shadow.scale.setScalar(1-Math.sin(clock.elapsedTime*1.3)*.03)}
+  controls.update();renderer.render(scene,camera);requestAnimationFrame(loop)}
+
+/* ---------- thumbnails ---------- */
+const tr=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});tr.setSize(520,520);tr.toneMapping=THREE.ACESFilmicToneMapping;tr.toneMappingExposure=.95;tr.outputColorSpace=SRGB;
+const ts=new THREE.Scene();lights(ts,tr);const tc=new THREE.PerspectiveCamera(30,1,.1,100);
+const tShadow=shadow.clone();ts.add(tShadow);
+function thumb(type,o,rotY=-.45,dist=7.4){const g=make(type,o);g.rotation.y=rotY;g.position.y=g.userData.lift;tShadow.position.y=g.userData.bottom+g.userData.lift-.01;ts.add(g);
+  tc.position.set(0,2.2,dist);tc.lookAt(0,.15,0);tr.render(ts,tc);const url=tr.domElement.toDataURL('image/png');ts.remove(g);return url}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('ru-RU').replace(/ /g,' ')+' ₸';
+function total(){const p=PRODUCTS[state.product].price+(state.mini&&state.product!=='mask'&&state.product!=='scrunchie'?6000:0);return p}
+function updateUI(){const P=PRODUCTS[state.product];$('pTitle').textContent=P.name;$('pSub').textContent=P.sub;$('colName').textContent=COLORS[state.color].n;$('thName').textContent=THREADS[state.thread].n;
+  const miniOk=state.product==='duffel'||state.product==='pouch';$('mini').disabled=!miniOk;$('mini').closest('.chk').style.opacity=miniOk?1:.45;
+  const t=total();$('total').textContent=fmt(t);$('kaspi').textContent=t>=10000?`или ${fmt(Math.ceil(t/12))} × 12 мес в рассрочку Kaspi`:'оплата Kaspi или переводом';
+  $('cnt').textContent=`${state.name.length}/12`;
+  const noEmb=state.product==='scrunchie';$('nameIn').closest('.grp').style.opacity=noEmb?.45:1;
+  const msg=`Здравствуйте! Хочу заказать в Amore:\n• ${P.name}, бархат «${COLORS[state.color].n}»\n• ${noEmb?'Без вышивки':`Вышивка «${state.name||'—'}»${state.heart?' с сердечком':''}, нитка ${THREADS[state.thread].n.toLowerCase()}, шрифт ${state.font==='script'?'рукописный':'классика'}`}${state.mini&&miniOk?'\n• + мини-набор (маска + резинка)':''}\nИтого: ${fmt(t)}`;
+  $('waBtn').href='https://wa.me/77753595065?text='+encodeURIComponent(msg)}
+function pressed(box,el){box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===el))}
+COLORS.forEach((c,i)=>$('colors').insertAdjacentHTML('beforeend',`<button type="button" aria-label="${c.n}" title="${c.n}" style="background:${c.c}" aria-pressed="${i===state.color}" data-i="${i}"></button>`));
+THREADS.forEach((c,i)=>$('threads').insertAdjacentHTML('beforeend',`<button type="button" aria-label="Нитка ${c.n}" title="${c.n}" style="background:${c.c}" aria-pressed="${i===state.thread}" data-i="${i}"></button>`));
+Object.entries(PRODUCTS).forEach(([k,p])=>$('prods').insertAdjacentHTML('beforeend',`<button type="button" class="pr" aria-pressed="${k===state.product}" data-k="${k}"><span class="ph" id="th-${k}"></span>${p.short}</button>`));
+$('colors').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.color=+b.dataset.i;pressed($('colors'),b);refreshColor();updateUI()});
+$('threads').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.thread=+b.dataset.i;pressed($('threads'),b);refreshEmb();updateUI()});
+$('fonts').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.font=b.dataset.f;pressed($('fonts'),b);refreshEmb();updateUI()});
+$('prods').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.k===state.product)return;state.product=b.dataset.k;pressed($('prods'),b);swapProduct();updateUI()});
+$('nameIn').addEventListener('input',e=>{state.name=e.target.value;refreshEmb();updateUI()});
+$('heart').addEventListener('change',e=>{state.heart=e.target.checked;refreshEmb();updateUI()});
+$('mini').addEventListener('change',e=>{state.mini=e.target.checked;updateUI()});
+
+/* ---------- init ---------- */
+(async()=>{
+  try{await Promise.all([document.fonts.load('120px "Marck Script"','Saya Имя'),document.fonts.load('italic 600 120px "Cormorant Garamond"','Saya')])}catch(e){}
+  current=make(state.product,opts());current.position.y=current.userData.lift;current.rotation.y=-.55;holder.add(current);placeShadow(current);
+  $('loading').remove();loop();
+  // миниатюры изделий для выбора
+  const base={color:'#efe5d4',thread:'#f08aaf',name:'Aru',font:'script',heart:false};
+  Object.keys(PRODUCTS).forEach(k=>{const img=new Image();img.alt='';img.src=thumb(k,{...base,color:k==='duffel'?'#174d70':k==='pouch'?'#efe5d4':k==='mask'?'#e3aea7':'#6c1824',thread:k==='duffel'?'#ffffff':'#f08aaf'},-.45,k==='duffel'?8.4:7.2);$('th-'+k).replaceWith(img)});
+  // коллекция
+  const looks={duffel:{color:'#174d70',thread:'#ffffff',name:'Saya'},pouch:{color:'#efe5d4',thread:'#f08aaf',name:'Bota',heart:true},mask:{color:'#e3aea7',thread:'#ffffff',name:'Аружан'},scrunchie:{color:'#6c1824',thread:'#d6b06a',name:''}};
+  Object.entries(PRODUCTS).forEach(([k,p])=>{const L={font:'script',heart:false,...looks[k]};
+    $('coll').insertAdjacentHTML('beforeend',`<article class="card"><div class="im"><img alt="${p.name}" src="${thumb(k,L,-.5,k==='duffel'?8.2:7)}"></div><div class="tx"><h3>${p.name}</h3><p>${p.desc}</p><div class="row"><b>${fmt(p.price)}</b><button type="button" data-k="${k}">Настроить</button></div></div></article>`)});
+  $('coll').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b)return;const pb=$('prods').querySelector(`[data-k="${b.dataset.k}"]`);pb.click();$('make').scrollIntoView({behavior:'smooth'})});
+  $('o1').src=thumb('duffel',{color:'#174d70',thread:'#ffffff',name:'Saya',font:'script',heart:false},-.35,8.2);
+  $('o2').src=thumb('pouch',{color:'#efe5d4',thread:'#f08aaf',name:'Bota',font:'script',heart:true},-.3,6.6);
+  updateUI();
+})();
+
+/* ---------- ornament ---------- */
+(function(){const horn='M0 -60 C 10 -86 40 -92 52 -74 C 62 -58 50 -42 36 -48 C 26 -52 28 -66 38 -66 M0 -60 C -10 -86 -40 -92 -52 -74 C -62 -58 -50 -42 -36 -48 C -26 -52 -28 -66 -38 -66 M0 -60 L0 -20';
+  let s='<svg viewBox="-200 -200 400 400" fill="none" stroke="#d9766a" stroke-width="1.1" stroke-opacity=".35">';
+  for(let i=0;i<8;i++)s+=`<path d="${horn}" transform="rotate(${i*45}) translate(0 -70)"/>`;
+  for(let i=0;i<16;i++)s+=`<path d="M0 -188 l6 10 l-6 10 l-6 -10z" transform="rotate(${i*22.5})" stroke-opacity=".25"/>`;
+  s+='<circle r="196" stroke-opacity=".2"/><circle r="150" stroke-dasharray="2 7" stroke-opacity=".3"/><circle r="40" stroke-opacity=".25"/></svg>';document.getElementById('orn').innerHTML=s})();
+</script>
+</body>
+</html>
