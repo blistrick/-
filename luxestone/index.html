@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LUXESTONE — кузовной ремонт и покраска в Алматы</title>
+<meta name="description" content="Кузовной ремонт, покраска под толщиномер, удаление вмятин без покраски, шумоизоляция и химчистка салона в Алматы.">
+<meta property="og:title" content="LUXESTONE — кузовной ремонт и покраска в Алматы">
+<meta property="og:description" content="Восстанавливаем так, что разницу не покажет даже толщиномер.">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --black:#0B0B0C; --graphite:#17181A; --graphite2:#1F2023; --line:#2A2B2F; --white:#F4F3F1; --mute:#8D8E93; --orange:#F26A1B;
+  --f-d:"Unbounded","Arial Black",sans-serif; --f-b:"Inter",system-ui,-apple-system,sans-serif;
+  --gut:max(20px,env(safe-area-inset-left,0px));
+  --ease:cubic-bezier(.2,.7,.1,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--black);color:var(--white);font:16px/1.6 var(--f-b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding-left:var(--gut);padding-right:max(20px,env(safe-area-inset-right,0px))}
+.kick{font:500 11px var(--f-b);letter-spacing:.24em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:12px}
+.kick::before{content:"";width:28px;height:1px;background:var(--orange)}
+h1,h2,h3{font-family:var(--f-d);font-weight:700;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(28px,6.4vw,56px);line-height:1.04}
+.lead{color:#B9BABE;font-size:17px;max-width:56ch}
+.ph{color:var(--mute);border-bottom:1px dashed #4a4b50}
+section{padding-block:clamp(72px,11vw,140px)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 26px;border-radius:2px;font:600 15px var(--f-b);letter-spacing:.01em;border:1px solid transparent;cursor:pointer;transition:background .3s var(--ease),color .3s,border-color .3s;white-space:nowrap}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-o{background:var(--orange);color:#140A04}
+.btn-o:hover{background:#ff7d33}
+.btn-l{border-color:rgba(244,243,241,.35);color:var(--white)}
+.btn-l:hover{border-color:var(--white)}
+
+/* logo */
+.logo{font:800 17px/1 var(--f-d);letter-spacing:.06em}
+.logo b{color:var(--orange);font-weight:800}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(11,11,12,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.nav ul{display:none;list-style:none;margin:0;padding:0;gap:30px;font-size:14px;color:#c7c8cc}
+.nav ul a:hover{color:var(--white)}
+.nav .btn{height:42px;padding:0 18px;font-size:14px;display:none}
+@media(min-width:960px){.nav ul,.nav .btn{display:flex}}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:620px;overflow:hidden;background:var(--black)}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 50%;transform:scale(var(--hs,1.06));transition:transform .1s linear;will-change:transform}
+@media(max-width:719px){.hero video,.hero .poster{object-position:24% 50%}}
+.hero .shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(11,11,12,.5) 0%,rgba(11,11,12,0) 20%,rgba(11,11,12,0) 52%,rgba(11,11,12,.88) 90%,var(--black) 100%),
+  linear-gradient(90deg,rgba(11,11,12,.45) 0%,rgba(11,11,12,0) 55%)}
+.hero .grain{position:absolute;inset:0;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero-in{position:absolute;left:0;right:0;bottom:0;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));transform:translateY(var(--hy,0));opacity:var(--ho,1)}
+.hero h1{font-size:clamp(46px,10.5vw,132px);line-height:.86;font-weight:800;letter-spacing:-.02em;margin:18px 0 22px}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .ln>span{display:block;transform:translateY(105%);animation:up 1.2s var(--ease) forwards}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+.hero h1 .st{color:var(--orange)}
+.hero .sub{font-size:clamp(16px,2.2vw,20px);line-height:1.5;max-width:30ch;color:#D6D6D8;margin:0 0 30px}
+.fade{opacity:0;transform:translateY(16px);animation:fin 1s var(--ease) forwards}
+.d1{animation-delay:.45s}.d2{animation-delay:.6s}.d3{animation-delay:.75s}
+@keyframes up{to{transform:none}}
+@keyframes fin{to{opacity:1;transform:none}}
+.hero .cta{display:flex;flex-direction:column;gap:10px}
+.hero .cta .btn{width:100%}
+.hero .meta{display:none}
+@media(min-width:720px){.hero .cta{flex-direction:row}.hero .cta .btn{width:auto}}
+@media(min-width:960px){
+  .hero-in .wrap{display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px}
+  .hero .meta{display:grid;gap:18px;text-align:right;font-size:13px;color:var(--mute);padding-bottom:6px}
+  .hero .meta b{display:block;font:500 13px var(--f-b);color:var(--white)}
+}
+.scrollcue{position:absolute;right:var(--gut);bottom:calc(40px + env(safe-area-inset-bottom,0px));width:1px;height:64px;background:rgba(255,255,255,.18);overflow:hidden;display:none}
+.scrollcue::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--orange);animation:cue 2.4s var(--ease) infinite}
+@keyframes cue{to{top:100%}}
+
+/* stats */
+.stats{border-block:1px solid var(--line);padding:0}
+.stats .wrap{display:grid;grid-template-columns:1fr 1fr 1fr}
+.stat{padding:26px 0 24px;display:grid;gap:4px}
+.stat+.stat{border-left:1px solid var(--line);padding-left:16px}
+.stat b{font:700 clamp(22px,6vw,40px)/1 var(--f-d);color:var(--orange);font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--mute);line-height:1.35}
+
+/* services */
+.head{display:grid;gap:18px;margin-bottom:44px}
+@media(min-width:960px){.head{grid-template-columns:1fr 1fr;align-items:end}.head .lead{justify-self:end}}
+.svc{display:grid;gap:14px}
+@media(min-width:680px){.svc{grid-template-columns:1fr 1fr}}
+@media(min-width:1080px){.svc{grid-template-columns:repeat(3,1fr)}}
+.card{position:relative;overflow:hidden;background:var(--graphite);border:1px solid var(--line);display:flex;flex-direction:column;transition:opacity .5s var(--ease),filter .5s var(--ease),border-color .4s}
+.card .im{position:relative;aspect-ratio:16/11;overflow:hidden;background:#0f0f10}
+.card .im img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 1.2s var(--ease)}
+.card .im::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(23,24,26,.9))}
+.card .tx{padding:22px 22px 24px;display:grid;gap:10px;flex:1;align-content:start}
+.card h3{font-size:19px;line-height:1.2}
+.card p{margin:0;color:#A9AAAE;font-size:15px;line-height:1.55}
+.card .time{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+.card .time b{color:var(--white);font-weight:500}
+.card .bar{position:absolute;left:0;top:0;height:2px;width:0;background:var(--orange);transition:width .6s var(--ease)}
+@media(hover:hover){
+  .svc:hover .card{opacity:.45;filter:saturate(.6)}
+  .svc .card:hover{opacity:1;filter:none;border-color:#3a3b40}
+  .card:hover .im img{transform:scale(1.08)}
+  .card:hover .bar{width:100%}
+}
+
+/* before / after */
+.ba-grid{display:grid;gap:28px}
+@media(min-width:960px){.ba-grid{grid-template-columns:1fr 1fr}}
+figure{margin:0}
+.cmp{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0a0a0b;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;outline:none;border:1px solid var(--line)}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cmp .after{clip-path:inset(0 calc(100% - var(--p,50%)) 0 0)}
+.cmp .line{position:absolute;top:0;bottom:0;left:var(--p,50%);width:1px;background:var(--white);transform:translateX(-.5px);box-shadow:0 0 14px rgba(0,0,0,.5)}
+.cmp .knob{position:absolute;top:50%;left:var(--p,50%);width:46px;height:46px;transform:translate(-50%,-50%);border-radius:50%;background:var(--white);color:var(--black);display:grid;place-items:center;box-shadow:0 10px 28px -8px rgba(0,0,0,.7);transition:transform .15s}
+.cmp.drag .knob{transform:translate(-50%,-50%) scale(.92)}
+.cmp:focus-visible .knob{outline:2px solid var(--orange);outline-offset:3px}
+.cmp .lb{position:absolute;bottom:14px;font:500 11px var(--f-b);letter-spacing:.2em;text-transform:uppercase;padding:6px 10px;background:rgba(11,11,12,.6);backdrop-filter:blur(6px)}
+.cmp .lb.l{left:14px}.cmp .lb.r{right:14px}
+.cmp .lb.l::before{content:"";display:inline-block;width:6px;height:6px;background:var(--orange);margin-right:8px;vertical-align:1px}
+figcaption{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--mute)}
+figcaption b{color:var(--white);font-weight:500}
+
+/* thickness */
+.th{background:var(--graphite);border-block:1px solid var(--line)}
+.th .wrap{display:grid;gap:44px}
+@media(min-width:960px){.th .wrap{grid-template-columns:1fr 1.1fr;align-items:center;gap:72px}}
+.th .pic{position:relative;aspect-ratio:4/5;overflow:hidden}
+.th .pic img{width:100%;height:100%;object-fit:cover}
+.th .pic .read{position:absolute;left:16px;bottom:16px;background:rgba(11,11,12,.72);backdrop-filter:blur(8px);padding:12px 16px;border-left:2px solid var(--orange)}
+.th .pic .read small{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.th .pic .read b{font:700 30px/1.1 var(--f-d);font-variant-numeric:tabular-nums}
+.th .pic .read b i{font:500 13px var(--f-b);font-style:normal;color:var(--mute);margin-left:6px}
+.th ul{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:0}
+.th li{display:grid;grid-template-columns:28px 1fr;gap:6px;padding:16px 0;border-top:1px solid var(--line);font-size:16px}
+.th li::before{content:"";width:12px;height:1px;background:var(--orange);margin-top:13px}
+.gauge{margin-top:36px;display:grid;gap:16px}
+.gauge .t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.g-row{display:grid;gap:7px}
+.g-row .nm{display:flex;justify-content:space-between;font-size:14px}
+.g-row .nm b{font:500 14px var(--f-b);font-variant-numeric:tabular-nums}
+.g-track{position:relative;height:8px;background:#232428}
+.g-fill{position:absolute;top:0;bottom:0;background:#55565c;transform-origin:left;transform:scaleX(0);transition:transform 1.4s var(--ease)}
+.g-fill.o{background:var(--orange)}
+.g-fill.f{background:#9a9ba0}
+.in .g-fill{transform:scaleX(1)}
+.g-scale{display:flex;justify-content:space-between;font-size:11px;color:#5d5e63;font-variant-numeric:tabular-nums}
+
+/* timeline (scroll progress) */
+.tl{position:relative;display:grid;gap:44px;padding-left:44px;margin-top:20px}
+.tl .rail,.tl .prog{position:absolute;left:11px;top:6px;width:1px}
+.tl .rail{bottom:6px;background:var(--line)}
+.tl .prog{height:calc(var(--tp,0) * (100% - 12px));background:var(--orange)}
+.step{position:relative;transition:opacity .6s var(--ease),transform .6s var(--ease);opacity:.35;transform:translateY(10px)}
+.step.on{opacity:1;transform:none}
+.step .dot{position:absolute;left:-44px;top:2px;width:23px;height:23px;border-radius:50%;background:var(--black);border:1px solid #3a3b40;display:grid;place-items:center;font:600 11px var(--f-b);color:var(--mute);transition:all .4s}
+.step.on .dot{border-color:var(--orange);color:var(--orange)}
+.step h3{font-size:clamp(19px,2.4vw,24px);margin-bottom:8px}
+.step p{margin:0;color:#A9AAAE;max-width:52ch}
+.step .tag{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--mute);border:1px solid var(--line);padding:5px 10px}
+@media(min-width:960px){
+  .proc{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:start}
+  .proc .head{position:sticky;top:120px;grid-template-columns:1fr;margin:0}
+  .proc .head .lead{justify-self:start}
+}
+
+/* reviews */
+.rv{display:grid;gap:14px}
+@media(min-width:960px){.rv{grid-template-columns:repeat(3,1fr)}}
+.r{background:var(--graphite);border:1px solid var(--line);padding:28px 26px;display:flex;flex-direction:column;gap:22px}
+.r q{font-size:17px;line-height:1.6;quotes:none}
+.r .who{display:flex;justify-content:space-between;align-items:end;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:14px}
+.r .who span{color:var(--mute);font-size:13px}
+.r .q{font:800 46px/0.6 var(--f-d);color:var(--orange);height:22px}
+
+/* faq */
+.faq{display:grid;gap:30px}
+@media(min-width:960px){.faq{grid-template-columns:.8fr 1.2fr;gap:72px}}
+.acc{border-top:1px solid var(--line)}
+.ai{border-bottom:1px solid var(--line)}
+.ai button{width:100%;display:grid;grid-template-columns:34px 1fr 24px;gap:10px;align-items:center;text-align:left;background:none;border:0;padding:22px 0;cursor:pointer;font:500 17px/1.4 var(--f-b)}
+.ai .n{font:500 12px var(--f-b);color:var(--mute);font-variant-numeric:tabular-nums}
+.ai .x{position:relative;width:16px;height:16px;justify-self:end}
+.ai .x::before,.ai .x::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--white);transition:transform .4s var(--ease),background .3s}
+.ai .x::after{transform:rotate(90deg)}
+.ai[data-open] .x::before{transform:rotate(45deg);background:var(--orange)}
+.ai[data-open] .x::after{transform:rotate(135deg);background:var(--orange)}
+.ai .pn{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.ai[data-open] .pn{grid-template-rows:1fr}
+.ai .pn>div{overflow:hidden}
+.ai .pn p{margin:0 0 24px 44px;color:#A9AAAE;max-width:58ch}
+
+/* contacts */
+.ct{display:grid;gap:14px}
+@media(min-width:960px){.ct{grid-template-columns:1fr 1.15fr}}
+.ct .info{background:var(--graphite);border:1px solid var(--line);padding:30px 26px;display:flex;flex-direction:column;gap:26px}
+.ct dl{margin:0;display:grid;gap:0}
+.ct dl div{display:grid;gap:4px;padding:16px 0;border-top:1px solid var(--line)}
+.ct dt{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.ct dd{margin:0;font-size:17px}
+.ct .btns{display:grid;gap:10px;margin-top:auto}
+@media(min-width:520px){.ct .btns{grid-template-columns:1fr 1fr}}
+.map{position:relative;min-height:360px;background:#111214;border:1px solid var(--line);overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .pin{position:absolute;left:56%;top:46%;transform:translate(-50%,-100%);display:grid;justify-items:center;gap:8px}
+.map .pin span{background:var(--black);border:1px solid var(--line);padding:8px 12px;font:700 12px var(--f-d);letter-spacing:.06em;white-space:nowrap}
+.map .pin span b{color:var(--orange)}
+.map .pin i{width:14px;height:14px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 6px rgba(242,106,27,.18),0 0 0 14px rgba(242,106,27,.07)}
+.map a.open{position:absolute;right:14px;bottom:14px;font-size:13px;background:var(--black);border:1px solid var(--line);padding:10px 14px}
+.map a.open:hover{border-color:var(--orange)}
+
+footer{border-top:1px solid var(--line);padding-block:30px calc(100px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--mute)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+@media(min-width:960px){footer{padding-bottom:30px}}
+
+/* sticky whatsapp (mobile) */
+.wa-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:linear-gradient(180deg,rgba(11,11,12,0),rgba(11,11,12,.92) 40%);transform:translateY(110%);transition:transform .5s var(--ease)}
+.wa-bar.show{transform:none}
+.wa-bar .btn{width:100%}
+@media(min-width:960px){.wa-bar{display:none}}
+
+/* reveal on scroll */
+.js .rv-up{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv-up.in{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .hero h1 .ln>span,.fade{transform:none;opacity:1}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="logo" href="#top" aria-label="LUXESTONE">LUXE<b>STONE</b></a>
+  <ul><li><a href="#services">Услуги</a></li><li><a href="#works">Работы</a></li><li><a href="#gauge">Под толщиномер</a></li><li><a href="#process">Как работаем</a></li><li><a href="#contacts">Контакты</a></li></ul>
+  <a class="btn btn-o js-wa" href="#contacts">Оценить по фото</a>
+</div></header>
+
+<section class="hero" id="top" style="padding:0">
+  <img class="poster" src="assets/hero-poster.jpg" alt="" aria-hidden="true">
+  <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg" aria-hidden="true"><source src="assets/hero.mp4" type="video/mp4"></video>
+  <div class="grain"></div><div class="shade"></div>
+  <div class="hero-in" id="heroIn"><div class="wrap">
+    <div>
+      <div class="kick fade">Кузовной цех · Алматы</div>
+      <h1><span class="ln"><span>LUXE</span></span><span class="ln"><span class="st">STONE</span></span></h1>
+      <p class="sub fade d1">Кузовной ремонт и покраска в&nbsp;Алматы. Восстанавливаем так, что разницу не&nbsp;покажет даже толщиномер.</p>
+      <div class="cta fade d2">
+        <a class="btn btn-o js-wa" href="#contacts"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-1-5-3.9-5.2-4.1-.1-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.8 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg>Оценить по фото в WhatsApp</a>
+        <a class="btn btn-l" href="#services">Услуги</a>
+      </div>
+    </div>
+    <div class="meta fade d3">
+      <div><b>Покраска под толщиномер</b>110–140 мкм, как с завода</div>
+      <div><b>PDR без покраски</b>мелкая вмятина за 1–2 часа</div>
+      <div><b>Подбор цвета</b>по коду и компьютерному сканеру</div>
+    </div>
+  </div></div>
+</section>
+
+<section class="stats" aria-label="Цифры"><div class="wrap">
+  <div class="stat"><b>[N]</b><span>лет работы</span></div>
+  <div class="stat"><b>[N]</b><span>машин восстановлено</span></div>
+  <div class="stat"><b>[срок]</b><span>гарантия на работы</span></div>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="head rv-up">
+    <div><div class="kick">Услуги</div><h2 style="margin-top:18px">Что делаем в&nbsp;боксе</h2></div>
+    <p class="lead">Стоимость после осмотра. Пришлите фото повреждения в WhatsApp, назовём вилку цены в течение часа.</p>
+  </div>
+  <div class="svc">
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-body.webp" alt="Подготовка кузовной детали к ремонту" loading="lazy"></div><div class="tx"><h3>Кузовной ремонт</h3><p>Восстанавливаем геометрию, правим и меняем детали. Варим без перегрева металла, швы обрабатываем от коррозии.</p><div class="time">Срок<b>от 2 дней</b></div></div></article>
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-paint.webp" alt="Дверь в покрасочной камере" loading="lazy"></div><div class="tx"><h3>Покраска кузова и элементов</h3><p>Цвет подбираем по коду и компьютерному сканеру. Красим в камере с подогревом, после сушки полируем.</p><div class="time">Срок<b>1–2 дня на элемент</b></div></div></article>
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-gauge.webp" alt="Толщиномер на чёрной детали" loading="lazy"></div><div class="tx"><h3>Покраска под толщиномер</h3><p>Оставляем слой краски в заводском диапазоне 110–140 мкм. При проверке перед продажей деталь не отличить.</p><div class="time">Срок<b>2–3 дня на элемент</b></div></div></article>
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-pdr.webp" alt="Отражение полос PDR-лампы на двери" loading="lazy"></div><div class="tx"><h3>PDR — вмятины без покраски</h3><p>Мелкую вмятину на двери убираем за 1–2 часа. Заводской лак остаётся на месте, толщиномер ремонт не покажет.</p><div class="time">Срок<b>от 1 часа</b></div></div></article>
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-noise.webp" alt="Шумоизоляция двери" loading="lazy"></div><div class="tx"><h3>Шумоизоляция</h3><p>Двери, пол, арки, крыша. Вибродемпфер и шумопоглотитель, обшивку собираем на новые клипсы, без скрипов.</p><div class="time">Срок<b>1–2 дня</b></div></div></article>
+    <article class="card rv-up"><span class="bar"></span><div class="im"><img src="assets/s-interior.webp" alt="Чистый кожаный салон" loading="lazy"></div><div class="tx"><h3>Химчистка салона</h3><p>Сиденья, потолок, ковролин, кожа. Сушим и озонируем, запах сырости не остаётся.</p><div class="time">Срок<b>5–6 часов</b></div></div></article>
+  </div>
+</div></section>
+
+<section id="works" style="padding-top:0"><div class="wrap">
+  <div class="head rv-up">
+    <div><div class="kick">До / после</div><h2 style="margin-top:18px">Одна деталь, один ракурс, один свет</h2></div>
+    <p class="lead">Потяните разделитель. Снимаем каждую машину до начала работ и при выдаче в одном и том же месте бокса.</p>
+  </div>
+  <div class="ba-grid">
+    <figure class="rv-up">
+      <div class="cmp" data-start="58" tabindex="0" role="slider" aria-label="Сравнить до и после: задняя дверь" aria-valuemin="0" aria-valuemax="100" aria-valuenow="58">
+        <img src="assets/ba1-before.webp" alt="Вмятина на задней двери до ремонта">
+        <img class="after" src="assets/ba1-after.webp" alt="Задняя дверь после ремонта">
+        <span class="line"></span><span class="knob"><svg width="18" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M1.25 6 5.75 1.75v8.5zM14.75 6l-4.5-4.25v8.5z"/></svg></span>
+        <span class="lb l">После</span><span class="lb r">До</span>
+      </div>
+      <figcaption><b>Задняя дверь, вмятина от парковки</b><span>PDR · 2 часа · без покраски</span></figcaption>
+    </figure>
+    <figure class="rv-up">
+      <div class="cmp" data-start="42" tabindex="0" role="slider" aria-label="Сравнить до и после: передняя дверь" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42">
+        <img src="assets/ba2-before.webp" alt="Глубокая царапина на двери до ремонта">
+        <img class="after" src="assets/ba2-after.webp" alt="Передняя дверь после покраски">
+        <span class="line"></span><span class="knob"><svg width="18" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M1.25 6 5.75 1.75v8.5zM14.75 6l-4.5-4.25v8.5z"/></svg></span>
+        <span class="lb l">После</span><span class="lb r">До</span>
+      </div>
+      <figcaption><b>Передняя дверь, царапина до грунта</b><span>Покраска под толщиномер · 2 дня</span></figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section class="th" id="gauge"><div class="wrap">
+  <div class="pic rv-up"><img src="assets/gauge-big.webp" alt="Замер толщины лакокрасочного покрытия" loading="lazy"><div class="read"><small>Крыло после ремонта</small><b>124<i>мкм</i></b></div></div>
+  <div class="rv-up">
+    <div class="kick">Покраска под толщиномер</div>
+    <h2 style="margin-top:18px">Ремонт, который не&nbsp;найдёт покупатель</h2>
+    <p class="lead" style="margin-top:22px">Перед покупкой машину всегда проверяют толщиномером. Если на крыле 300 мкм вместо заводских 120, покупатель видит ремонт и сбивает цену. Мы восстанавливаем деталь так, чтобы слой краски остался в заводском диапазоне.</p>
+    <ul>
+      <li>Машина продаётся без скидки «за крашеное»</li>
+      <li>При проверке перед покупкой ремонт не виден</li>
+      <li>Выдаём машину с замером по каждой детали при вас</li>
+    </ul>
+    <div class="gauge" id="gaugeChart">
+      <div class="t">Толщина покрытия, мкм</div>
+      <div class="g-row"><div class="nm"><span>Заводская краска</span><b>110–130</b></div><div class="g-track"><div class="g-fill f" style="left:27.5%;width:5%"></div></div></div>
+      <div class="g-row"><div class="nm"><span>Обычный ремонт со шпаклёвкой</span><b>250–400</b></div><div class="g-track"><div class="g-fill" style="left:62.5%;width:37.5%"></div></div></div>
+      <div class="g-row"><div class="nm"><span>Ремонт в LUXESTONE</span><b>115–140</b></div><div class="g-track"><div class="g-fill o" style="left:28.75%;width:6.25%"></div></div></div>
+      <div class="g-scale"><span>0</span><span>100</span><span>200</span><span>300</span><span>400</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="process"><div class="wrap proc">
+  <div class="head rv-up">
+    <div><div class="kick">Как проходит работа</div><h2 style="margin-top:18px">Четыре шага от&nbsp;фото до&nbsp;выдачи</h2></div>
+    <p class="lead">Цена, которую назвали на осмотре, не меняется. Если в процессе найдём скрытое повреждение, сначала позвоним.</p>
+  </div>
+  <div class="tl" id="tl"><span class="rail"></span><span class="prog"></span>
+    <div class="step"><span class="dot">1</span><h3>Фото в WhatsApp</h3><p>Сфотографируйте повреждение с двух-трёх ракурсов при дневном свете. Ответим с примерной ценой и сроком.</p><span class="tag">Ответ в течение часа</span></div>
+    <div class="step"><span class="dot">2</span><h3>Осмотр и точная цена</h3><p>Приезжаете в бокс. Замеряем толщину краски по всем деталям, показываем, что нашли, называем окончательную цену.</p><span class="tag">20 минут, бесплатно</span></div>
+    <div class="step"><span class="dot">3</span><h3>Ремонт</h3><p>Работаем по согласованному плану. Присылаем фото с каждого этапа: разбор, подготовка, грунт, покраска.</p><span class="tag">Фотоотчёт в WhatsApp</span></div>
+    <div class="step"><span class="dot">4</span><h3>Выдача с замером</h3><p>Показываем машину под лампами и при дневном свете. При вас проходим толщиномером отремонтированные детали.</p><span class="tag">Цифры по каждой детали</span></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="head rv-up"><div><div class="kick">Отзывы</div><h2 style="margin-top:18px">Что говорят клиенты</h2></div></div>
+  <div class="rv">
+    <blockquote class="r rv-up" style="margin:0"><div class="q">“</div><q>Вмятина на задней двери после парковки у ТРЦ. Сделали без покраски, пока я ждал в зоне отдыха. Через два часа забрал, не нашёл где была.</q><div class="who"><b>Ерлан</b><span>Toyota Camry 70</span></div></blockquote>
+    <blockquote class="r rv-up" style="margin:0"><div class="q">“</div><q>Красили крыло и бампер перед продажей. Покупатель приехал со своим толщиномером, прошёлся по всей машине и ничего не нашёл. Продала за свою цену.</q><div class="who"><b>Айгерим</b><span>Hyundai Tucson</span></div></blockquote>
+    <blockquote class="r rv-up" style="margin:0"><div class="q">“</div><q>Шумоизоляцию делали на двери и арки. На трассе до Конаева теперь разговариваем, не повышая голос. Обшивка нигде не скрипит.</q><div class="who"><b>Руслан</b><span>Kia K5</span></div></blockquote>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap faq">
+  <div class="rv-up"><div class="kick">Вопросы</div><h2 style="margin-top:18px">Коротко о&nbsp;главном</h2></div>
+  <div class="acc rv-up" id="acc">
+    <div class="ai" data-open><button type="button" aria-expanded="true"><span class="n">01</span>Сколько стоит ремонт?<span class="x"></span></button><div class="pn"><div><p>Зависит от детали и повреждения. Пришлите фото в WhatsApp, назовём вилку цены за час. Точную цену называем после осмотра, дальше она не меняется.</p></div></div></div>
+    <div class="ai"><button type="button" aria-expanded="false"><span class="n">02</span>Сколько времени займёт?<span class="x"></span></button><div class="pn"><div><p>PDR — от 1 часа. Покраска одного элемента — 1–2 дня. Кузовной ремонт с покраской — от 3 дней. Точный срок называем на осмотре и держим его.</p></div></div></div>
+    <div class="ai"><button type="button" aria-expanded="false"><span class="n">03</span>Есть ли гарантия?<span class="x"></span></button><div class="pn"><div><p>Да, <span class="ph">[срок]</span> на покраску и кузовные работы. Если лак отойдёт или проявится шпаклёвка, переделываем бесплатно.</p></div></div></div>
+    <div class="ai"><button type="button" aria-expanded="false"><span class="n">04</span>Можно убрать вмятину без покраски?<span class="x"></span></button><div class="pn"><div><p>Если лак не треснул и металл не растянут — да, методом PDR. На осмотре сразу скажем, подходит ли ваш случай.</p></div></div></div>
+    <div class="ai"><button type="button" aria-expanded="false"><span class="n">05</span>Как подбираете цвет?<span class="x"></span></button><div class="pn"><div><p>По коду краски с таблички и компьютерному сканеру. Делаем тестовый выкрас и сверяем с машиной при дневном свете, только потом красим деталь.</p></div></div></div>
+  </div>
+</div></section>
+
+<section id="contacts" style="padding-top:0"><div class="wrap">
+  <div class="head rv-up"><div><div class="kick">Контакты</div><h2 style="margin-top:18px">Приезжайте на осмотр</h2></div><p class="lead">Осмотр и замер толщиномером бесплатно. Лучше заранее написать в WhatsApp, чтобы мастер был на месте.</p></div>
+  <div class="ct">
+    <div class="info rv-up">
+      <a class="logo" href="#top" style="font-size:22px">LUXE<b>STONE</b></a>
+      <dl>
+        <div><dt>Адрес</dt><dd>Алматы, <span class="ph">[адрес]</span></dd></div>
+        <div><dt>Телефон и WhatsApp</dt><dd><span class="ph">[номер]</span></dd></div>
+        <div><dt>График</dt><dd><span class="ph">[часы работы]</span></dd></div>
+        <div><dt>Instagram</dt><dd>@luxestone_studio</dd></div>
+      </dl>
+      <div class="btns">
+        <a class="btn btn-o js-wa" href="#contacts">Написать в WhatsApp</a>
+        <a class="btn btn-l" href="https://instagram.com/luxestone_studio" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="map rv-up" aria-label="Схема проезда">
+      <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" fill="none">
+        <rect width="600" height="420" fill="#111214"/>
+        <g stroke="#1d1e21" stroke-width="10">
+          <path d="M-20 120 L640 92"/><path d="M-20 260 L640 236"/><path d="M-20 360 L640 344"/>
+          <path d="M90 -20 L120 440"/><path d="M250 -20 L268 440"/><path d="M420 -20 L432 440"/><path d="M540 -20 L548 440"/>
+        </g>
+        <g stroke="#232428" stroke-width="22"><path d="M-20 190 C 160 180 300 172 640 158"/><path d="M340 -20 C 334 120 330 260 322 440"/></g>
+        <g stroke="#18191c" stroke-width="4"><path d="M-20 60 L640 40"/><path d="M-20 310 L640 290"/><path d="M170 -20 L190 440"/><path d="M490 -20 L496 440"/></g>
+        <path d="M0 410 C 120 380 200 400 330 370 S 520 330 600 340" stroke="#152028" stroke-width="16"/>
+        <path d="M322 190 L330 196" stroke="#F26A1B" stroke-width="2"/>
+      </svg>
+      <div class="pin"><span>LUXE<b>STONE</b></span><i></i></div>
+      <a class="open" href="https://2gis.kz/almaty/search/LUXESTONE" target="_blank" rel="noopener">Открыть в 2ГИС →</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>© 2026 LUXESTONE, Алматы</span><a class="logo" href="#top" style="font-size:13px">LUXE<b>STONE</b></a></div></footer>
+
+<div class="wa-bar" id="waBar"><a class="btn btn-o js-wa" href="#contacts"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-1-5-3.9-5.2-4.1-.1-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.8 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg>Оценить по фото в WhatsApp</a></div>
+
+<script>
+/* Номер WhatsApp: впишите цифры без «+», например 77011234567 */
+const WA_NUMBER = '';
+const WA_TEXT = 'Здравствуйте! Хочу оценить ремонт по фото.';
+if (WA_NUMBER) document.querySelectorAll('.js-wa').forEach(a => { a.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_TEXT)}`; a.target = '_blank'; a.rel = 'noopener'; });
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const nav = document.getElementById('nav'), heroIn = document.getElementById('heroIn'), hero = document.getElementById('top'), waBar = document.getElementById('waBar');
+const tl = document.getElementById('tl'), steps = [...tl.querySelectorAll('.step')];
+let ticking = false;
+function onScroll(){
+  const y = scrollY, h = hero.offsetHeight;
+  nav.classList.toggle('solid', y > 40);
+  waBar.classList.toggle('show', y > h * .6);
+  if (!reduce && y < h) {
+    const k = y / h;
+    hero.style.setProperty('--hs', 1.06 + k * .08);
+    heroIn.style.setProperty('--hy', (k * -60) + 'px');
+    heroIn.style.setProperty('--ho', Math.max(0, 1 - k * 1.4));
+  }
+  const r = tl.getBoundingClientRect(), mid = innerHeight * .55;
+  const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+  tl.style.setProperty('--tp', p);
+  steps.forEach((s, i) => s.classList.toggle('on', p >= i / (steps.length - 1) - .08 || p >= .98));
+  ticking = false;
+}
+addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, {passive:true});
+onScroll();
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv-up, #gaugeChart').forEach(el => io.observe(el));
+
+/* before / after */
+document.querySelectorAll('.cmp').forEach(el => {
+  const set = v => { v = Math.max(0, Math.min(100, v)); el.style.setProperty('--p', v + '%'); el.setAttribute('aria-valuenow', Math.round(v)); el._v = v; };
+  set(+el.dataset.start || 50);
+  let drag = false;
+  const fromX = x => { const r = el.getBoundingClientRect(); set((x - r.left) / r.width * 100); };
+  el.addEventListener('pointerdown', e => { drag = true; el.classList.add('drag'); el.setPointerCapture(e.pointerId); fromX(e.clientX); });
+  el.addEventListener('pointermove', e => { if (drag) fromX(e.clientX); });
+  const end = () => { drag = false; el.classList.remove('drag'); };
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  el.addEventListener('keydown', e => {
+    const m = {ArrowLeft:-2, ArrowRight:2, PageDown:-10, PageUp:10}[e.key];
+    if (m) { e.preventDefault(); set(el._v + m); } else if (e.key === 'Home') { e.preventDefault(); set(0); } else if (e.key === 'End') { e.preventDefault(); set(100); }
+  });
+  if (!reduce) {
+    const demo = new IntersectionObserver(([en]) => {
+      if (!en.isIntersecting) return; demo.disconnect();
+      const s = el._v, t0 = performance.now();
+      (function f(t){ const k = Math.min(1, (t - t0) / 1600); if (drag) return; set(s + Math.sin(k * Math.PI) * 18); if (k < 1) requestAnimationFrame(f); })(t0 + 1);
+    }, {threshold:.6});
+    demo.observe(el);
+  }
+});
+
+/* accordion */
+document.querySelectorAll('#acc .ai button').forEach(b => b.addEventListener('click', () => {
+  const it = b.parentElement, open = it.hasAttribute('data-open');
+  document.querySelectorAll('#acc .ai').forEach(x => { x.removeAttribute('data-open'); x.querySelector('button').setAttribute('aria-expanded', 'false'); });
+  if (!open) { it.setAttribute('data-open', ''); b.setAttribute('aria-expanded', 'true'); }
+}));
+</script>
+</body>
+</html>
