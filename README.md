@@ -11,3 +11,5 @@
 
 Запуск локально: `python3 -m http.server` и откройте http://localhost:8000.
 Для публикации подойдёт любой статический хостинг (GitHub Pages, Netlify, Vercel).
+
+Фото первого экрана: Gabrielle Henderson, Unsplash (https://unsplash.com/photos/ZiBSfB6KEFA), Unsplash License — можно использовать бесплатно, в том числе в коммерческих целях.
