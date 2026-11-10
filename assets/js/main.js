@@ -59,7 +59,7 @@
   chips.forEach(function (c) {
     c.addEventListener('click', function () { setFilter(c.dataset.filter); });
   });
-  document.querySelectorAll('.cat[data-cat]').forEach(function (c) {
+  document.querySelectorAll('a[data-cat]').forEach(function (c) {
     c.addEventListener('click', function () { setFilter(c.dataset.cat); });
   });
   render('all');
