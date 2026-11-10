@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>FEYA — одежда, сумки, обувь и аксессуары в Алматы</title>
   <meta name="description" content="FEYA — магазин одежды в Алматы. Оверсайз свитера, дублёнки, капоры, сумки и обувь. Новинки каждую неделю. Макатаева 81, ТД «Urban Nomad».">
-  <meta name="theme-color" content="#FFF6A8">
+  <meta name="theme-color" content="#F7F6FB">
   <meta property="og:title" content="FEYA — Be Cool. Be Free. Be Yourself.">
   <meta property="og:description" content="Одежда, сумки, обувь и аксессуары в Алматы. Новинки каждую неделю.">
   <meta property="og:image" content="assets/img/hero.webp">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/img/hero.webp" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -43,10 +43,11 @@
 
 <!-- Hero -->
 <section class="hero">
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="container hero__grid">
     <div class="hero__text">
-      <span class="pill reveal">✿ Алматы · Макатаева 81</span>
-      <h1 class="hero__title reveal">Be Cool.<br>Be Free.<br><span class="hl">Be Yourself.</span></h1>
+      <span class="pill reveal"><i></i>Ежедневно 11:00–21:00 · Макатаева 81</span>
+      <h1 class="hero__title reveal">Be Cool.<br>Be Free.<br><span class="hl">Be <span class="serif">Yourself.</span></span></h1>
       <p class="hero__sub reveal">Одежда, сумки, обувь и аксессуары, которые хочется носить каждый день. Новинки каждую неделю.</p>
       <div class="hero__btns reveal">
         <a href="#new" class="btn btn--primary">Смотреть каталог</a>
@@ -54,18 +55,24 @@
           <svg class="ico"><use href="#i-wa"/></svg>Написать в WhatsApp
         </a>
       </div>
+      <div class="hero__trust reveal">
+        <div><b>58K</b>подписчиц в Instagram</div>
+        <div><b>2 500+</b>публикаций</div>
+        <div><b>11–21</b>каждый день</div>
+      </div>
     </div>
     <div class="hero__media reveal">
-      <div class="hero__blob" aria-hidden="true"></div>
-      <img src="assets/img/hero.webp" alt="Девушка в розовом оверсайз-свитере с номером 8 и джинсах" width="800" height="1000" fetchpriority="high">
-      <div class="sticker sticker--1">новинки<br>каждую неделю</div>
-      <div class="sticker sticker--2"><b>58K</b> девочек<br>с нами в insta</div>
+      <div class="hero__frame">
+        <img src="assets/img/hero.webp" alt="Девушка в розовом оверсайз-свитере с номером 8 и джинсах" width="800" height="1000" fetchpriority="high">
+      </div>
+      <div class="sticker sticker--1"><span class="serif">new</span> каждую неделю</div>
+      <div class="sticker sticker--2"><b>из Гуанчжоу</b><br>без перекупов</div>
     </div>
   </div>
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>оверсайз свитера ✦ дублёнки ✦ капоры ✦ сумки ✦ обувь ✦ аксессуары ✦ </span>
-      <span>оверсайз свитера ✦ дублёнки ✦ капоры ✦ сумки ✦ обувь ✦ аксессуары ✦ </span>
+      <span>оверсайз свитера <em>feya</em> дублёнки <em>feya</em> капоры <em>feya</em> сумки <em>feya</em> обувь <em>feya</em> аксессуары <em>feya</em></span>
+      <span>оверсайз свитера <em>feya</em> дублёнки <em>feya</em> капоры <em>feya</em> сумки <em>feya</em> обувь <em>feya</em> аксессуары <em>feya</em></span>
     </div>
   </div>
 </section>
@@ -74,8 +81,9 @@
 <section class="section" id="catalog">
   <div class="container">
     <div class="section__head reveal">
-      <h2 class="h2">Каталог</h2>
-      <p class="muted">Выбирай, что ищешь, и покажем всё из этой категории</p>
+      <span class="eyebrow">Категории</span>
+      <h2 class="h2">Что ищем <span class="serif">сегодня?</span></h2>
+      <p class="muted">Нажми на категорию, и покажем всё, что сейчас есть</p>
     </div>
     <div class="cats">
       <a href="#new" class="cat reveal" data-cat="tops"><img src="assets/img/cat-tops.webp" alt="Верха" loading="lazy" width="480" height="600"><span class="cat__name">Верха</span></a>
@@ -89,11 +97,12 @@
 </section>
 
 <!-- New arrivals / catalog grid -->
-<section class="section section--yellow" id="new">
+<section class="section section--tint" id="new">
   <div class="container">
     <div class="section__head reveal">
-      <h2 class="h2">Новинки недели</h2>
-      <p class="muted">Только привезли. Понравилось — жми «Заказать», ответим в WhatsApp</p>
+      <span class="eyebrow">Только привезли</span>
+      <h2 class="h2">Новинки <span class="serif">недели</span></h2>
+      <p class="muted">Понравилось? Жми «Заказать», ответим в WhatsApp</p>
     </div>
     <div class="filters" role="tablist" aria-label="Фильтр по категориям">
       <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">Всё</button>
@@ -113,7 +122,8 @@
 <section class="section">
   <div class="container">
     <div class="section__head reveal">
-      <h2 class="h2">Почему к нам</h2>
+      <span class="eyebrow">Почему FEYA</span>
+      <h2 class="h2">Почему <span class="serif">к нам</span></h2>
     </div>
     <div class="why">
       <div class="why__item reveal">
@@ -141,16 +151,19 @@
 </section>
 
 <!-- How to order -->
-<section class="section section--lilac" id="order">
+<section class="section section--night" id="order">
+  <div class="night-glow" aria-hidden="true"></div>
+  <div class="night-glow night-glow--2" aria-hidden="true"></div>
   <div class="container">
     <div class="section__head reveal">
-      <h2 class="h2">Как заказать</h2>
-      <p class="muted">Всё просто, три шага</p>
+      <span class="eyebrow">Три шага</span>
+      <h2 class="h2">Как <span class="serif">заказать</span></h2>
+      <p class="muted">Всё просто, справишься за пару минут</p>
     </div>
     <ol class="steps">
-      <li class="step reveal"><span class="step__n">1</span><h3>Выбрали вещь</h3><p>На сайте или у нас в Instagram</p></li>
-      <li class="step reveal"><span class="step__n">2</span><h3>Написали в WhatsApp</h3><p>Подскажем размер и проверим наличие</p></li>
-      <li class="step reveal"><span class="step__n">3</span><h3>Забрали или ждёте курьера</h3><p>В магазине на Макатаева или доставкой</p></li>
+      <li class="step reveal"><span class="step__n">01</span><h3>Выбрали вещь</h3><p>На сайте или у нас в Instagram</p></li>
+      <li class="step reveal"><span class="step__n">02</span><h3>Написали в WhatsApp</h3><p>Подскажем размер и проверим наличие</p></li>
+      <li class="step reveal"><span class="step__n">03</span><h3>Забрали или ждёте курьера</h3><p>В магазине на Макатаева или доставкой</p></li>
     </ol>
     <div class="center reveal">
       <a href="https://wa.me/77070259040" class="btn btn--wa" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Написать нам</a>
@@ -163,7 +176,8 @@
   <div class="container">
     <div class="section__head section__head--row reveal">
       <div>
-        <h2 class="h2">Нас уже 58 тысяч в Instagram</h2>
+        <span class="eyebrow">@feya.almaty</span>
+        <h2 class="h2">Нас уже 58 тысяч <span class="serif">в Instagram</span></h2>
         <p class="muted">Образы, примерки и новинки каждый день в @feya.almaty</p>
       </div>
       <a href="https://www.instagram.com/feya.almaty" class="btn btn--primary" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ig"/></svg>Подписаться</a>
@@ -180,10 +194,11 @@
 </section>
 
 <!-- Contacts -->
-<section class="section section--yellow" id="contacts">
+<section class="section section--tint" id="contacts">
   <div class="container contacts">
     <div class="contacts__info reveal">
-      <h2 class="h2">Приходи в гости</h2>
+      <span class="eyebrow">Магазин</span>
+      <h2 class="h2">Приходи <span class="serif">в гости</span></h2>
       <ul class="contacts__list">
         <li><svg class="ico"><use href="#i-pin"/></svg><div><b>Макатаева 81, ТД «Urban Nomad»</b><span>Алматы</span></div></li>
         <li><svg class="ico"><use href="#i-clock"/></svg><div><b>Ежедневно 11:00–21:00</b><span>без выходных</span></div></li>

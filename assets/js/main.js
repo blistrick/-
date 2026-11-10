@@ -33,7 +33,7 @@
     grid.innerHTML = list.map(function (p, i) {
       return '<article class="product" style="animation-delay:' + (i * 60) + 'ms">' +
         '<div class="product__img">' +
-          (p.badge ? '<span class="product__badge">' + esc(p.badge) + '</span>' : '') +
+          (p.badge ? '<span class="product__badge' + (p.badge === 'хит' ? ' product__badge--hit' : '') + '">' + esc(p.badge) + '</span>' : '') +
           '<img src="assets/img/' + p.img + '.webp" alt="' + esc(p.name) + '" loading="lazy" width="480" height="720">' +
         '</div>' +
         '<div class="product__body">' +
