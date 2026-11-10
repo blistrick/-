@@ -352,18 +352,6 @@ button { font: inherit; cursor: pointer; }
 .step h3 { font-size: 18px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 8px; }
 .step p { color: var(--muted); }
 
-/* ---------- Instagram ---------- */
-.insta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border-radius: 18px; overflow: hidden; }
-@media (min-width: 768px) { .insta { gap: 4px; border-radius: var(--radius); } }
-.insta__item { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; }
-.insta__item img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease); }
-.insta__item::after {
-  content: ""; position: absolute; inset: 0; background: rgba(17, 17, 17, .18);
-  opacity: 0; transition: opacity .4s;
-}
-.insta__item:hover img { transform: scale(1.07); }
-.insta__item:hover::after { opacity: 1; }
-
 /* ---------- Contacts ---------- */
 .contacts { display: grid; gap: 32px; }
 @media (min-width: 900px) { .contacts { grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: stretch; } }
@@ -424,36 +412,3 @@ button { font: inherit; cursor: pointer; }
   .reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
-
-/* ---------- Instagram profile head ---------- */
-.ig-profile { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
-.ig-avatar {
-  flex: none; width: 84px; height: 84px; border-radius: 50%; padding: 3px;
-  background: conic-gradient(from 200deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #FEDA75);
-}
-.ig-avatar span {
-  display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%;
-  background: var(--yellow); border: 3px solid var(--bg);
-  font-family: var(--head); font-weight: 800; font-size: 17px; color: var(--purple);
-}
-.ig-stats { display: flex; gap: 22px; font-size: 13px; color: var(--muted); line-height: 1.3; }
-.ig-stats b { display: block; font-family: var(--head); font-weight: 600; font-size: 18px; color: var(--ink); letter-spacing: -.02em; }
-.ig-bio { font-size: 15px; margin-bottom: 18px; }
-.ig-bio b { display: block; }
-.ig-actions { display: flex; gap: 8px; margin-bottom: 22px; }
-.ig-actions .btn { flex: 1; min-height: 44px; font-size: 14px; border-radius: 12px; }
-.highlights { display: flex; gap: 14px; overflow-x: auto; margin: 0 -16px 22px; padding: 2px 16px; scrollbar-width: none; }
-.highlights::-webkit-scrollbar { display: none; }
-.highlight { flex: none; display: grid; justify-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
-.highlight i {
-  display: grid; place-items: center; width: 66px; height: 66px; border-radius: 50%;
-  background: var(--yellow); border: 3px solid var(--bg); box-shadow: 0 0 0 1.5px rgba(17, 17, 17, .18);
-  font-family: var(--head); font-style: normal; font-weight: 800; font-size: 12px; color: var(--purple);
-}
-@media (min-width: 768px) {
-  .ig-wrap { display: grid; grid-template-columns: 410px 1fr; gap: 48px; align-items: start; }
-  .highlights { margin: 0 0 22px; padding: 2px 0; }
-}
-.insta__reel { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; z-index: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
-.ig-bio .muted { display: block; }
-.highlight { letter-spacing: .02em; }
