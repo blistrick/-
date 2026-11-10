@@ -33,21 +33,21 @@
     grid.innerHTML = list.map(function (p, i) {
       return '<article class="product" style="animation-delay:' + (i * 60) + 'ms">' +
         '<div class="product__img">' +
-          (p.badge ? '<span class="product__badge' + (p.badge === 'хит' ? ' product__badge--hit' : '') + '">' + esc(p.badge) + '</span>' : '') +
-          '<img src="assets/img/' + p.img + '.webp" alt="' + esc(p.name) + '" loading="lazy" width="480" height="720">' +
+          (p.badge ? '<span class="product__badge">' + esc(p.badge) + '</span>' : '') +
+          '<img src="assets/img/' + p.img + '.webp" alt="' + esc(p.name) + '" loading="lazy" width="640" height="960">' +
         '</div>' +
-        '<div class="product__body">' +
+        '<div>' +
           '<h3 class="product__name">' + esc(p.name) + '</h3>' +
-          '<div class="product__price">' + fmt(p.price) + '</div>' +
-          '<a class="btn btn--primary" target="_blank" rel="noopener" href="' +
-            waLink('Здравствуйте! Хочу заказать: ' + p.name) + '">Заказать</a>' +
+          '<p class="product__price">' + fmt(p.price) + '</p>' +
         '</div>' +
+        '<a class="btn btn--line" target="_blank" rel="noopener" href="' +
+          waLink('Здравствуйте! Хочу заказать: ' + p.name) + '">Заказать</a>' +
       '</article>';
     }).join('');
     empty.hidden = list.length > 0;
   }
 
-  var chips = document.querySelectorAll('.chip');
+  var chips = document.querySelectorAll('.tab');
   function setFilter(f) {
     chips.forEach(function (c) {
       var on = c.dataset.filter === f;
