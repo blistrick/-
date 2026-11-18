@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isTouchLite } from "@/lib/motion-mode";
 import { MaskedTextReveal } from "@/components/ui/text-reveal-mask";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,25 +14,25 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 const DOCTORS = [
   {
-    name: "Анна Лебедева",
+    name: "Айгерим Сейткали",
     role: "Основатель, эстетическая стоматология",
     img: "/img/doc-1.jpg",
     facts: ["Стаж 19 лет", "Член ESCD", "Обучение в Цюрихе"],
   },
   {
-    name: "Михаил Орлов",
+    name: "Ерлан Абдрахманов",
     role: "Хирург-имплантолог",
     img: "/img/doc-2.jpg",
     facts: ["Стаж 24 года", "3 000+ имплантов", "Straumann Expert"],
   },
   {
-    name: "Мария Соколова",
+    name: "Мадина Жумабаева",
     role: "Ортодонт",
     img: "/img/doc-3.jpg",
     facts: ["Стаж 9 лет", "Invisalign Diamond", "Детская ортодонтия"],
   },
   {
-    name: "Даниил Воронов",
+    name: "Арман Касымов",
     role: "Ортопед, виниры",
     img: "/img/doc-4.jpg",
     facts: ["Стаж 13 лет", "Цифровой дизайн улыбки", "Ученик Г. Убасси"],
@@ -51,7 +52,7 @@ export function Doctors() {
           scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true },
         });
         // staggered vertical rhythm on desktop
-        if (window.innerWidth >= 1024 && i % 2 === 1) {
+        if (window.innerWidth >= 1024 && !isTouchLite() && i % 2 === 1) {
           gsap.fromTo(img.closest("article"), { y: 80 }, { y: -40, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
         }
       });

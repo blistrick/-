@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { isTouchLite } from "@/lib/motion-mode";
 
 /**
  * Dot + ring cursor. Ring grows over links/buttons/[data-cursor].
@@ -16,7 +17,7 @@ export function Cursor() {
   useEffect(() => {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduce) return;
+    if (!fine || reduce || isTouchLite()) return;
     setEnabled(true);
     document.documentElement.classList.add("has-cursor");
 

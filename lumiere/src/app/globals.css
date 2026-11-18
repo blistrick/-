@@ -209,6 +209,17 @@ html.lenis body {
   animation: scrollcue 2.4s var(--ease-lux) infinite;
 }
 
+/* ── Touch / lite motion: native scroll, stacked journey, no full-screen overlays ── */
+.touch .grain { display: none; }
+.touch .journey { height: auto !important; display: block !important; padding-top: 6rem !important; padding-bottom: 6rem !important; }
+.touch .journey-track { flex-direction: column !important; width: auto !important; padding-right: 1.25rem !important; transform: none !important; }
+@media (min-width: 768px) { .touch .journey-track { display: grid !important; grid-template-columns: 1fr 1fr; padding-right: 3rem !important; } }
+.touch .journey-card { width: auto !important; height: auto !important; grid-template-columns: 1fr !important; }
+.touch .journey-card > div:first-child { aspect-ratio: 4 / 3; }
+.touch .journey-progress { display: none !important; }
+.touch #philosophy { min-height: auto; }
+.touch .page-bg { will-change: auto; }
+
 /* Custom cursor */
 .cursor { pointer-events: none; position: fixed; inset: 0 auto auto 0; z-index: 70; --c: var(--graphite); }
 html[data-theme="dark"] .cursor { --c: var(--night-text); }

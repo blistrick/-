@@ -141,7 +141,7 @@ export function Hero() {
       <div data-layer="copy" className="hero-copy relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-end px-5 pb-28 md:justify-center md:px-12 md:pb-0">
         {/* CSS-driven entrance: paints without waiting for hydration (fast LCP) */}
         <p className="rise eyebrow mb-8 flex items-center gap-4 text-champagne-ink" style={{ animationDelay: "1.15s" }}>
-          <span className="h-px w-10 bg-champagne" /> Ателье эстетической стоматологии · Москва
+          <span className="h-px w-10 bg-champagne" /> Ателье эстетической стоматологии · Алматы
         </p>
 
         <h1 className="display h1 max-w-[13ch] text-graphite" aria-label="Искусство вашей улыбки">

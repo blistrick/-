@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 
 const SOCIAL = [
   { label: "Telegram", href: "#" },
-  { label: "Instagram*", href: "#" },
+  { label: "Instagram", href: "#" },
   { label: "WhatsApp", href: "#" },
 ];
 
@@ -32,7 +32,7 @@ function StyledMap() {
         <circle cx="205" cy="128" r="7" fill="var(--champagne)" />
       </svg>
       <div className="absolute bottom-5 left-5 rounded-full bg-ivory/95 px-4 py-2 text-[13px] text-graphite">
-        Патриаршие пруды · 5 мин пешком
+        Рядом с Esentai Mall · 3 мин пешком
       </div>
     </div>
   );
@@ -51,9 +51,9 @@ export function Footer() {
           <p className="eyebrow text-champagne">Контакты</p>
           <address className="mt-8 not-italic">
             <p className="display text-[clamp(32px,3.4vw,52px)] leading-[1.1]">
-              Москва, Малая Бронная, 24
+              Алматы, проспект Аль-Фараби
             </p>
-            <a href="tel:+74950000000" className="mt-6 block text-[18px] text-night-text">+7 495 000-00-00</a>
+            <a href="tel:+77270000000" className="mt-6 block text-[18px] text-night-text">+7 727 000-00-00</a>
             <a href="mailto:hello@lumiere.dental" className="mt-2 block text-[18px] text-night-muted transition-colors hover:text-night-text">
               hello@lumiere.dental
             </a>
@@ -74,9 +74,8 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-24 flex max-w-[1440px] flex-wrap justify-between gap-4 border-t border-night-text/15 px-5 pt-8 text-[13px] text-night-muted md:px-12">
-        <span>© {new Date().getFullYear()} LUMIÈRE Dental Atelier · Лицензия ЛО-77-01-000000</span>
+        <span>© {new Date().getFullYear()} LUMIÈRE Dental Atelier · Лицензия на медицинскую деятельность № 00000DX</span>
         <span>Имеются противопоказания. Необходима консультация специалиста.</span>
-        <span>*Принадлежит Meta, признанной экстремистской в РФ</span>
       </div>
 
       <div className="overflow-hidden" aria-hidden>

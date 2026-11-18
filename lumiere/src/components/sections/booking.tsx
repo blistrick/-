@@ -116,7 +116,7 @@ export function Booking() {
           <dl className="mt-12 space-y-6 text-[15px]">
             <div>
               <dt className="eyebrow text-graphite-soft">Телефон</dt>
-              <dd className="mt-1"><a href="tel:+74950000000" className="display text-[32px]">+7 495 000-00-00</a></dd>
+              <dd className="mt-1"><a href="tel:+77270000000" className="display text-[32px]">+7 727 000-00-00</a></dd>
             </div>
             <div>
               <dt className="eyebrow text-graphite-soft">Часы</dt>

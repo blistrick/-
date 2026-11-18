@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { Cursor } from "@/components/cursor";
 import { Preloader } from "@/components/preloader";
+import { TOUCH_DETECT_SCRIPT } from "@/lib/motion-mode";
 
 // Display: high-contrast Didone (fashion/luxury feel), variable, full Cyrillic.
 const display = Noto_Serif_Display({
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     title: "LUMIÈRE Dental — искусство вашей улыбки",
     description: "Эстетическая стоматология в атмосфере бутик-отеля.",
     images: ["/img/hero-bg.jpg"],
-    locale: "ru_RU",
+    locale: "ru_KZ",
     type: "website",
   },
 };
@@ -42,13 +43,14 @@ const schema = {
   "@type": "Dentist",
   name: "LUMIÈRE Dental",
   priceRange: "$$$",
-  address: { "@type": "PostalAddress", addressLocality: "Москва", addressCountry: "RU" },
+  address: { "@type": "PostalAddress", addressLocality: "Алматы", addressCountry: "KZ" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body className={`${display.variable} ${text.variable} antialiased`}>
+        <script dangerouslySetInnerHTML={{ __html: TOUCH_DETECT_SCRIPT }} />
         <div className="page-bg" aria-hidden />
         <script
           type="application/ld+json"

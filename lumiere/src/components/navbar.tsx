@@ -64,8 +64,8 @@ export function Navbar() {
             ))}
           </ul>
           <div className="flex items-center gap-3">
-            <a href="tel:+74950000000" className="hidden text-[14px] tracking-wide xl:block">
-              +7 495 000-00-00
+            <a href="tel:+77270000000" className="hidden text-[14px] tracking-wide xl:block">
+              +7 727 000-00-00
             </a>
             <MagneticButton className="hidden h-11 px-6 text-[14px] sm:inline-flex">Записаться</MagneticButton>
             <button
