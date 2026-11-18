@@ -33,7 +33,7 @@ export function Philosophy() {
             : { trigger: el, start: "top 70%", end: "bottom 60%", scrub: 0.6 },
         });
         tl.to("[data-word]", { opacity: 1, stagger: 0.08, ease: "none" }, 0)
-          .fromTo("[data-ph-img] [data-ph-inner]", { yPercent: -8 }, { yPercent: 8, ease: "none" }, 0)
+          .fromTo("[data-ph-img] [data-ph-inner]", { yPercent: -4 }, { yPercent: 4, ease: "none" }, 0)
           .fromTo("[data-ph-line]", { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0);
       },
       el,
@@ -58,9 +58,9 @@ export function Philosophy() {
           </p>
           <span data-ph-line className="mt-6 block h-px w-full origin-left bg-champagne" />
           <div data-ph-img className="relative mt-10 hidden aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-card)] bg-pearl lg:block">
-            {/* inner layer is 20% taller than the frame, so the ±8% parallax never reveals an edge */}
-            <div data-ph-inner className="absolute inset-x-0 -inset-y-[10%] will-change-transform">
-              <Image src="/img/suite.jpg" alt="Кабинет LUMIÈRE: кресло в тонах травертина и льна" fill sizes="25vw" className="object-cover object-[68%_60%]" />
+            {/* inner layer is 12% taller than the frame, so the ±4% parallax never reveals an edge */}
+            <div data-ph-inner className="absolute inset-x-0 -inset-y-[6%] will-change-transform">
+              <Image src="/img/chair.jpg" alt="Кабинет LUMIÈRE: кресло в тонах травертина и льна" fill sizes="25vw" className="object-cover object-center" />
             </div>
           </div>
         </div>
