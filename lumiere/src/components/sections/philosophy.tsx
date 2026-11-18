@@ -76,7 +76,7 @@ export function Philosophy() {
           </p>
           <footer className="mt-12 flex items-center gap-5">
             <span className="h-12 w-12 overflow-hidden rounded-full bg-ivory ring-1 ring-champagne/50">
-              <Image src="/img/craft.jpg" alt="" width={96} height={96} className="h-full w-full object-cover" />
+              <Image src="/img/doc-1.jpg" alt="" width={96} height={96} className="h-full w-full object-cover" />
             </span>
             <span>
               <span className="block text-[15px] font-medium">Д-р Анна Лебедева</span>
