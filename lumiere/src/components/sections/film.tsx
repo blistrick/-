@@ -16,7 +16,6 @@ export function Film() {
   const root = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: root, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.45], [0.82, 1]);
-  const radius = useTransform(scrollYProgress, [0, 0.45], [64, 28]);
   const [open, setOpen] = useState(false);
   const bg = useRef<HTMLVideoElement>(null);
 
@@ -51,8 +50,8 @@ export function Film() {
   return (
     <section ref={root} id="film" data-bg="ivory" className="relative px-5 py-10 md:px-12" aria-label="Фильм о клинике">
       <motion.div
-        style={{ scale, borderRadius: radius }}
-        className="relative mx-auto aspect-[4/5] max-w-[1440px] overflow-hidden bg-pearl will-change-transform sm:aspect-[16/9]"
+        style={{ scale }}
+        className="relative mx-auto aspect-[4/5] max-w-[1440px] overflow-hidden rounded-[var(--radius-card)] bg-pearl will-change-transform sm:aspect-[16/9]"
       >
         <Image src={PROMO_POSTER} alt="" fill sizes="100vw" className="object-cover" />
         <video ref={bg} className="absolute inset-0 h-full w-full object-cover" muted loop playsInline preload="none" aria-hidden />
@@ -66,7 +65,7 @@ export function Film() {
             type="button"
             onClick={() => setOpen(true)}
             data-cursor="Смотреть"
-            className="group flex h-24 w-24 items-center justify-center rounded-full border border-ivory/60 bg-ivory/15 backdrop-blur-md transition-all duration-700 hover:scale-110 hover:bg-ivory hover:text-graphite"
+            className="group flex h-24 w-24 items-center justify-center rounded-full border border-ivory/60 bg-[#1e1e1c]/25 transition-all duration-700 hover:scale-110 hover:bg-ivory hover:text-graphite"
             aria-label="Смотреть фильм о клинике"
           >
             <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-current" aria-hidden>
@@ -79,7 +78,7 @@ export function Film() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[75] flex items-center justify-center bg-night/92 p-4 backdrop-blur"
+            className="fixed inset-0 z-[75] flex items-center justify-center bg-night/95 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

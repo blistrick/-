@@ -48,7 +48,7 @@ export function MagneticButton({ children, href = "#booking", variant = "solid",
         "group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full px-8 text-[15px] font-medium tracking-wide transition-colors duration-500",
         variant === "solid" && "bg-graphite text-ivory",
         variant === "ghost" && "border border-graphite/25 text-graphite hover:border-graphite",
-        variant === "light" && "bg-ivory/90 text-graphite backdrop-blur",
+        variant === "light" && "bg-ivory text-graphite",
         className,
       )}
     >

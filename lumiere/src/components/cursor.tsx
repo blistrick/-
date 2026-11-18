@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
-/** Dot + ring cursor. Ring grows over links/buttons/[data-cursor]. Fine pointers only. */
+/**
+ * Dot + ring cursor. Ring grows over links/buttons/[data-cursor].
+ * Perf: no mix-blend-mode (it forced a full-screen re-blend every frame), no React re-render per move —
+ * positions are written straight to transforms inside one rAF loop with lerp for the ring.
+ */
 export function Cursor() {
   const [enabled, setEnabled] = useState(false);
-  const [hover, setHover] = useState(false);
-  const [label, setLabel] = useState<string | null>(null);
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
-  const rx = useSpring(x, { stiffness: 260, damping: 28, mass: 0.6 });
-  const ry = useSpring(y, { stiffness: 260, damping: 28, mass: 0.6 });
+  const dot = useRef<HTMLDivElement>(null);
+  const ring = useRef<HTMLDivElement>(null);
+  const label = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -20,36 +20,45 @@ export function Cursor() {
     setEnabled(true);
     document.documentElement.classList.add("has-cursor");
 
+    let x = -100, y = -100, rx = -100, ry = -100, raf = 0;
+    let hoverEl: Element | null = null;
+
     const move = (e: PointerEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-      const t = (e.target as HTMLElement)?.closest?.("a, button, [data-cursor], input, select, textarea, label");
-      setHover(!!t);
-      setLabel((t as HTMLElement | null)?.dataset?.cursor ?? null);
+      x = e.clientX;
+      y = e.clientY;
+      const t = (e.target as HTMLElement)?.closest?.("a, button, [data-cursor], input, select, textarea, label") ?? null;
+      if (t !== hoverEl) {
+        hoverEl = t;
+        const text = (t as HTMLElement | null)?.dataset?.cursor ?? "";
+        const r = ring.current;
+        if (r) r.dataset.state = text ? "label" : t ? "hover" : "idle";
+        if (label.current) label.current.textContent = text;
+      }
+    };
+    const loop = () => {
+      rx += (x - rx) * 0.2;
+      ry += (y - ry) * 0.2;
+      if (dot.current) dot.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      if (ring.current) ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      raf = requestAnimationFrame(loop);
     };
     window.addEventListener("pointermove", move, { passive: true });
+    raf = requestAnimationFrame(loop);
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", move);
       document.documentElement.classList.remove("has-cursor");
     };
-  }, [x, y]);
+  }, []);
 
   if (!enabled) return null;
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[70] mix-blend-difference">
-      <motion.div
-        className="absolute left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f6f2ec]"
-        style={{ x, y }}
-      />
-      <motion.div
-        className="absolute left-0 top-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#f6f2ec]/70"
-        style={{ x: rx, y: ry }}
-        animate={{ width: label ? 96 : hover ? 64 : 34, height: label ? 96 : hover ? 64 : 34 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {label && <span className="eyebrow text-[10px] text-[#f6f2ec]">{label}</span>}
-      </motion.div>
+    <div aria-hidden className="cursor">
+      <div ref={dot} className="cursor-dot" />
+      <div ref={ring} className="cursor-ring" data-state="idle">
+        <span ref={label} className="eyebrow text-[10px]" />
+      </div>
     </div>
   );
 }

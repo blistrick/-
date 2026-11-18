@@ -31,7 +31,7 @@ function StyledMap() {
         </circle>
         <circle cx="205" cy="128" r="7" fill="var(--champagne)" />
       </svg>
-      <div className="absolute bottom-5 left-5 rounded-full bg-ivory/90 px-4 py-2 text-[13px] text-graphite backdrop-blur">
+      <div className="absolute bottom-5 left-5 rounded-full bg-ivory/95 px-4 py-2 text-[13px] text-graphite">
         Патриаршие пруды · 5 мин пешком
       </div>
     </div>

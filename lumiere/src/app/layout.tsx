@@ -1,20 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Noto_Serif_Display, Onest } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { Cursor } from "@/components/cursor";
 import { Preloader } from "@/components/preloader";
 
-// Display serif with full Cyrillic support (Instrument Serif / Fraunces are Latin-only).
-const display = Cormorant_Garamond({
+// Display: high-contrast Didone (fashion/luxury feel), variable, full Cyrillic.
+const display = Noto_Serif_Display({
   variable: "--font-display",
   subsets: ["latin", "cyrillic"],
-  weight: ["400"],
+  weight: "variable",
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const text = Manrope({
+const text = Onest({
   variable: "--font-text",
   subsets: ["latin", "cyrillic"],
   display: "swap",
@@ -49,6 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ru">
       <body className={`${display.variable} ${text.variable} antialiased`}>
+        <div className="page-bg" aria-hidden />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

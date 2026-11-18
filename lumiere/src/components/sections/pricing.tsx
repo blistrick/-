@@ -44,8 +44,8 @@ export function Pricing() {
           {PLANS.map((p, i) => (
             <motion.article
               key={p.name}
-              initial={{ opacity: 0, y: 60, filter: "blur(8px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px 0px -10% 0px" }}
               transition={{ duration: 1.1, delay: i * 0.1, ease: EASE }}
               whileHover={{ y: -8 }}

@@ -62,8 +62,8 @@ export function Technology() {
     io.observe(el);
     if (reduce) return () => io.disconnect();
     const ctx = gsap.context(() => {
-      gsap.fromTo("[data-tech-media]", { scale: 0.86, borderRadius: "48px" }, {
-        scale: 1, borderRadius: "28px", ease: "none",
+      gsap.fromTo("[data-tech-media]", { scale: 0.86 }, {
+        scale: 1, ease: "none",
         scrollTrigger: { trigger: "[data-tech-media]", start: "top bottom", end: "center center", scrub: true },
       });
     }, el);

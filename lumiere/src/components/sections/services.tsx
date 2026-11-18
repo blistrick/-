@@ -77,8 +77,8 @@ const SERVICES: Service[] = [
 function Card({ s, i }: { s: Service; i: number }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 60, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
       transition={{ duration: 1.1, delay: (i % 3) * 0.08, ease: EASE }}
       className={cn(
@@ -101,7 +101,7 @@ function Card({ s, i }: { s: Service; i: number }) {
           <span className="eyebrow text-ivory/85">{s.n}</span>
           <span
             aria-hidden
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/40 backdrop-blur-sm transition-all duration-700 group-hover:rotate-[-45deg] group-hover:border-ivory group-hover:bg-ivory group-hover:text-graphite"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/40 bg-[#1e1e1c]/20 transition-all duration-700 group-hover:rotate-[-45deg] group-hover:border-ivory group-hover:bg-ivory group-hover:text-graphite"
           >
             →
           </span>

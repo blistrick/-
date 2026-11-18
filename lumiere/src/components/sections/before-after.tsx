@@ -74,8 +74,8 @@ export function BeforeAfter() {
             <Image src={c.before} alt="До лечения" fill sizes="(min-width:1440px) 1344px, 100vw" className="object-cover" />
           </motion.div>
 
-          <span className="eyebrow absolute left-5 top-5 rounded-full bg-ivory/85 px-3 py-1.5 text-graphite backdrop-blur md:left-8 md:top-8">До</span>
-          <span className="eyebrow absolute right-5 top-5 rounded-full bg-ivory/85 px-3 py-1.5 text-graphite backdrop-blur md:right-8 md:top-8">После</span>
+          <span className="eyebrow absolute left-5 top-5 rounded-full bg-ivory/90 px-3 py-1.5 text-graphite md:left-8 md:top-8">До</span>
+          <span className="eyebrow absolute right-5 top-5 rounded-full bg-ivory/90 px-3 py-1.5 text-graphite md:right-8 md:top-8">После</span>
 
           <motion.div className="absolute inset-y-0 w-px -translate-x-1/2 bg-ivory" style={{ left }}>
             <div
@@ -89,7 +89,7 @@ export function BeforeAfter() {
                 if (e.key === "ArrowLeft") target.set(Math.max(2, target.get() - 5));
                 if (e.key === "ArrowRight") target.set(Math.min(98, target.get() + 5));
               }}
-              className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center gap-1.5 rounded-full border border-ivory/70 bg-ivory/30 text-ivory shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)] backdrop-blur-md"
+              className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center gap-1.5 rounded-full border border-ivory/70 bg-[#1e1e1c]/35 text-ivory shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
             >
               <span aria-hidden>‹</span>
               <span aria-hidden>›</span>

@@ -67,7 +67,7 @@ export function Philosophy() {
               const em = w.startsWith("*");
               const clean = w.replace(/\*/g, "");
               return (
-                <span key={i} data-word className={`inline-block will-change-[opacity] ${em ? "opacity-75" : "opacity-50"}`}>
+                <span key={i} data-word className={`inline-block ${em ? "opacity-75" : "opacity-50"}`}>
                   {em ? <em className="text-champagne-ink">{clean}</em> : clean}
                   {i < words.length - 1 && " "}
                 </span>

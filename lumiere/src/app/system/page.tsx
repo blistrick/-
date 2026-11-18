@@ -54,7 +54,7 @@ export default function System() {
 
       <section className="mt-24 grid gap-12 lg:grid-cols-2">
         <div>
-          <h2 className="eyebrow mb-6 text-graphite-soft">Заголовки — Cormorant Garamond</h2>
+          <h2 className="eyebrow mb-6 text-graphite-soft">Заголовки — Noto Serif Display</h2>
           <p className="display text-[clamp(56px,8vw,140px)]">Улыбка</p>
           <p className="display text-[72px] italic text-champagne-ink">в деталях</p>
           <p className="mt-4 text-[14px] text-graphite-soft">
@@ -63,7 +63,7 @@ export default function System() {
           </p>
         </div>
         <div>
-          <h2 className="eyebrow mb-6 text-graphite-soft">Текст — Manrope</h2>
+          <h2 className="eyebrow mb-6 text-graphite-soft">Текст — Onest</h2>
           <p className="measure text-[18px]">
             Мы создаём улыбки, которые выглядят естественно и живут долго. Body 17–18px, межстрочный 1.6, ширина строки
             60–70 символов.

@@ -91,7 +91,7 @@ export function Doctors() {
                   <Image src={d.img} alt={`${d.name}, ${d.role}`} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]" />
                 </div>
                 {/* Credentials revealed with clip-path */}
-                <div className="absolute inset-0 flex flex-col justify-end bg-[#1e1e1c]/72 p-6 text-ivory backdrop-blur-[2px] transition-[clip-path] duration-[0.9s] ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0_0_0_0)] group-focus-visible:[clip-path:inset(0_0_0_0)]">
+                <div className="absolute inset-0 flex flex-col justify-end bg-[#1e1e1c]/72 p-6 text-ivory transition-[clip-path] duration-[0.9s] ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0_0_0_0)] group-focus-visible:[clip-path:inset(0_0_0_0)]">
                   <ul className="space-y-3">
                     {d.facts.map((f) => (
                       <li key={f} className="flex items-center gap-3 border-b border-ivory/20 pb-3 text-[15px]">

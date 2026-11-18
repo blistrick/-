@@ -27,7 +27,10 @@ export function Hero() {
       !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     if (!ok) return;
     v.src = "/video/hero-loop.mp4";
-    v.play().catch(() => {});
+    // play only while the hero is on screen
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()));
+    io.observe(v);
+    return () => io.disconnect();
   }, [ready]);
 
   // Mouse tilt (springs) — applied to inner wrappers so GSAP scroll transforms don't collide
@@ -130,7 +133,7 @@ export function Hero() {
           animate={ready ? { y: 0, opacity: 0.75, rotate: 0 } : {}}
           transition={{ duration: 2, delay: 0.45, ease: EASE }}
         >
-          <Image src="/img/hero-fg.png" alt="" width={1024} height={1024} sizes="(min-width:768px) 52vw, 60vw" className="h-auto w-full blur-[6px] md:blur-[10px]" />
+          <Image src="/img/hero-fg-blur.png" alt="" width={1104} height={1104} sizes="(min-width:768px) 52vw, 60vw" className="h-auto w-full" />
         </motion.div>
       </div>
 

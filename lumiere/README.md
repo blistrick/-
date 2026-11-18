@@ -34,7 +34,7 @@ npm run build && npm start
 
 ## Шрифты
 
-Cormorant Garamond (заголовки) + Manrope (текст) — бесплатные, с кириллицей.
+Noto Serif Display (заголовки, высококонтрастная антиква в духе Didot) + Onest (текст, гротеск, созданный под кириллицу) — бесплатные, вариативные.
 Instrument Serif и Fraunces из ТЗ не поддерживают кириллицу. Премиум-замена при покупке лицензии:
 PP Editorial New / Canela + Neue Montreal / Suisse Int'l — подключить через `next/font/local` в `src/app/layout.tsx`.
 
