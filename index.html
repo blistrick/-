@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TÖR — архитектура интерьера, Алматы</title>
+<meta name="description" content="TÖR — студия архитектуры интерьера в Алматы. Частные дома, квартиры и рестораны: проект, комплектация и реализация под ключ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EAE4DA; --paper-2:#E1D9CC; --ink:#1C1611; --ink-2:#2A221B;
+  --clay:#A6623A; --clay-l:#C99773; --mute:#857A6E; --line:rgba(28,22,17,.13); --line-l:rgba(234,228,218,.15);
+  --disp:"Tenor Sans",system-ui,sans-serif; --sans:"Manrope",system-ui,sans-serif;
+  --e:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--clay);color:var(--paper)}
+.ph{position:relative;overflow:hidden;background:#b9a995}
+.k{font-size:11px;letter-spacing:.3em;text-transform:uppercase}
+.d{font-family:var(--disp);font-weight:400;letter-spacing:-.01em}
+.c{color:var(--clay)}
+
+/* loader */
+.ld{position:fixed;inset:0;z-index:100;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+.ld__w{display:flex;gap:.04em;font-family:var(--disp);font-size:clamp(90px,16vw,240px);line-height:1;overflow:hidden}
+.ld__w span{display:inline-block;transform:translateY(105%)}
+.ld__l{position:absolute;left:8vw;right:8vw;bottom:9vh;height:1px;background:var(--line-l)}
+.ld__l i{position:absolute;inset:0;background:var(--clay-l);transform:scaleX(0);transform-origin:left}
+.ld__n{position:absolute;right:8vw;bottom:calc(9vh + 16px);font-size:12px;letter-spacing:.2em;color:var(--clay-l)}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;color:var(--paper);transition:color .3s,background-color .3s;transform:translateZ(0)}
+.nav.on{background:var(--ink)}
+.nav.lt{color:var(--ink)}.nav.lt.on{background:var(--paper)}
+.logo{font-family:var(--disp);font-size:24px;letter-spacing:.18em}
+.nav ul{display:flex;gap:40px;list-style:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.nav ul a{position:relative}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .6s var(--e)}
+.nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav__cta{font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.nav__cta i{width:7px;height:7px;border-radius:50%;background:var(--clay-l)}
+
+/* HERO — the arch */
+.hero{height:240vh;position:relative;background:var(--ink)}
+.hero__s{position:sticky;top:0;height:100vh;overflow:hidden}
+.hero__img{position:absolute;inset:0;will-change:transform}
+.hero__img img{transform:scale(1.12)}
+.hero__mask{position:absolute;inset:0;z-index:2;pointer-events:none;will-change:transform}
+.hero__mask svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hero__shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(28,22,17,.35),rgba(28,22,17,.05) 35%,rgba(28,22,17,.5))}
+.hero__word{position:absolute;left:0;right:0;bottom:-2vw;z-index:3;display:flex;justify-content:space-between;padding:0 3vw;font-family:var(--disp);font-size:31vw;line-height:.8;color:var(--paper);pointer-events:none}
+.hero__word span{display:block;will-change:transform}
+.hero__top{position:absolute;top:110px;left:4vw;right:4vw;z-index:3;display:flex;justify-content:space-between;color:var(--paper)}
+.hero__top p{max-width:340px;font-size:15px;line-height:1.7;color:rgba(234,228,218,.86)}
+.hero__top .k{color:var(--clay-l)}
+.hero__cap{position:absolute;left:50%;top:50%;z-index:3;transform:translate(-50%,-50%);color:var(--paper);text-align:center;opacity:0;will-change:opacity}
+.hero__cap .k{color:var(--clay-l)}
+.hero__cap h1{font-family:var(--disp);font-weight:400;font-size:clamp(22px,2.2vw,34px);margin-top:12px;line-height:1.3}
+
+/* intro */
+.intro{padding:22vh 4vw 16vh;max-width:1440px;margin:0 auto}
+.intro__t{font-family:var(--disp);font-size:clamp(30px,4.1vw,66px);line-height:1.14;letter-spacing:-.015em;margin-top:5vh;max-width:1250px}
+.intro__t .w{opacity:.13;transition:opacity .25s linear}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14vh;border-top:1px solid var(--line)}
+.fact{padding:30px 24px 0 0}.fact+.fact{padding-left:24px;border-left:1px solid var(--line)}
+.fact b{display:block;font-family:var(--disp);font-weight:400;font-size:clamp(46px,5vw,84px);line-height:1}
+.fact span{display:block;margin-top:14px;font-size:13px;line-height:1.6;color:var(--mute);max-width:220px}
+
+/* works */
+.works{padding:10vh 4vw 18vh;max-width:1440px;margin:0 auto}
+.works__h{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:9vh}
+.works__h h2{font-family:var(--disp);font-weight:400;font-size:clamp(44px,6vw,104px);line-height:.95}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{font-family:var(--sans);font-size:13px;background:none;border:1px solid var(--line);border-radius:100px;padding:11px 20px;cursor:pointer;color:var(--ink);transition:all .4s}
+.tabs button.on,.tabs button:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.wk{display:grid;grid-template-columns:repeat(12,1fr);column-gap:2vw;row-gap:14vh}
+.w{grid-column:span 7;transition:opacity .5s var(--e)}
+.w:nth-child(2){grid-column:9/span 4;margin-top:22vh}
+.w:nth-child(3){grid-column:2/span 5}
+.w:nth-child(4){grid-column:8/span 5;margin-top:-12vh}
+.w.off{opacity:.12;pointer-events:none}
+.w__img{aspect-ratio:4/3}
+.w:nth-child(2) .w__img,.w:nth-child(3) .w__img{aspect-ratio:3/4}
+.w__img img{position:absolute;left:0;top:-12%;height:124%;will-change:transform}
+.w__m{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding-top:18px}
+.w__m h3{font-family:var(--disp);font-weight:400;font-size:clamp(22px,1.9vw,30px)}
+.w__m span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.w__d{font-size:14px;color:var(--mute);margin-top:8px;line-height:1.6;max-width:440px}
+
+/* materials — horizontal */
+.mat{height:420vh;background:var(--ink);color:var(--paper);position:relative}
+.mat__s{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
+.mat__tr{display:flex;gap:3vw;padding:0 4vw;width:max-content;will-change:transform;align-items:center}
+.mat__intro{width:min(34vw,480px);flex-shrink:0;padding-right:4vw}
+.mat__intro h2{font-family:var(--disp);font-weight:400;font-size:clamp(40px,4.6vw,78px);line-height:1;margin:26px 0}
+.mat__intro p{color:rgba(234,228,218,.62);line-height:1.8;font-size:15px}
+.mc{width:min(30vw,440px);flex-shrink:0}
+.mc:nth-child(odd){margin-top:12vh}
+.mc__img{aspect-ratio:2/3}
+.mc__img img{position:absolute;top:0;left:-10%;width:120%;will-change:transform}
+.mc__t{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;border-bottom:1px solid var(--line-l);padding-bottom:14px}
+.mc__t h3{font-family:var(--disp);font-weight:400;font-size:28px}
+.mc__t span{font-size:12px;letter-spacing:.14em;color:var(--clay-l)}
+.mc p{font-size:13px;color:rgba(234,228,218,.6);line-height:1.7;margin-top:12px}
+.mat__bar{position:absolute;left:4vw;right:4vw;bottom:7vh;height:1px;background:var(--line-l)}
+.mat__bar i{position:absolute;inset:0;background:var(--clay-l);transform:scaleX(0);transform-origin:left}
+
+/* sketch -> object */
+.sk{height:260vh;position:relative;background:var(--paper-2)}
+.sk__s{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 4vw}
+.sk__h{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;max-width:1440px;width:100%;margin:0 auto 4vh}
+.sk__h h2{font-family:var(--disp);font-weight:400;font-size:clamp(36px,4.2vw,70px);line-height:1}
+.sk__h p{max-width:360px;font-size:14px;line-height:1.75;color:var(--mute)}
+.sk__f{position:relative;max-width:1440px;width:100%;margin:0 auto;aspect-ratio:16/9;max-height:66vh;border-radius:3px;--p:0}
+.sk__f>.ph{position:absolute;inset:0}
+.sk__photo{clip-path:inset(0 calc((1 - var(--p)) * 100%) 0 0)}
+.sk__line{position:absolute;top:0;bottom:0;left:calc(var(--p) * 100%);width:1px;background:var(--paper);z-index:3}
+.sk__tag{position:absolute;top:18px;z-index:3;padding:8px 14px;border-radius:100px;background:rgba(28,22,17,.6);color:var(--paper)}
+.sk__tag.l{right:18px}.sk__tag.r{left:18px}
+
+/* method */
+.mt{padding:20vh 4vw;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:4fr 8fr;gap:6vw}
+.mt__l{position:sticky;top:20vh;align-self:start}
+.mt__l h2{font-family:var(--disp);font-weight:400;font-size:clamp(40px,4.6vw,78px);line-height:1;margin-top:26px}
+.mt__l p{margin-top:26px;color:var(--mute);line-height:1.8;font-size:15px;max-width:360px}
+.mt__img{margin-top:6vh;aspect-ratio:4/5;max-width:340px}
+.mt__img img{position:absolute;left:0;top:-10%;height:120%;will-change:transform}
+.mt__r{position:relative;padding-left:56px}
+.mt__rail{position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}
+.mt__rail i{position:absolute;inset:0;background:var(--clay);transform:scaleY(0);transform-origin:top}
+.st{padding:0 0 14vh}
+.st:last-child{padding-bottom:0}
+.st small{color:var(--clay)}
+.st h3{font-family:var(--disp);font-weight:400;font-size:clamp(32px,3.4vw,56px);margin:18px 0 20px}
+.st p{font-size:16px;line-height:1.85;color:#4a4038;max-width:560px}
+.st ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.st li{font-size:12px;border:1px solid var(--line);border-radius:100px;padding:8px 14px}
+
+/* quote */
+.qt{height:130vh;position:relative;overflow:hidden;color:var(--paper);display:flex;align-items:center;justify-content:center;text-align:center}
+.qt .ph{position:absolute;inset:-15% 0;will-change:transform}
+.qt .ph::after{content:"";position:absolute;inset:0;background:rgba(28,22,17,.42)}
+.qt blockquote{position:relative;z-index:2;font-family:var(--disp);font-size:clamp(34px,4.8vw,84px);line-height:1.08;max-width:1100px;padding:0 5vw}
+.qt cite{display:block;font-family:var(--sans);font-style:normal;margin-top:42px;color:rgba(234,228,218,.78)}
+
+/* faq */
+.fq{padding:20vh 4vw;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:6vw}
+.fq h2{font-family:var(--disp);font-weight:400;font-size:clamp(40px,4.8vw,80px);line-height:1;margin-top:26px}
+.fq details{border-top:1px solid var(--line)}.fq details:last-child{border-bottom:1px solid var(--line)}
+.fq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 0;font-family:var(--disp);font-size:clamp(19px,1.6vw,26px)}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary i{position:relative;width:15px;height:15px;flex-shrink:0}
+.fq summary i::before,.fq summary i::after{content:"";position:absolute;left:0;top:50%;width:15px;height:1px;background:var(--ink);transition:transform .5s var(--e)}
+.fq summary i::after{transform:rotate(90deg)}
+.fq details[open] summary i::after{transform:rotate(0)}
+.fq details p{padding:0 0 28px;color:var(--mute);line-height:1.8;font-size:15px;max-width:620px}
+
+/* contact */
+.ct{background:var(--ink);color:var(--paper);padding:20vh 4vw 6vh;overflow:hidden}
+.ct__in{max-width:1440px;margin:0 auto}
+.ct h2{font-family:var(--disp);font-weight:400;font-size:clamp(44px,7vw,124px);line-height:.98}
+.ct__g{display:grid;grid-template-columns:1fr 1fr;gap:6vw;margin-top:10vh}
+.ct__i p{color:rgba(234,228,218,.6);line-height:1.8;font-size:15px;max-width:420px}
+.ct__i dl{margin-top:44px;display:grid;gap:24px}
+.ct__i dt{color:var(--clay-l);margin-bottom:6px}
+.ct__i dd{font-family:var(--disp);font-size:24px}
+form{display:grid;gap:6px}
+.fl{position:relative;border-bottom:1px solid var(--line-l)}
+.fl input{width:100%;background:none;border:0;outline:0;color:var(--paper);font-family:var(--sans);font-size:17px;padding:30px 0 14px;border-radius:0}
+.fl label{position:absolute;left:0;top:30px;font-size:15px;color:rgba(234,228,218,.45);pointer-events:none;transition:all .4s var(--e)}
+.fl input:focus+label,.fl input:not(:placeholder-shown)+label{top:6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-l)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:24px 0 6px;border:0}
+.chips legend{width:100%;margin-bottom:12px;color:var(--clay-l)}
+.chip{font-family:var(--sans);font-size:13px;color:rgba(234,228,218,.8);background:none;border:1px solid var(--line-l);border-radius:100px;padding:10px 18px;cursor:pointer;transition:all .35s}
+.chip.on,.chip:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn{margin-top:30px;justify-self:start;display:inline-flex;gap:16px;align-items:center;background:var(--clay);color:var(--paper);border:0;border-radius:100px;padding:21px 32px;font-family:var(--sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .4s}
+.btn:hover{background:var(--clay-l);color:var(--ink)}
+.sent{display:none;font-family:var(--disp);font-size:30px;line-height:1.3}
+.ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:16vh;padding-top:26px;border-top:1px solid var(--line-l);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(234,228,218,.45)}
+.ft__w{font-family:var(--disp);font-size:34vw;line-height:.74;text-align:center;color:var(--ink-2);margin-top:6vh;letter-spacing:.05em;will-change:transform}
+
+.rv{opacity:0}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .hero__top{top:96px;flex-direction:column;gap:14px}
+  .hero__top p{font-size:14px}
+  .facts{grid-template-columns:1fr 1fr;row-gap:30px}.fact:nth-child(3){border-left:0;padding-left:0}
+  .works__h{flex-direction:column;align-items:flex-start}
+  .wk{display:flex;flex-direction:column;gap:9vh}
+  .w,.w:nth-child(n){margin:0}
+  .w:nth-child(2),.w:nth-child(4){width:78%;margin-left:auto}
+  .mat__intro{width:78vw}.mc{width:68vw}.mc:nth-child(odd){margin-top:6vh}
+  .sk__h{flex-direction:column;align-items:flex-start}
+  .sk__f{aspect-ratio:3/4;max-height:60vh}
+  .mt,.fq,.ct__g{grid-template-columns:1fr}
+  .mt__l{position:relative;top:0}.mt__img{display:none}
+  .mt__r{padding-left:30px}
+}
+</style>
+</head>
+<body>
+
+<div class="ld" id="ld">
+  <div class="ld__w"><span>T</span><span>Ö</span><span>R</span></div>
+  <div class="ld__n k" id="ldn">000</div>
+  <div class="ld__l"><i id="ldl"></i></div>
+</div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="logo">TÖR</a>
+  <ul><li><a href="#works">Работы</a></li><li><a href="#materials">Материалы</a></li><li><a href="#method">Метод</a></li><li><a href="#faq">Вопросы</a></li></ul>
+  <a href="#contact" class="nav__cta"><i></i>Записаться на встречу</a>
+</header>
+
+<main id="top">
+
+<section class="hero" id="hero">
+  <div class="hero__s">
+    <div class="hero__img ph" id="hImg"><img id="heroImg" fetchpriority="high" src="https://app-uploads.krea.ai/public/edfabd6f-5284-42eb-9e76-b4602b2e092c.png" alt="Гостиная с видом на горы Алматы"></div>
+    <div class="hero__shade"></div>
+    <div class="hero__mask" id="hMask"><svg id="hSvg" aria-hidden="true"><path id="hPath" fill="#1C1611" fill-rule="evenodd"/></svg></div>
+    <div class="hero__top">
+      <span class="k">Архитектура интерьера · Алматы</span>
+      <p>Проектируем дома, квартиры и рестораны, в которые хочется возвращаться. От первого эскиза до последней вазы на полке.</p>
+    </div>
+    <div class="hero__cap" id="hCap"><span class="k">Дом на Каменском плато</span><h1>Почётное место — для вас</h1></div>
+    <div class="hero__word" id="hWord"><span>T</span><span>Ö</span><span>R</span></div>
+  </div>
+</section>
+
+<section class="intro" id="about">
+  <span class="k c">Почему TÖR</span>
+  <p class="intro__t" id="introT">В казахском доме төр — самое почётное место. Его оставляют для гостя, которого по-настоящему ждали. Мы проектируем так же: каждый метр — для того, кто будет здесь жить.</p>
+  <div class="facts">
+    <div class="fact rv"><b data-n="2015">0</b><span>год, когда мы сдали первый объект</span></div>
+    <div class="fact rv"><b data-n="94">0</b><span>интерьера в Алматы, Астане и Шымкенте</span></div>
+    <div class="fact rv"><b data-n="11">0</b><span>человек в команде — без фрилансеров</span></div>
+    <div class="fact rv"><b data-n="6">0</b><span>объектов в год. Больше не берём</span></div>
+  </div>
+</section>
+
+<section class="works" id="works">
+  <div class="works__h">
+    <h2>Работы</h2>
+    <div class="tabs" id="tabs"><button class="on" data-f="all">Все</button><button data-f="home">Жилые</button><button data-f="biz">Коммерческие</button></div>
+  </div>
+  <div class="wk">
+    <article class="w" data-t="home"><div class="w__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/6cbac4fb-6d45-44e5-b8a0-e084d5f7cf02.png" alt="Столовая с ореховым столом"></div><div class="w__m"><h3>Квартира у Ботанического сада</h3><span>186 м² · 2025</span></div><p class="w__d">Глиняная штукатурка, массив ореха и стол на двенадцать человек — для семьи, где ужинают вместе.</p></article>
+    <article class="w" data-t="home"><div class="w__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/f11fcd50-e663-44c2-8547-a555add94a43.png" alt="Спальня с войлочной кроватью"></div><div class="w__m"><h3>Дом на Каменском плато</h3><span>420 м² · 2024</span></div><p class="w__d">Спальни смотрят на восток: утро начинается с гор, а не с экрана.</p></article>
+    <article class="w" data-t="biz"><div class="w__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/621ee3d5-9d10-4121-b331-6cf5c3c7ac72.png" alt="Ресторан с кожаными диванами"></div><div class="w__m"><h3>Ресторан «Шай»</h3><span>240 м² · 2024</span></div><p class="w__d">Сорок посадочных мест, ни одного лишнего источника света. Гости остаются на второй чайник.</p></article>
+    <article class="w" data-t="biz"><div class="w__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/ed394649-c2cf-4a01-8269-8c2859ac953a.png" alt="Шоурум керамики"></div><div class="w__m"><h3>Шоурум авторской керамики</h3><span>120 м² · 2023</span></div><p class="w__d">Травертиновые постаменты и мягкий свет — пространство, где вещи говорят сами.</p></article>
+  </div>
+</section>
+
+<section class="mat" id="materials">
+  <div class="mat__s">
+    <div class="mat__tr" id="matTr">
+      <div class="mat__intro">
+        <span class="k" style="color:var(--clay-l)">Материалы</span>
+        <h2>Мы выбираем то, что стареет красиво</h2>
+        <p>Работаем с мастерскими в Казахстане и фабриками Италии напрямую. Каждый образец вы трогаете руками до того, как он попадёт в смету.</p>
+      </div>
+      <div class="mc"><div class="mc__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/c7f0f720-718f-4cdd-866f-095fdf1aac1b.png" alt="Травертин"></div><div class="mc__t"><h3>Травертин</h3><span>01</span></div><p>Пористый, тёплый, с годами только мягче. Для полов, столешниц и ванн.</p></div>
+      <div class="mc"><div class="mc__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/e17b0334-3667-40af-9fe9-aa21c662574d.png" alt="Американский орех"></div><div class="mc__t"><h3>Орех</h3><span>02</span></div><p>Массив под маслом и латунь ручной ковки. Мебель делаем по своим чертежам.</p></div>
+      <div class="mc"><div class="mc__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/408e6ab1-187b-4969-bfd0-b720000418d8.png" alt="Войлок и букле"></div><div class="mc__t"><h3>Войлок</h3><span>03</span></div><p>Валяем с мастерами из Шымкента. Глушит звук и держит тепло лучше любой панели.</p></div>
+      <div class="mc"><div class="mc__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/5581fd69-52fb-4789-9c95-cdcdafa259fc.png" alt="Кухня из травертина и ореха"></div><div class="mc__t"><h3>Целое</h3><span>04</span></div><p>Три материала, одна палитра. Так выглядит кухня, когда в ней нечего убрать.</p></div>
+    </div>
+    <div class="mat__bar"><i id="matBar"></i></div>
+  </div>
+</section>
+
+<section class="sk" id="sketch">
+  <div class="sk__s">
+    <div class="sk__h">
+      <h2>Сначала — рука.<br><span class="c">Потом — камень.</span></h2>
+      <p>Каждый проект начинается с карандашного эскиза. Листайте: так выглядит путь от первого рисунка до готовой гостиной.</p>
+    </div>
+    <div class="sk__f" id="skF">
+      <div class="ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/ec1ce8d0-c24c-4068-a116-48bfed6a577b.png" alt="Эскиз гостиной"></div>
+      <div class="ph sk__photo"><img loading="lazy" src="https://app-uploads.krea.ai/public/edfabd6f-5284-42eb-9e76-b4602b2e092c.png" alt="Готовая гостиная"></div>
+      <div class="sk__line"></div>
+      <span class="sk__tag r k">Объект</span><span class="sk__tag l k">Эскиз</span>
+    </div>
+  </div>
+</section>
+
+<section class="mt" id="method">
+  <div class="mt__l">
+    <span class="k c">Метод</span>
+    <h2>Три этапа, один ответственный</h2>
+    <p>За ваш объект отвечает один архитектор — от первого звонка до сдачи ключей.</p>
+    <div class="mt__img ph"><img loading="lazy" src="https://app-uploads.krea.ai/public/5581fd69-52fb-4789-9c95-cdcdafa259fc.png" alt=""></div>
+  </div>
+  <div class="mt__r" id="mtR">
+    <div class="mt__rail"><i id="rail"></i></div>
+    <div class="st rv"><small class="k">01 · 8–12 недель</small><h3>Проект</h3><p>Обмеры, планировка, свет и инженерия. Вы получаете альбом чертежей, по которому любой подрядчик построит ровно то, что нарисовано, — без «а давайте упростим».</p><ul><li>Планировочные решения</li><li>Визуализации</li><li>Рабочие чертежи</li></ul></div>
+    <div class="st rv"><small class="k">02 · параллельно</small><h3>Комплектация</h3><p>Собираем спецификацию до последней ручки и заказываем напрямую у фабрик и мастерских. Сроки поставок закладываем в график с первого дня.</p><ul><li>Мебель на заказ</li><li>Свет</li><li>Текстиль и декор</li></ul></div>
+    <div class="st rv"><small class="k">03 · до сдачи</small><h3>Реализация</h3><p>Ведём стройку сами: еженедельные выезды, фотоотчёты, приёмка каждого этапа. В день сдачи мы расставляем книги и заправляем постель.</p><ul><li>Авторский надзор</li><li>Ремонт под ключ</li><li>Финальная расстановка</li></ul></div>
+  </div>
+</section>
+
+<section class="qt">
+  <div class="ph" id="qBg"><img loading="lazy" src="https://app-uploads.krea.ai/public/c73d985a-5b04-4688-a901-078fef1c0c3e.png" alt=""></div>
+  <blockquote class="rv">Хороший интерьер не спорит с жизнью. Он её продолжает.<cite class="k">Айжан Сейткали, основатель TÖR</cite></blockquote>
+</section>
+
+<section class="fq" id="faq">
+  <div><span class="k c">Вопросы</span><h2>Прежде чем позвонить</h2></div>
+  <div>
+    <details><summary>С какой площади вы берёте проекты?<i></i></summary><p>С квартир от 120 м² и домов от 250 м². Рестораны и шоурумы — от 100 м². Для меньших объектов можем порекомендовать коллег.</p></details>
+    <details><summary>Сколько стоит работа студии?<i></i></summary><p>Проект считается за квадратный метр, комплектация и реализация — отдельной сметой. Точную цифру называем после первой встречи и выезда на объект. Она фиксируется в договоре.</p></details>
+    <details><summary>Можно ли заказать только проект?<i></i></summary><p>Да, но мы советуем оставить за нами авторский надзор: так проект не «упростят» на стройке.</p></details>
+    <details><summary>Работаете ли вы за пределами Алматы?<i></i></summary><p>Да, в Астане и Шымкенте у нас постоянные бригады. В другие города выезжаем на ключевые этапы.</p></details>
+    <details><summary>Что нужно для первой встречи?<i></i></summary><p>Планировка или адрес объекта и пара картинок того, что вам нравится. Остальное спросим сами.</p></details>
+  </div>
+</section>
+
+<section class="ct" id="contact">
+  <div class="ct__in">
+    <span class="k" style="color:var(--clay-l)">Записаться на встречу</span>
+    <h2 style="margin-top:30px" class="rv">Расскажите, каким должен быть ваш дом</h2>
+    <div class="ct__g">
+      <div class="ct__i rv">
+        <p>Первая встреча — в нашей мастерской или у вас на объекте. Час разговора, образцы материалов и честный ответ, подходим ли мы друг другу.</p>
+        <dl>
+          <div><dt class="k">Мастерская</dt><dd>Алматы, ул. Кабанбай батыра, 00</dd></div>
+          <div><dt class="k">Телефон</dt><dd>+7 (700) 000 00 00</dd></div>
+          <div><dt class="k">Instagram</dt><dd>@tor.interiors</dd></div>
+        </dl>
+      </div>
+      <div class="rv">
+        <form id="form" novalidate>
+          <div class="fl"><input id="f1" placeholder=" "><label for="f1">Имя</label></div>
+          <div class="fl"><input id="f2" type="tel" placeholder=" "><label for="f2">Телефон или WhatsApp</label></div>
+          <fieldset class="chips"><legend class="k">Объект</legend><button type="button" class="chip on">Квартира</button><button type="button" class="chip">Дом</button><button type="button" class="chip">Ресторан</button><button type="button" class="chip">Шоурум</button></fieldset>
+          <button class="btn" type="submit">Отправить заявку <span>→</span></button>
+        </form>
+        <p class="sent" id="sent">Спасибо. Мы позвоним сегодня до 19:00, чтобы договориться о встрече.</p>
+      </div>
+    </div>
+    <div class="ft"><span>© 2026 TÖR</span><span>Алматы · Астана · Шымкент</span><span>Архитектура интерьера</span></div>
+    <div class="ft__w" id="ftW">TÖR</div>
+  </div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+<script>
+(() => {
+const { animate, scroll, inView, stagger } = window.Motion;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const ease = [0.22, 1, 0.36, 1];
+const fine = matchMedia('(pointer: fine)').matches;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mob = () => innerWidth <= 900;
+const lin = { ease: 'linear' };
+
+/* smooth wheel on desktop only */
+let lenis = null;
+if (fine && !reduce) {
+  lenis = new Lenis({ lerp: 0.1 });
+  const raf = t => { lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf);
+}
+$$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  const t = $(a.getAttribute('href')); if (!t) return; e.preventDefault();
+  lenis ? lenis.scrollTo(t, { duration: 1.6 }) : t.scrollIntoView({ behavior: 'smooth' });
+}));
+
+/* loader */
+lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
+const hero = $('#heroImg');
+const heroReady = Promise.race([new Promise(r => { if (hero.complete) r(); else { hero.onload = r; hero.onerror = r; } }), new Promise(r => setTimeout(r, 5000))]);
+animate('.ld__w span', { transform: ['translateY(105%)', 'translateY(0%)'] }, { duration: 1, delay: stagger(.08), ease });
+const cnt = animate(0, 100, { duration: 1.7, ease: [.65, 0, .35, 1], onUpdate: v => { $('#ldn').textContent = String(Math.round(v)).padStart(3, '0'); $('#ldl').style.transform = `scaleX(${v / 100})`; } });
+Promise.all([cnt, heroReady]).then(() => {
+  animate('.ld__w span', { transform: 'translateY(-105%)' }, { duration: .7, delay: stagger(.06), ease });
+  animate('#ld', { opacity: [1, 0] }, { duration: .8, delay: .5 }).then(() => { $('#ld').remove(); document.documentElement.style.overflow = ''; lenis && lenis.start(); });
+  animate('#hWord span', { transform: ['translateY(40%)', 'translateY(0%)'], opacity: [0, 1] }, { duration: 1.4, delay: stagger(.1, { startDelay: .7 }), ease });
+});
+
+/* HERO: arch mask built in viewport pixels, scaled from huge to 1 (transform only) */
+const svg = $('#hSvg'), path = $('#hPath');
+let archCx = 0, archCy = 0;
+function buildArch() {
+  const W = innerWidth, H = innerHeight;
+  const aw = mob() ? W * .74 : Math.min(W * .34, H * .52), ah = mob() ? H * .56 : H * .7;
+  const x0 = (W - aw) / 2, y1 = H * (mob() ? .74 : .86), y0 = y1 - ah, r = aw / 2;
+  archCx = W / 2; archCy = y0 + ah / 2;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  path.setAttribute('d', `M${-W * 4} ${-H * 4}H${W * 5}V${H * 5}H${-W * 4}Z M${x0} ${y1}V${y0 + r}A${r} ${r} 0 0 1 ${x0 + aw} ${y0 + r}V${y1}Z`);
+  $('#hMask').style.transformOrigin = `${archCx}px ${archCy}px`;
+  return Math.max(W / aw, H / ah) * 2.4;
+}
+let s0 = buildArch();
+const heroOpts = { target: $('#hero'), offset: ['start start', 'end end'] };
+const mask = $('#hMask'), hImg = $('#hImg'), cap = $('#hCap'), words = $$('#hWord span'), top = $('.hero__top');
+scroll(p => {
+  const t = Math.min(1, p / .75), e = 1 - Math.pow(1 - t, 3);
+  mask.style.transform = `scale(${(s0 + (1 - s0) * e).toFixed(4)})`;
+  hImg.style.transform = `scale(${(1 + .08 * e).toFixed(4)})`;
+  cap.style.opacity = Math.max(0, (p - .6) / .25).toFixed(3);
+  top.style.opacity = (1 - Math.min(1, p / .3)).toFixed(3);
+  words[0].style.transform = `translate3d(${-e * 22}vw,${e * 8}vh,0)`;
+  words[1].style.transform = `translate3d(0,${e * 32}vh,0)`;
+  words[2].style.transform = `translate3d(${e * 22}vw,${e * 8}vh,0)`;
+}, heroOpts);
+addEventListener('resize', () => { s0 = buildArch(); });
+
+/* intro words */
+const it = $('#introT');
+it.innerHTML = it.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+const ws = $$('#introT .w'); let lit = -1;
+scroll(p => { const k = Math.floor(p * ws.length * 1.08); if (k === lit) return; lit = k; ws.forEach((w, i) => w.style.opacity = i < k ? 1 : .13); }, { target: it, offset: ['start .85', 'end .5'] });
+
+/* counters + reveals */
+$$('[data-n]').forEach(el => inView(el, () => { const n = +el.dataset.n, from = n > 1000 ? n - 40 : 0; animate(from, n, { duration: 1.8, ease, onUpdate: v => el.textContent = Math.round(v) }); }, { amount: .6 }));
+inView('.rv', ({ target }) => { animate(target, { opacity: [0, 1], transform: ['translateY(36px)', 'translateY(0px)'] }, { duration: 1.1, ease }); }, { amount: .2 });
+
+/* works: inner-image parallax + tabs */
+$$('.w__img img, .mt__img img').forEach(img => {
+  scroll(animate(img, { transform: ['translate3d(0,-8%,0)', 'translate3d(0,8%,0)'] }, lin), { target: img.parentElement, offset: ['start end', 'end start'] });
+});
+$$('#tabs button').forEach(b => b.addEventListener('click', () => {
+  $$('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const f = b.dataset.f; $$('.w').forEach(w => w.classList.toggle('off', f !== 'all' && w.dataset.t !== f));
+}));
+
+/* materials: vertical -> horizontal + per-card inner drift */
+const tr = $('#matTr'); let dist = 0;
+const meas = () => dist = tr.scrollWidth - innerWidth; meas(); addEventListener('resize', meas);
+const matOpts = { target: $('#materials'), offset: ['start start', 'end end'] };
+const mcImgs = $$('.mc__img img');
+scroll(p => {
+  tr.style.transform = `translate3d(${(-p * dist).toFixed(1)}px,0,0)`;
+  mcImgs.forEach((im, i) => { const l = p * (mcImgs.length + 1) - (i + 1); im.style.transform = `translate3d(${(l * -5).toFixed(2)}%,0,0)`; });
+}, matOpts);
+scroll(animate('#matBar', { transform: ['scaleX(0)', 'scaleX(1)'] }, lin), matOpts);
+
+/* sketch -> object wipe */
+const skF = $('#skF');
+scroll(p => { const v = Math.min(1, Math.max(0, (p - .12) / .7)); skF.style.setProperty('--p', v.toFixed(4)); }, { target: $('#sketch'), offset: ['start start', 'end end'] });
+
+/* method rail */
+scroll(animate('#rail', { transform: ['scaleY(0)', 'scaleY(1)'] }, lin), { target: $('#mtR'), offset: ['start .7', 'end .6'] });
+
+/* quote + footer word */
+scroll(animate('#qBg', { transform: ['translate3d(0,-9%,0)', 'translate3d(0,9%,0)'] }, lin), { target: $('.qt'), offset: ['start end', 'end start'] });
+scroll(animate('#ftW', { transform: ['translate3d(0,35%,0)', 'translate3d(0,0,0)'] }, lin), { target: $('#ftW'), offset: ['start end', 'end end'] });
+
+/* nav state */
+const nav = $('#nav'), lights = $$('.intro, .works, .sk, .mt, .fq');
+let navOn = null, navLt = null;
+const navUpd = () => {
+  const on = scrollY > innerHeight * 1.2;
+  let lt = false; const y = 40;
+  for (const s of lights) { const r = s.getBoundingClientRect(); if (r.top <= y && r.bottom >= y) { lt = true; break; } }
+  if (on !== navOn) { navOn = on; nav.classList.toggle('on', on); }
+  if (lt !== navLt) { navLt = lt; nav.classList.toggle('lt', lt); }
+};
+addEventListener('scroll', navUpd, { passive: true }); navUpd();
+
+/* form */
+$$('.chips').forEach(g => g.addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; g.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === c)); }));
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!$('#f1').value.trim() || !$('#f2').value.trim()) { animate('#form .fl', { transform: ['translateX(0px)', 'translateX(-6px)', 'translateX(6px)', 'translateX(0px)'] }, { duration: .4 }); return; }
+  animate('#form', { opacity: 0 }, { duration: .5 }).then(() => { $('#form').style.display = 'none'; const s = $('#sent'); s.style.display = 'block'; animate(s, { opacity: [0, 1], transform: ['translateY(16px)', 'translateY(0px)'] }, { duration: .8, ease }); });
+});
+})();
+</script>
+</body>
+</html>
