@@ -8,3 +8,4 @@ dist/
 .impeccable/mocks/
 .lighthouse/
 showcase/
+.netlify/
