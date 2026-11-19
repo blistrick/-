@@ -20,7 +20,7 @@ const floors = Array.from({ length: TOTAL_FLOORS }, (_, i) => TOTAL_FLOORS - i).
   return {
     n,
     key: p?.key ?? '',
-    summary: p ? `${units.length} помещ.${sold ? ` · ${sold} продано` : ''}` : 'план по запросу',
+    summary: p ? `${units.length} помещ.${sold ? `, ${sold} прод.` : ''}` : 'план по запросу',
   };
 });
 const initial = 5;
@@ -31,8 +31,8 @@ const shown = floorPlans.filter((p) => p.floors.length);
     <header class="offices__head">
       <h2 id="offices-title" data-reveal>Офисы и&nbsp;планировки</h2>
       <p class="offices__lead muted" data-reveal>
-        Выберите этаж, затем помещение на плане. Офисные этажи — потолки {facts.ceilingTypical} и чистовая отделка;
-        первый этаж — коммерция с отдельными входами и потолками {facts.ceilingGround}.
+        Выберите этаж, затем помещение на плане. На офисных этажах потолки {facts.ceilingTypical} и чистовая отделка;
+        на первом этаже коммерция с отдельными входами и потолками {facts.ceilingGround}.
       </p>
     </header>
 
@@ -104,7 +104,7 @@ const shown = floorPlans.filter((p) => p.floors.length);
                           aria-pressed={sold ? undefined : 'false'}
                           aria-label={sold ? 'Помещение продано' : `Помещение ${label} м²`}
                         >
-                          <rect x={u.x} y={u.y} width={u.w} height={u.h} fill={sold ? `url(#hatch-${p.key})` : undefined} />
+                          <rect x={u.x} y={u.y} width={u.w} height={u.h} style={sold ? `fill:url(#hatch-${p.key});fill-opacity:1` : undefined} />
                           <text x={u.x + u.w / 2} y={u.y + u.h / 2} font-size={labelSize[p.key] * (sold ? 0.8 : 1)} dominant-baseline="central" text-anchor="middle">{label}</text>
                         </g>
                       );
@@ -119,7 +119,7 @@ const shown = floorPlans.filter((p) => p.floors.length);
         <div class="plan__empty" data-plan-view="none" hidden>
           <h3 class="plan__title"><span data-empty-floor></span> этаж</h3>
           <p>
-            Планировки этого этажа нет в материалах — <span class="fill">{FILL}</span>. Типовые параметры офисных этажей:
+            Планировки этого этажа пока нет: <span class="fill">{FILL}</span>. Типовые параметры офисных этажей:
             потолки {facts.ceilingTypical}, чистовая отделка, площади от {facts.minArea} м².
           </p>
           <a href="#request" class="btn btn--line" data-request-floor>Запросить планировку <Arrow /></a>
@@ -162,7 +162,7 @@ const shown = floorPlans.filter((p) => p.floors.length);
   }
   .picker {
     display: grid;
-    grid-template-columns: 9.5rem minmax(0, 1fr) 17rem;
+    grid-template-columns: 10.5rem minmax(0, 1fr) 17rem;
     gap: clamp(1.5rem, 3vw, 3rem);
     align-items: start;
     border-top: 1px solid var(--ink-on-stone);
@@ -293,9 +293,6 @@ const shown = floorPlans.filter((p) => p.floors.length);
   .unit[aria-pressed='true'] rect {
     fill-opacity: 0.85;
   }
-  .unit--sold rect {
-    fill-opacity: 1;
-  }
   .unit--sold text {
     fill: var(--ink-on-stone-2);
     font-weight: 400;
@@ -357,11 +354,13 @@ const shown = floorPlans.filter((p) => p.floors.length);
   }
   .unit-card__cta {
     width: 100%;
+    padding-inline: 1rem;
+    white-space: nowrap;
   }
 
   @media (max-width: 1180px) {
     .picker {
-      grid-template-columns: 9rem minmax(0, 1fr);
+      grid-template-columns: 10.5rem minmax(0, 1fr);
     }
     .unit-card {
       grid-column: 1 / -1;

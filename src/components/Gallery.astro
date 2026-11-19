@@ -125,8 +125,10 @@ const large = await Promise.all(shots.map((s) => getImage({ src: s.img, width: M
     object-fit: cover;
     transition: transform 1.1s var(--ease-out);
   }
-  .shot__btn:hover :global(img) {
-    transform: scale(1.035);
+  @media (prefers-reduced-motion: no-preference) {
+    .shot__btn:hover :global(img) {
+      transform: scale(1.035);
+    }
   }
   .shot__cap {
     padding-top: 0.6rem;

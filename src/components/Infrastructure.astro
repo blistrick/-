@@ -12,10 +12,10 @@ import { facts } from '../data/site';
 
 const items = [
   { t: 'Лобби с ресепшен', d: 'Мрамор, дерево и мягкий свет. Гостей встречают у стойки ресепшен.', img: reception, alt: 'Лобби: стойка ресепшен из мрамора и турникеты' },
-  { t: 'Турникеты на входе', d: 'Проход в офисную часть — через турникеты у ресепшен.', img: entrance, alt: 'Вход в лобби с высокими витражами' },
+  { t: 'Турникеты на входе', d: 'Проход в офисную часть через турникеты у ресепшен.', img: entrance, alt: 'Вход в лобби с высокими витражами' },
   { t: 'Лифтовой холл', d: 'Лифты в отделке под медь, светлый камень на полу и стенах.', img: elevators, alt: 'Лифтовой холл с тремя лифтами в медной отделке' },
-  { t: 'Зона ожидания', d: 'Кресла и столики у стены из дерева — место для гостей и коротких встреч.', img: lounge, alt: 'Зона ожидания с креслами в лобби' },
-  { t: 'Коммерция на первом этаже', d: 'Помещения под магазины, услуги, банки, рестораны и шоурумы — с отдельными входами с улицы.', img: podium, alt: 'Первый этаж с витринами, кафе и пешеходной зоной' },
+  { t: 'Зона ожидания', d: 'Кресла и столики у стены из дерева: место для гостей и коротких встреч.', img: lounge, alt: 'Зона ожидания с креслами в лобби' },
+  { t: 'Коммерция на первом этаже', d: 'Помещения под магазины, услуги, банки, рестораны и шоурумы, с отдельными входами с улицы.', img: podium, alt: 'Первый этаж с витринами, кафе и пешеходной зоной' },
   { t: 'Парковка', d: 'Въезд с улицы Бектурова.', extra: { k: 'Мест', v: facts.parkingSpaces }, img: aerial, alt: 'Вид сверху на бизнес-центр и прилегающие улицы' },
   { t: 'Управляющая компания', d: 'Здание обслуживает собственная управляющая компания.', extra: { k: 'Охрана', v: facts.security }, img: crossroad, alt: 'Бизнес-центр на перекрёстке днём' },
 ];
@@ -106,13 +106,15 @@ const items = [
     padding-block: 2.25rem;
     border-top: 1px solid var(--rule);
     min-height: 34vh;
-    transition: opacity 0.6s var(--ease-out);
   }
-  :global(html.motion) .infra__item {
-    opacity: 0.55;
+  .infra__item h3 {
+    transition: color 0.6s var(--ease-out);
   }
-  :global(html.motion) .infra__item.is-active {
-    opacity: 1;
+  :global(html.motion) .infra__item h3 {
+    color: var(--ink-on-night-2);
+  }
+  :global(html.motion) .infra__item.is-active h3 {
+    color: var(--ink-on-night);
   }
   .infra__item p {
     margin-top: 0.75rem;
@@ -134,8 +136,8 @@ const items = [
     .infra__item {
       min-height: 0;
     }
-    :global(html.motion) .infra__item {
-      opacity: 1;
+    :global(html.motion) .infra__item h3 {
+      color: var(--ink-on-night);
     }
     .infra__mobile-img {
       display: block;

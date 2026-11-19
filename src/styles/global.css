@@ -292,12 +292,14 @@ p {
   color: var(--ink-on-stone-2);
 }
 
-/* motion: content is visible by default; JS adds .motion before animating */
+/* reduced motion: no motion libraries load (html.motion is never set), state changes stay
+   instant but visible; only movement-based hover effects are switched off here */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+  html {
+    scroll-behavior: auto;
+  }
+  .btn:hover svg,
+  .btn:active {
+    transform: none;
   }
 }

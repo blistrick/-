@@ -29,7 +29,10 @@ if (modelEl && !reduced && canRun3D()) {
     (entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         io.disconnect();
-        import('./building').then((m) => m.initBuilding(modelEl)).catch(() => {});
+        const load = () => import('./building').then((m) => m.initBuilding(modelEl)).catch(() => {});
+        // parse + shader compile off the critical moment of scrolling
+        if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 1500 });
+        else setTimeout(load, 300);
       }
     },
     { rootMargin: '120% 0px' },

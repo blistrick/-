@@ -127,10 +127,45 @@ export async function initBuilding(section: HTMLElement) {
     if (needsRender) {
       renderer.render(scene, camera);
       needsRender = false;
+      govern(performance.now());
     }
   };
   const request = () => {
     if (!raf && visible) raf = requestAnimationFrame(loop);
+  };
+
+  // Frame governor: if scrolling through the block can't hold ~35 fps, drop resolution,
+  // and if even that fails, hand the block back to the static render.
+  let dpr = renderer.getPixelRatio();
+  let lastFrame = 0;
+  let slow = 0;
+  let samples = 0;
+  let gaveUp = false;
+  const govern = (now: number) => {
+    if (gaveUp) return;
+    if (lastFrame && now - lastFrame < 250) {
+      samples++;
+      if (now - lastFrame > 28) slow++;
+      if (samples >= 24) {
+        if (slow / samples > 0.4) {
+          if (dpr > 0.75) {
+            dpr = Math.max(0.75, dpr - 0.5);
+            renderer.setPixelRatio(dpr);
+            resize();
+          } else {
+            gaveUp = true;
+            section.classList.remove('is-3d');
+            visible = false;
+            renderer.setAnimationLoop(null);
+            renderer.dispose();
+            renderer.domElement.remove();
+            return;
+          }
+        }
+        samples = slow = 0;
+      }
+    }
+    lastFrame = now;
   };
 
   modelProgress.listeners.add((p) => {
