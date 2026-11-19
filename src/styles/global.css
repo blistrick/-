@@ -144,6 +144,10 @@ textarea {
   outline: 2px solid var(--amber);
   outline-offset: 3px;
 }
+/* on travertine the amber ring is too faint (1.9:1); bronze keeps it above 3:1 */
+.on-stone :focus-visible {
+  outline-color: #8a5a1c;
+}
 h1,
 h2,
 h3,

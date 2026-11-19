@@ -255,11 +255,11 @@ Calm, square, and amber; the one warm object on the screen.
 
 ### Floor Stack and Plan Picker (signature)
 - **Floor stack:** a vertical list of floors bound by hairlines, each a Numeral plus a one-line summary. Hover tints to Honed Travertine; the selected floor inverts to Night Glass with Lamplit Paper text. Under 900px it becomes a horizontal strip of bordered cells, floor numbers only.
-- **Plan:** the real plan drawing on Pale Travertine with an SVG overlay. Units fill amber at 35% on hover/focus and 85% when selected; sold units lose weight and colour. Under 900px unit labels move into square chips that fill amber when selected.
+- **Plan:** the real plan drawing on Pale Travertine with an SVG overlay. Units fill amber at 35% on hover/focus and 85% when selected; sold units take a 45° Night Ink hatch at 35% opacity, lose label weight and drop out of the tab order. Under 900px unit labels move into square chips that fill amber when selected; past eight chips the rest fold behind an underlined «Показать все» text button.
 - **Unit sheet:** a 17rem Night Glass panel, sticky beside the plan, with the area in Lead size, a hairline key/value list and a full-width amber CTA.
 
 ### Fin Cluster (signature)
-- The facade fins as a mark: placed at the top of night and stone sections, the hero, plates and the footer. Fins grow downward from the top (scaleY 0 to 1, 1.6–1.8s expo-out, 0.05–0.06s stagger) when their section enters. Never interactive, always aria-hidden.
+- The facade fins as a mark: placed at the top of chosen night and stone sections (about, location, request), the hero and the full-bleed plates; not every section carries one. Fins grow downward from the top (scaleY 0 to 1, 1.6–1.8s expo-out, 0.05–0.06s stagger) when their section enters. Never interactive, always aria-hidden.
 
 ### Scroll-Driven Scenes
 - **3D turn:** a 320vh track (260vh on mobile) pins a full-viewport stage; scroll turns the model from day to night sky while windows light, one step of copy at a time, and a 1px amber line on the right fills as progress. Without motion it falls back to a static render and stacked steps.
