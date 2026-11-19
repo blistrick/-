@@ -1,5 +1,6 @@
 import {
   ACESFilmicToneMapping,
+  MeshBasicMaterial,
   CanvasTexture,
   Color,
   DirectionalLight,
@@ -38,6 +39,7 @@ export async function initBuilding(section: HTMLElement) {
   host.append(renderer.domElement);
 
   const scene = new Scene();
+  // soft studio reflections give the glass believable highlights without an HDR download
   const pmrem = new PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   pmrem.dispose();
@@ -58,7 +60,7 @@ export async function initBuilding(section: HTMLElement) {
   g.fillStyle = grd;
   g.fillRect(0, 0, 128, 128);
   const shadowTex = new CanvasTexture(c);
-  const ground = new Mesh(new PlaneGeometry(150, 150), new MeshStandardMaterial({ map: shadowTex, transparent: true, depthWrite: false, roughness: 1 }));
+  const ground = new Mesh(new PlaneGeometry(120, 120), new MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0.8 }));
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = 0.02;
   scene.add(ground);
@@ -70,16 +72,17 @@ export async function initBuilding(section: HTMLElement) {
   loader.setMeshoptDecoder(MeshoptDecoder);
   const gltf = await loader.loadAsync('/models/capital.glb');
   const model = gltf.scene;
-  const lit: MeshStandardMaterial[] = [];
+  const lit: { m: MeshStandardMaterial; k: number }[] = [];
+  const litLevel: Record<string, number> = { glassLitA: 1.25, glassLitB: 0.85, glassLitC: 0.55, glassGround: 0.5 };
   model.traverse((o: Object3D) => {
     const m = (o as Mesh).material as MeshStandardMaterial | undefined;
     if (!m) return;
     if (['fin', 'frame', 'stone'].includes(m.name)) m.side = DoubleSide;
-    if (m.name === 'glass' || m.name === 'glassLit') m.envMapIntensity = 1.4;
-    if (m.name === 'glassLit' || m.name === 'glassGround') {
+    if (m.name.startsWith('glass')) m.envMapIntensity = m.name === 'glass' ? 1.25 : 0.9;
+    if (m.name in litLevel) {
       m.emissive = new Color(m.emissive.r, m.emissive.g, m.emissive.b);
       m.emissiveIntensity = 0;
-      lit.push(m);
+      lit.push({ m, k: litLevel[m.name] });
     }
   });
   // centre the L-shape on its footprint
@@ -103,8 +106,8 @@ export async function initBuilding(section: HTMLElement) {
   const apply = (p: number) => {
     const t = ease(Math.min(1, Math.max(0, p)));
     const angle = lerp(-0.95, 1.15, t);
-    const dist = lerp(isMobile ? 260 : 175, isMobile ? 230 : 150, t);
-    const h = lerp(72, 36, t);
+    const dist = lerp(isMobile ? 260 : 178, isMobile ? 238 : 160, t);
+    const h = lerp(70, 44, t);
     // desktop: keep the building right of the copy; mobile: centred between title and captions
     const offsetX = isMobile ? 0 : lerp(-20, -16, t);
     camera.position.set(Math.sin(angle) * dist, h, Math.cos(angle) * dist);
@@ -112,7 +115,7 @@ export async function initBuilding(section: HTMLElement) {
     target.set(offsetX * Math.cos(angle), ty, -offsetX * Math.sin(angle));
     camera.lookAt(target);
     const dusk = Math.min(1, Math.max(0, (p - 0.45) / 0.4));
-    lit.forEach((m) => (m.emissiveIntensity = dusk * 1.15));
+    lit.forEach(({ m, k }) => (m.emissiveIntensity = dusk * k));
     hemi.intensity = lerp(0.9, 0.35, dusk);
     sun.intensity = lerp(2.2, 0.55, dusk);
     needsRender = true;

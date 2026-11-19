@@ -3,9 +3,11 @@ import { Picture } from 'astro:assets';
 import tower from '../../images/facade-corner-day.jpg';
 import Arrow from './Arrow.astro';
 import { contacts, formEndpoint, FILL } from '../data/site';
+import Fins from './Fins.astro';
 const wa = contacts.whatsapp ? `https://wa.me/${contacts.whatsapp}?text=${encodeURIComponent('Здравствуйте! Интересует офис в бизнес-центре CAPITAL.')}` : null;
 ---
 <section class="req on-stone section" id="request" aria-labelledby="req-title">
+  <Fins tone="stone" count={7} />
   <div class="wrap req__grid">
     <div class="req__copy">
       <h2 id="req-title" data-reveal>Подберём офис под&nbsp;вашу команду</h2>

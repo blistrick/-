@@ -1,0 +1,32 @@
+---
+// The facade's crown fins as thin vertical rules: the page's recurring mark.
+interface Props { class?: string; count?: number; tone?: 'night' | 'stone' }
+const { class: cls, count = 9, tone = 'night' } = Astro.props;
+const heights = [62, 78, 54, 90, 70, 100, 66, 84, 58, 94, 72, 80];
+---
+<div class:list={['fins', `fins--${tone}`, cls]} aria-hidden="true" data-fins>
+  {heights.slice(0, count).map((h, i) => <span style={`--h:${h}%;--i:${i}`}></span>)}
+</div>
+<style>
+  .fins {
+    position: absolute;
+    top: 0;
+    right: var(--gutter);
+    height: clamp(6rem, 22vh, 13rem);
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 1rem);
+    align-items: flex-start;
+    pointer-events: none;
+  }
+  .fins span {
+    width: 1px;
+    height: var(--h);
+    transform-origin: top;
+  }
+  .fins--night span {
+    background: linear-gradient(180deg, rgb(236 230 219 / 0), rgb(236 230 219 / 0.5));
+  }
+  .fins--stone span {
+    background: linear-gradient(180deg, rgb(21 29 51 / 0), rgb(21 29 51 / 0.38));
+  }
+</style>

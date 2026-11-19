@@ -1,6 +1,5 @@
 ---
 import { Picture, getImage } from 'astro:assets';
-import sky from '../../images/facade-sky.jpg';
 import reception from '../../images/lobby-reception.jpg';
 import corner from '../../images/facade-corner-day.jpg';
 import officeOpen from '../../images/office-open.jpg';
@@ -12,7 +11,6 @@ import commercial from '../../images/interior-commercial.jpg';
 import crossroad from '../../images/facade-crossroad.jpg';
 
 const shots = [
-  { img: sky, alt: 'Фасад бизнес-центра CAPITAL на фоне синего неба', cap: 'Фасад' },
   { img: reception, alt: 'Ресепшен в лобби', cap: 'Лобби' },
   { img: corner, alt: 'Угол здания с витринами первого этажа днём', cap: 'Подиум и витрины' },
   { img: officeOpen, alt: 'Офис открытой планировки с панорамными окнами', cap: 'Офис в чистовой отделке' },
@@ -82,14 +80,12 @@ const large = await Promise.all(shots.map((s) => getImage({ src: s.img, width: M
   .gallery__head {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: end;
+    align-items: baseline;
     gap: 1rem 3rem;
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
   .gallery__note {
-    font-size: var(--step--1);
-    max-width: 36ch;
+    max-width: 40ch;
   }
   .gallery__track {
     list-style: none;
@@ -132,7 +128,7 @@ const large = await Promise.all(shots.map((s) => getImage({ src: s.img, width: M
   }
   .shot__cap {
     padding-top: 0.6rem;
-    font-size: var(--step--1);
+    font-size: var(--step-0);
     color: var(--ink-on-stone-2);
   }
 

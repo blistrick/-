@@ -27,7 +27,11 @@ export function initPicker() {
     if (focus) btn?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
+  const syncChips = (id: string | null) =>
+    root.querySelectorAll<HTMLButtonElement>('[data-unit-btn]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.unitBtn === id)));
+
   function clearUnit() {
+    syncChips(null);
     selected?.setAttribute('aria-pressed', 'false');
     selected = null;
     cardEmpty.hidden = false;
@@ -39,6 +43,7 @@ export function initPicker() {
     selected?.setAttribute('aria-pressed', 'false');
     selected = g;
     g.setAttribute('aria-pressed', 'true');
+    syncChips(g.dataset.unit!);
     const view = g.closest<HTMLElement>('[data-plan-view]')!;
     const m = meta[view.dataset.planView!] || { ceiling: '', finish: '' };
     const area = Number(g.dataset.area);
@@ -71,6 +76,13 @@ export function initPicker() {
       }
     });
   });
+
+  root.querySelectorAll<HTMLButtonElement>('[data-unit-btn]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const g = root.querySelector<SVGGElement>(`.unit[data-unit="${b.dataset.unitBtn}"]`);
+      if (g) selectUnit(g);
+    }),
+  );
 
   card.querySelector('[data-card-cta]')?.addEventListener('click', () => {
     if (!selected) return;

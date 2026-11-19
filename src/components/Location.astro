@@ -4,6 +4,7 @@ import scheme from '../../images/map-scheme.jpg';
 import Arrow from './Arrow.astro';
 import Fill from './Fill.astro';
 import { travel, contacts } from '../data/site';
+import Fins from './Fins.astro';
 const query = encodeURIComponent('Астана, улица Бектурова');
 const yandexEmbed = `https://yandex.ru/map-widget/v1/?text=${query}&z=16`;
 const yandexLink = `https://yandex.kz/maps/?text=${query}&z=16`;
@@ -31,6 +32,7 @@ const points = [
     </div>
   </div>
   <div class="loc__copy">
+    <Fins count={7} />
     <h2 id="loc-title" data-reveal>Левый берег, у&nbsp;Хан Шатыра</h2>
     <p class="loc__addr">{contacts.objectAddress}</p>
     <ul class="loc__points">
@@ -84,6 +86,7 @@ const points = [
     bottom: var(--gutter);
   }
   .loc__copy {
+    position: relative;
     padding: var(--section-y) var(--gutter);
     max-width: 44rem;
   }

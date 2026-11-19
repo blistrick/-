@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import front from '../../images/facade-day-front.jpg';
 import Fill from './Fill.astro';
 import { facts } from '../data/site';
+import Fins from './Fins.astro';
 const rows: { k: string; v: string | null; hint?: string }[] = [
   { k: 'Расположение', v: 'Левый берег, первая линия ул. Бектурова, рядом с ТРЦ «Хан Шатыр»' },
   { k: 'Класс', v: facts.buildingClass, hint: 'Класс бизнес-центра' },
@@ -17,6 +18,7 @@ const rows: { k: string; v: string | null; hint?: string }[] = [
 ];
 ---
 <section class="about on-stone section" id="about" aria-labelledby="about-title">
+  <Fins tone="stone" />
   <div class="wrap about__grid">
     <div class="about__intro">
       <h2 id="about-title" data-reveal>Рядом с&nbsp;Хан Шатыром, на&nbsp;выезде к&nbsp;проспекту Туран</h2>

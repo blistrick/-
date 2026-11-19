@@ -112,7 +112,12 @@ const shown = floorPlans.filter((p) => p.floors.length);
                   </svg>
                 </div>
               </div>
-              <p class="plan__hint muted">Схема по плану из презентации. Прокрутите план вбок, если он не помещается.</p>
+              <p class="plan__hint muted">Схема по плану из презентации.</p>
+              <ul class="unit-list" aria-label={`Свободные помещения, ${p.title}`}>
+                {d.units.filter((u) => u.status !== 'sold' && u.area != null).map((u) => (
+                  <li><button type="button" class="unit-chip num" data-unit-btn={u.id} aria-pressed="false">{fmt(u.area as number)} м²</button></li>
+                ))}
+              </ul>
             </div>
           );
         })}
@@ -301,6 +306,27 @@ const shown = floorPlans.filter((p) => p.floors.length);
     margin-top: 0.75rem;
     font-size: var(--step--1);
   }
+  .unit-list {
+    display: none;
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .unit-chip {
+    min-height: 2.75rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--rule);
+    background: var(--stone-50);
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .unit-chip[aria-pressed='true'] {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--night-950);
+  }
   .plan__empty {
     display: grid;
     gap: 1.25rem;
@@ -370,6 +396,15 @@ const shown = floorPlans.filter((p) => p.floors.length);
   @media (max-width: 900px) {
     .offices__head {
       grid-template-columns: 1fr;
+    }
+    .plan__canvas {
+      min-width: 0;
+    }
+    .unit-list {
+      display: flex;
+    }
+    .unit text {
+      display: none;
     }
     .picker {
       grid-template-columns: minmax(0, 1fr);

@@ -29,6 +29,7 @@ export function initMotion() {
   initNav();
   initReveals();
   initParallax();
+  initFins();
   initModelScroll();
   initInfra();
   initGallery();
@@ -90,6 +91,18 @@ function initReveals() {
   });
 }
 
+function initFins() {
+  gsap.utils.toArray<HTMLElement>('[data-fins]').forEach((group) => {
+    gsap.from(group.children, {
+      scaleY: 0,
+      duration: 1.6,
+      ease: 'expo.out',
+      stagger: 0.05,
+      scrollTrigger: { trigger: group.parentElement!, start: 'top 80%', once: true },
+    });
+  });
+}
+
 function initParallax() {
   gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
     const amount = parseFloat(el.dataset.parallax || '0.15');
@@ -135,7 +148,8 @@ function initModelScroll() {
       steps.forEach((_, i) => {
         const centre = (i + 0.5) / steps.length;
         const d = Math.abs(p - centre) * steps.length; // 0 at centre, 0.5 at edges
-        const o = i === 0 && p < centre ? 1 : i === steps.length - 1 && p > centre ? 1 : gsap.utils.clamp(0, 1, 1.6 - d * 2.2);
+        // each caption fades fully out before the next one fades in, so two never overlap
+        const o = i === 0 && p < centre ? 1 : i === steps.length - 1 && p > centre ? 1 : gsap.utils.clamp(0, 1, (0.5 - d) * 4);
         setters[i](o);
         ySetters[i]((p - centre) * -40);
       });

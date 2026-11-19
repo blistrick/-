@@ -2,10 +2,12 @@
 import Wordmark from './Wordmark.astro';
 import Fill from './Fill.astro';
 import { contacts } from '../data/site';
+import Fins from './Fins.astro';
 const year = new Date().getFullYear();
 const tel = contacts.phone ? `tel:${contacts.phone.replace(/[^\d+]/g, '')}` : null;
 ---
 <footer class="foot on-night" aria-labelledby="foot-title">
+  <Fins count={12} />
   <div class="wrap">
     <h2 id="foot-title" class="sr-only">Контакты</h2>
     <Wordmark class="foot__wm" />
@@ -39,6 +41,7 @@ const tel = contacts.phone ? `tel:${contacts.phone.replace(/[^\d+]/g, '')}` : nu
 
 <style>
   .foot {
+    position: relative;
     padding-block: clamp(4rem, 8vw, 7rem) 2rem;
     border-top: 1px solid var(--rule-on-night);
   }
