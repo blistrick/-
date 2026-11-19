@@ -22,35 +22,14 @@ if (!reduced) {
   initStaticNav();
 }
 
-// 3D loads only when the visitor approaches the block, and only on capable devices
-const modelEl = document.querySelector<HTMLElement>('[data-model]');
-if (modelEl && !reduced && canRun3D()) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        io.disconnect();
-        const load = () => import('./building').then((m) => m.initBuilding(modelEl)).catch(() => {});
-        // parse + shader compile off the critical moment of scrolling
-        if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 1500 });
-        else setTimeout(load, 300);
-      }
-    },
-    { rootMargin: '120% 0px' },
+// Reduced motion / no scroll animation: the orbit video simply plays with its own controls
+if (reduced) {
+  import('./tour').then(({ loadTourVideo }) =>
+    loadTourVideo((v) => {
+      v.controls = true;
+      v.loop = true;
+    }),
   );
-  io.observe(modelEl);
-}
-
-function canRun3D() {
-  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  if (nav.connection?.saveData) return false;
-  if ((nav.deviceMemory ?? 8) < 4) return false;
-  if ((nav.hardwareConcurrency ?? 8) < 4) return false;
-  try {
-    const c = document.createElement('canvas');
-    return !!c.getContext('webgl2');
-  } catch {
-    return false;
-  }
 }
 
 function initStaticNav() {

@@ -60,7 +60,7 @@ Open / conflicting (never fill by guessing; show [ЗАПОЛНИТЬ]):
 - docs/capital-presentation.pdf: the sales presentation (13 pages).
 - images/: 17 renders (facades day/dusk/night, aerial, podium, lobby, lounge, elevators, offices, corridor) and map-scheme.jpg (location scheme from the presentation).
 - images/plans/: plan drawings derived from docs/plans-source/.
-- No 3D model was supplied; the site's model is built from the renders.
+- models/capital-tour-source.mp4: supplied 4 s orbit video of the building, scrubbed by scroll on the site (no 3D model is used).
 - Absent and never to be fabricated: prices, testimonials, tenant names, awards, travel times, class certification, contacts.
 
 ## Product Principles

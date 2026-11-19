@@ -31,7 +31,7 @@ export function initMotion() {
   initReveals();
   initParallax();
   initFins();
-  initModelScroll();
+  initTour();
   initInfra();
   initGallery();
 
@@ -117,35 +117,56 @@ function initParallax() {
   });
 }
 
-// Progress of the pinned 3D block; building.ts subscribes when WebGL is ready
-export const modelProgress = { value: 0, listeners: new Set<(p: number) => void>() };
-
-function initModelScroll() {
-  const track = document.querySelector<HTMLElement>('[data-model-track]');
-  if (!track) return;
-  const steps = [...document.querySelectorAll<HTMLElement>('[data-model-step]')];
-  const bar = document.querySelector<HTMLElement>('[data-model-progress]');
-  const night = document.querySelector<HTMLElement>('[data-model-night]');
+// Pinned orbit: scroll position maps to a frame of the building video. The playhead eases toward
+// the scroll target every tick, so fast wheel spins still play as a smooth camera move.
+function initTour() {
+  const track = document.querySelector<HTMLElement>('[data-tour-track]');
+  const media = document.querySelector<HTMLElement>('[data-tour-media]');
+  if (!track || !media) return;
+  const steps = [...document.querySelectorAll<HTMLElement>('[data-tour-step]')];
+  const bar = document.querySelector<HTMLElement>('[data-tour-progress]');
   const setters = steps.map((s) => gsap.quickSetter(s, 'opacity'));
   const ySetters = steps.map((s) => gsap.quickSetter(s, 'y', 'px'));
   const barSet = bar ? gsap.quickSetter(bar, 'scaleY') : null;
-  const nightSet = night ? gsap.quickSetter(night, 'opacity') : null;
+
+  let video: HTMLVideoElement | null = null;
+  let target = 0;
+  let current = 0;
+  let progress = 0;
+  const seek = () => {
+    if (!video || !video.duration) return;
+    const diff = target - current;
+    if (Math.abs(diff) < 0.001) return;
+    current += diff * 0.2;
+    if (!video.seeking) video.currentTime = current;
+  };
+  import('./tour').then(({ loadTourVideo }) =>
+    loadTourVideo((v) => {
+      video = v;
+      target = current = progress * (v.duration - 0.05);
+      v.currentTime = current;
+      gsap.ticker.add(seek);
+    }),
+  );
+
+  // entrance: the frame settles from a slight zoom as the block arrives
+  gsap.fromTo(
+    media,
+    { scale: 1.12, opacity: 0.35 },
+    { scale: 1, opacity: 1, ease: 'none', scrollTrigger: { trigger: track, start: 'top bottom', end: 'top top', scrub: true } },
+  );
 
   ScrollTrigger.create({
     trigger: track,
     start: 'top top',
     end: 'bottom bottom',
-    scrub: true,
     onUpdate(self) {
-      const p = self.progress;
-      modelProgress.value = p;
-      modelProgress.listeners.forEach((fn) => fn(p));
+      const p = (progress = self.progress);
+      if (video?.duration) target = p * (video.duration - 0.05);
       barSet?.(p);
-      nightSet?.(gsap.utils.clamp(0, 1, (p - 0.45) / 0.4));
-      // three captions, each owning a third of the scroll with soft crossfades
       steps.forEach((_, i) => {
         const centre = (i + 0.5) / steps.length;
-        const d = Math.abs(p - centre) * steps.length; // 0 at centre, 0.5 at edges
+        const d = Math.abs(p - centre) * steps.length;
         // each caption fades fully out before the next one fades in, so two never overlap
         const o = i === 0 && p < centre ? 1 : i === steps.length - 1 && p > centre ? 1 : gsap.utils.clamp(0, 1, (0.5 - d) * 4);
         setters[i](o);

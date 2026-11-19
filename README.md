@@ -1,6 +1,6 @@
 # CAPITAL — сайт бизнес-центра
 
-Одностраничный сайт: Astro (статическая сборка) + GSAP ScrollTrigger + Lenis + Three.js.
+Одностраничный сайт: Astro (статическая сборка) + GSAP ScrollTrigger + Lenis.
 
 ## Запуск
 
@@ -17,7 +17,11 @@ npm run preview    # просмотр сборки
 
 - `docs/` — презентация `capital-presentation.pdf` и исходные растры планов (`plans-source/`).
 - `images/` — рендеры из материалов; `images/plans/` — очищенные чертежи планов.
-- `models/build-model.mjs` — генератор 3D-модели здания (по планам и рендерам). Результат: `public/models/capital.glb`, сжатие meshopt. Пересобрать: `npm run model`.
+- `models/capital-tour-source.mp4` — исходное видео облёта здания. Для сайта оно перекодировано в `public/video/` (каждый кадр ключевой, чтобы перемотка скроллом шла плавно):
+  ```bash
+  ffmpeg -i models/capital-tour-source.mp4 -an -c:v libx264 -preset slow -crf 23 -g 1 -bf 0 -pix_fmt yuv420p -movflags +faststart public/video/capital-tour-960.mp4
+  ffmpeg -i models/capital-tour-source.mp4 -an -vf scale=640:640 -c:v libx264 -preset slow -crf 25 -g 1 -bf 0 -pix_fmt yuv420p -movflags +faststart public/video/capital-tour-640.mp4
+  ```
 - `scripts/build-plans.py` — извлечение помещений с планов в `src/data/plans.json`.
 - `scripts/build-wordmark.mjs`, `scripts/build-og.mjs` — логотип в SVG, OG-картинка, иконка.
 - `scripts/qa/` — проверки: проход по экранам, сценарии взаимодействия, fps при замедлении CPU.

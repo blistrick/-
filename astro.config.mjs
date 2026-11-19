@@ -12,6 +12,5 @@ export default defineConfig({
   compressHTML: true,
   build: { inlineStylesheets: 'auto' },
   image: { responsiveStyles: false },
-  // three.js lives in a lazy chunk loaded only near the 3D block
-  vite: { build: { assetsInlineLimit: 0, chunkSizeWarningLimit: 900 } },
+  vite: { build: { assetsInlineLimit: 0 } },
 });

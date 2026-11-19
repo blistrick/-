@@ -6,23 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "model": "node models/build-model.mjs"
+    "preview": "astro preview"
   },
   "dependencies": {
     "@fontsource-variable/alumni-sans": "^5.3.0",
     "@fontsource-variable/onest": "^5.3.1",
     "astro": "^5.18.2",
     "gsap": "^3.15.1",
-    "lenis": "^1.3.27",
-    "three": "^0.187.0"
+    "lenis": "^1.3.27"
   },
   "devDependencies": {
     "@fontsource/unbounded": "^5.3.0",
-    "@gltf-transform/core": "^4.5.1",
-    "@gltf-transform/extensions": "^4.5.1",
-    "@gltf-transform/functions": "^4.5.1",
-    "meshoptimizer": "^1.3.0",
     "opentype.js": "^2.0.0",
     "sharp": "^0.35.5"
   }
