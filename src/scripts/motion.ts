@@ -8,7 +8,8 @@ export let lenis: Lenis | null = null;
 
 export function initMotion() {
   // Smooth scroll on pointer devices; touch keeps native momentum (cheaper, feels right on phones)
-  lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(2, -10 * t), syncTouch: false });
+  // lerp-based smoothing follows the wheel closely: smooth, but never feels like it lags behind the hand
+  lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 1, syncTouch: false });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis?.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -42,17 +43,14 @@ export function initMotion() {
 function initNav() {
   const nav = document.querySelector<HTMLElement>('[data-nav]');
   if (!nav) return;
-  let last = 0;
+  // the header stays pinned at the top; it only gains its solid background once the page moves
+  let solid = false;
   ScrollTrigger.create({
     start: 0,
     end: 'max',
     onUpdate(self) {
-      const y = self.scroll();
-      nav.classList.toggle('is-solid', y > 40);
-      const menuOpen = document.documentElement.classList.contains('menu-open');
-      nav.classList.toggle('is-hidden', !menuOpen && y > 600 && y > last + 4);
-      if (y < last - 4) nav.classList.remove('is-hidden');
-      last = y;
+      const s = self.scroll() > 40;
+      if (s !== solid) nav.classList.toggle('is-solid', (solid = s));
     },
   });
   // highlight the section in view
@@ -185,14 +183,6 @@ function initInfra() {
           activate(idx);
         }
       },
-    });
-    // subtle drift on the active frame
-    imgs.forEach((im) => {
-      gsap.fromTo(
-        im,
-        { scale: 1.08 },
-        { scale: 1, ease: 'none', scrollTrigger: { trigger: '[data-infra]', start: 'top bottom', end: 'bottom top', scrub: true } },
-      );
     });
     return () => items.forEach((it) => it.classList.remove('is-active'));
   });

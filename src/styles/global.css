@@ -54,8 +54,8 @@
   --stone-200: #ddd5c6;
   --stone-300: #c9bfad;
   /* window lamp */
-  --amber: #d6a15c;
-  --amber-strong: #e2b375;
+  --amber: #c9ae86; /* champagne brass, taken from the lobby lift doors and warm window light */
+  --amber-strong: #d9c29f;
 
   --ink-on-stone: #151d33;
   --ink-on-stone-2: #4a5168;

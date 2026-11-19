@@ -1,5 +1,9 @@
 import {
   ACESFilmicToneMapping,
+  BackSide,
+  PCFShadowMap,
+  ShadowMaterial,
+  SphereGeometry,
   MeshBasicMaterial,
   CanvasTexture,
   Color,
@@ -30,25 +34,59 @@ export async function initBuilding(section: HTMLElement) {
   if (!host) return;
 
   const isMobile = window.matchMedia('(max-width: 900px)').matches;
-  const renderer = new WebGLRenderer({ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+  const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  // a full-screen canvas at retina 2× costs 4× the pixels for little visible gain on glass and steel
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.5));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = PCFShadowMap;
+  renderer.shadowMap.autoUpdate = false; // the sun and building never move: bake the shadow map once
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.0;
   renderer.setClearColor(0x000000, 0);
   host.append(renderer.domElement);
 
   const scene = new Scene();
-  // soft studio reflections give the glass believable highlights without an HDR download
+  // Reflections come from a painted sky dome (blue zenith, pale horizon, grey city below),
+  // so the curtain wall mirrors sky the way it does in the renders. Radius stays inside PMREM's far plane.
+  const sky = document.createElement('canvas');
+  sky.width = 4;
+  sky.height = 512;
+  const sg = sky.getContext('2d')!;
+  const sgrd = sg.createLinearGradient(0, 0, 0, 512);
+  sgrd.addColorStop(0, '#2f4f86');
+  sgrd.addColorStop(0.3, '#6f90c4');
+  sgrd.addColorStop(0.48, '#c9d7ea');
+  sgrd.addColorStop(0.52, '#eef1f4');
+  sgrd.addColorStop(0.56, '#9aa3ae');
+  sgrd.addColorStop(0.75, '#5d6571');
+  sgrd.addColorStop(1, '#2e333c');
+  sg.fillStyle = sgrd;
+  sg.fillRect(0, 0, 4, 512);
+  const skyTex = new CanvasTexture(sky);
+  skyTex.colorSpace = SRGBColorSpace;
+  const envScene = new Scene();
+  envScene.add(new Mesh(new SphereGeometry(30, 48, 24), new MeshBasicMaterial({ map: skyTex, side: BackSide })));
   const pmrem = new PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environment = pmrem.fromScene(envScene, 0.015, 0.1, 100).texture;
   pmrem.dispose();
+  void RoomEnvironment;
 
-  const hemi = new HemisphereLight(0xbfd2ff, 0x2a2418, 0.9);
+  const hemi = new HemisphereLight(0xc9d8f2, 0x3a3630, 0.75);
   scene.add(hemi);
-  const sun = new DirectionalLight(0xfff1dc, 2.2);
-  sun.position.set(-60, 90, 70);
+  const sun = new DirectionalLight(0xfff3e2, 2.0);
+  sun.position.set(-70, 95, 60);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(isMobile ? 1024 : 2048, isMobile ? 1024 : 2048);
+  Object.assign(sun.shadow.camera, { left: -60, right: 60, top: 60, bottom: -60, near: 10, far: 300 });
+  sun.shadow.bias = -0.0004;
+  sun.shadow.normalBias = 0.04;
   scene.add(sun);
+  const shadowCatcher = new Mesh(new PlaneGeometry(160, 160), new ShadowMaterial({ opacity: 0.28 }));
+  shadowCatcher.rotation.x = -Math.PI / 2;
+  shadowCatcher.position.y = 0.03;
+  shadowCatcher.receiveShadow = true;
+  scene.add(shadowCatcher);
 
   // soft contact shadow under the building, drawn once into a small canvas
   const c = document.createElement('canvas');
@@ -73,18 +111,35 @@ export async function initBuilding(section: HTMLElement) {
   const gltf = await loader.loadAsync('/models/capital.glb');
   const model = gltf.scene;
   const lit: { m: MeshStandardMaterial; k: number }[] = [];
-  const litLevel: Record<string, number> = { glassLitA: 1.25, glassLitB: 0.85, glassLitC: 0.55, glassGround: 0.5 };
+  // [day, dusk] emissive levels: shops and ceiling strips glow faintly by day, offices light up at dusk
+  const litLevel: Record<string, [number, number]> = {
+    glassLitA: [0, 1.0],
+    glassLitB: [0, 0.7],
+    glassGround: [0.18, 0.75],
+    lightLine: [0.55, 1.1],
+  };
+  const glassMats: MeshStandardMaterial[] = [];
+  const glassTint = new Color();
   model.traverse((o: Object3D) => {
-    const m = (o as Mesh).material as MeshStandardMaterial | undefined;
+    const mesh = o as Mesh;
+    const m = mesh.material as MeshStandardMaterial | undefined;
     if (!m) return;
+    // only the big masses cast: hundreds of slim mullions would stipple the ground
+    mesh.castShadow = m.name === 'glass' || m.name.startsWith('glassLit') || m.name === 'stone' || m.name === 'roof';
+    mesh.receiveShadow = false; // shadow lookups only on the ground plane: self-shadowing every pane is the costliest part of the frame
     if (['fin', 'frame', 'stone'].includes(m.name)) m.side = DoubleSide;
-    if (m.name.startsWith('glass')) m.envMapIntensity = m.name === 'glass' ? 1.25 : 0.9;
+    if (m.name === 'glass') glassTint.copy(m.color);
+    if (m.name.startsWith('glass')) {
+      m.envMapIntensity = m.name === 'glass' ? 1.0 : 0.8;
+      glassMats.push(m);
+    }
     if (m.name in litLevel) {
       m.emissive = new Color(m.emissive.r, m.emissive.g, m.emissive.b);
-      m.emissiveIntensity = 0;
-      lit.push({ m, k: litLevel[m.name] });
+      m.emissiveIntensity = litLevel[m.name][0];
+      lit.push({ m, k: 0 });
     }
   });
+  void lit;
   // centre the L-shape on its footprint
   model.position.set(0, 0, 0);
   scene.add(model);
@@ -115,9 +170,16 @@ export async function initBuilding(section: HTMLElement) {
     target.set(offsetX * Math.cos(angle), ty, -offsetX * Math.sin(angle));
     camera.lookAt(target);
     const dusk = Math.min(1, Math.max(0, (p - 0.45) / 0.4));
-    lit.forEach(({ m, k }) => (m.emissiveIntensity = dusk * k));
-    hemi.intensity = lerp(0.9, 0.35, dusk);
-    sun.intensity = lerp(2.2, 0.55, dusk);
+    lit.forEach(({ m }) => {
+      const [d0, d1] = litLevel[m.name];
+      m.emissiveIntensity = lerp(d0, d1, dusk);
+    });
+    glassMats.forEach((m) => {
+      m.envMapIntensity = lerp(m.name === 'glass' ? 1.0 : 0.8, 0.12, dusk);
+      if (m.name === 'glass') m.color.setScalar(lerp(1, 0.45, dusk)).multiply(glassTint);
+    });
+    hemi.intensity = lerp(0.75, 0.3, dusk);
+    sun.intensity = lerp(2.0, 0.45, dusk);
     needsRender = true;
   };
 
@@ -191,6 +253,7 @@ export async function initBuilding(section: HTMLElement) {
   apply(modelProgress.value);
   // compile shaders before showing, so the first scroll frame doesn't stall
   renderer.compile(scene, camera);
+  renderer.shadowMap.needsUpdate = true;
   renderer.render(scene, camera);
   section.classList.add('is-3d');
 }
