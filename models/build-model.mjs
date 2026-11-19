@@ -61,18 +61,18 @@ function facade(ax, az, bx, bz, nx, nz, height, floors, crownFloors) {
   const recess = 1.1;
   {
     const [x0, z0] = at(0, -recess), [x1, z1] = at(len, -recess);
-    quad(group('glassGround'), [x0, 0.3, z0], [x1, 0.3, z1], [x1, GROUND - 1.5, z1], [x0, GROUND - 1.5, z0], n);
-    const colEvery = Math.max(3, Math.round(6.0 / bw));
+    quad(group('glassGround'), [x0, 0.3, z0], [x1, 0.3, z1], [x1, GROUND - 0.9, z1], [x0, GROUND - 0.9, z0], n);
+    const colEvery = Math.max(3, Math.round(5.2 / bw));
     for (let i = 0; i <= bays; i += colEvery) {
       const s = Math.min(i * bw, len);
-      const c0 = Math.max(0, s - 0.85), c1 = Math.min(len, s + 0.85);
+      const c0 = Math.max(0, s - 0.6), c1 = Math.min(len, s + 0.6);
       const [cx0, cz0] = at(c0, 0), [cx1, cz1] = at(c1, 0);
       const [ix0, iz0] = at(c0, -recess);
       solidAlong('stone', cx0, cz0, cx1, cz1, ix0 - cx0, iz0 - cz0, 0, GROUND);
     }
     const [fx0, fz0] = at(0, 0.05), [fx1, fz1] = at(len, 0.05);
     const [gx0, gz0] = at(0, -recess);
-    solidAlong('stone', fx0, fz0, fx1, fz1, gx0 - fx0, gz0 - fz0, GROUND - 1.5, GROUND + 0.2);
+    solidAlong('stone', fx0, fz0, fx1, fz1, gx0 - fx0, gz0 - fz0, GROUND - 0.9, GROUND + 0.2);
     const [px0, pz0] = at(0, 0.15), [px1, pz1] = at(len, 0.15);
     solidAlong('stone', px0, pz0, px1, pz1, gx0 - px0, gz0 - pz0, 0, 0.3);
   }
@@ -107,6 +107,11 @@ function facade(ax, az, bx, bz, nx, nz, height, floors, crownFloors) {
     const s = (i / fins) * len;
     const [x0, z0] = at(s - 0.07, 0.05), [x1, z1] = at(s + 0.07, 0.05);
     solidAlong('fin', x0, z0, x1, z1, nx * 0.55, nz * 0.55, finBottom, top + 1.3);
+  }
+  // a continuous cap ties the fin tops together (and stops their tops aliasing from above)
+  {
+    const [x0, z0] = at(0, 0.05), [x1, z1] = at(len, 0.05);
+    solidAlong('frame', x0, z0, x1, z1, nx * 0.6, nz * 0.6, top + 1.3, top + 1.5);
   }
 }
 
@@ -169,8 +174,8 @@ const mats = {
   glassLitC: doc.createMaterial('glassLitC').setBaseColorFactor([0.16, 0.2, 0.28, 1]).setMetallicFactor(0.8).setRoughnessFactor(0.1).setEmissiveFactor([0.95, 0.45, 0.14]),
   glassGround: doc.createMaterial('glassGround').setBaseColorFactor([0.03, 0.04, 0.06, 1]).setMetallicFactor(0.8).setRoughnessFactor(0.1).setEmissiveFactor([1.0, 0.6, 0.28]),
   frame: doc.createMaterial('frame').setBaseColorFactor([0.06, 0.07, 0.09, 1]).setMetallicFactor(0.5).setRoughnessFactor(0.45),
-  fin: doc.createMaterial('fin').setBaseColorFactor([0.72, 0.73, 0.75, 1]).setMetallicFactor(0.75).setRoughnessFactor(0.35),
-  stone: doc.createMaterial('stone').setBaseColorFactor([0.62, 0.56, 0.47, 1]).setMetallicFactor(0).setRoughnessFactor(0.9),
+  fin: doc.createMaterial('fin').setBaseColorFactor([0.48, 0.5, 0.53, 1]).setMetallicFactor(0.85).setRoughnessFactor(0.42),
+  stone: doc.createMaterial('stone').setBaseColorFactor([0.5, 0.45, 0.37, 1]).setMetallicFactor(0).setRoughnessFactor(0.9),
   core: doc.createMaterial('core').setBaseColorFactor([0.2, 0.2, 0.22, 1]).setRoughnessFactor(1),
   roof: doc.createMaterial('roof').setBaseColorFactor([0.55, 0.56, 0.58, 1]).setRoughnessFactor(0.9),
 };

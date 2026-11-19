@@ -114,10 +114,15 @@ const shown = floorPlans.filter((p) => p.floors.length);
               </div>
               <p class="plan__hint muted">Схема по плану из презентации.</p>
               <ul class="unit-list" aria-label={`Свободные помещения, ${p.title}`}>
-                {d.units.filter((u) => u.status !== 'sold' && u.area != null).map((u) => (
-                  <li><button type="button" class="unit-chip num" data-unit-btn={u.id} aria-pressed="false">{fmt(u.area as number)} м²</button></li>
+                {d.units.filter((u) => u.status !== 'sold' && u.area != null).map((u, i) => (
+                  <li class:list={{ 'is-extra': i >= 8 }}><button type="button" class="unit-chip num" data-unit-btn={u.id} aria-pressed="false">{fmt(u.area as number)} м²</button></li>
                 ))}
               </ul>
+              {d.units.filter((u) => u.status !== 'sold').length > 8 && (
+                <button type="button" class="unit-more link-arrow" data-unit-more aria-expanded="false">
+                  Показать все {d.units.filter((u) => u.status !== 'sold').length}
+                </button>
+              )}
             </div>
           );
         })}
@@ -322,6 +327,18 @@ const shown = floorPlans.filter((p) => p.floors.length);
     font-size: var(--step--1);
     cursor: pointer;
   }
+  .unit-more {
+    display: none;
+    margin-top: 1rem;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    padding: 0.4rem 0;
+    cursor: pointer;
+  }
+  .unit-list:not(.is-open) .is-extra {
+    display: none;
+  }
   .unit-chip[aria-pressed='true'] {
     background: var(--amber);
     border-color: var(--amber);
@@ -402,6 +419,9 @@ const shown = floorPlans.filter((p) => p.floors.length);
     }
     .unit-list {
       display: flex;
+    }
+    .unit-more {
+      display: inline-flex;
     }
     .unit text {
       display: none;

@@ -84,6 +84,16 @@ export function initPicker() {
     }),
   );
 
+  root.querySelectorAll<HTMLButtonElement>('[data-unit-more]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const list = b.previousElementSibling as HTMLElement;
+      const open = list.classList.toggle('is-open');
+      b.setAttribute('aria-expanded', String(open));
+      b.textContent = open ? 'Свернуть' : b.dataset.label || b.textContent;
+    }),
+  );
+  root.querySelectorAll<HTMLButtonElement>('[data-unit-more]').forEach((b) => (b.dataset.label = b.textContent?.trim() || ''));
+
   card.querySelector('[data-card-cta]')?.addEventListener('click', () => {
     if (!selected) return;
     const pick: UnitPick = { floor, area: fmt(Number(selected.dataset.area)), id: selected.dataset.unit! };
