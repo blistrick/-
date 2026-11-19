@@ -22,15 +22,8 @@ if (!reduced) {
   initStaticNav();
 }
 
-// Reduced motion / no scroll animation: the orbit video simply plays with its own controls
-if (reduced) {
-  import('./tour').then(({ loadTourVideo }) =>
-    loadTourVideo((v) => {
-      v.controls = true;
-      v.loop = true;
-    }),
-  );
-}
+// The orbit video plays by itself; with reduced motion it waits for the visitor's play button
+import('./tour').then(({ initTourVideo }) => initTourVideo(!reduced));
 
 function initStaticNav() {
   const nav = document.querySelector<HTMLElement>('[data-nav]');

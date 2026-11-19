@@ -1,5 +1,5 @@
 ---
-// Pinned block: scrolling turns the camera around the building (the supplied 4 s orbit video).
+// The supplied orbit video plays on its own as a seamless forward-and-back loop.
 import { getImage } from 'astro:assets';
 import posterSrc from '../../images/tour-poster.jpg';
 const poster = await getImage({ src: posterSrc, width: 960, format: 'webp', quality: 72 });
@@ -10,90 +10,72 @@ const steps = [
 ];
 ---
 <section class="tour on-night" id="tour" aria-labelledby="tour-title" data-tour>
-  <div class="tour__track" data-tour-track>
-    <div class="tour__stage">
-      <div class="tour__media" data-tour-media>
-        <video
-          class="tour__video"
-          data-tour-video
-          data-src-desktop="/video/capital-tour-960.mp4"
-          data-src-mobile="/video/capital-tour-640.mp4"
-          poster={poster.src}
-          width="960"
-          height="960"
-          muted
-          playsinline
-          preload="none"
-          disablepictureinpicture
-          aria-label="Облёт бизнес-центра CAPITAL: вид со всех сторон"
-        ></video>
-      </div>
+  <div class="tour__media" data-tour-media>
+    <video
+      class="tour__video"
+      data-tour-video
+      data-src-desktop="/video/capital-tour-loop-960.mp4"
+      data-src-mobile="/video/capital-tour-loop-640.mp4"
+      poster={poster.src}
+      width="960"
+      height="960"
+      muted
+      loop
+      playsinline
+      preload="none"
+      disablepictureinpicture
+      aria-label="Облёт бизнес-центра CAPITAL: вид со всех сторон"
+    ></video>
+  </div>
 
-      <div class="tour__copy wrap">
-        <h2 id="tour-title" class="tour__title">Здание со&nbsp;всех сторон</h2>
-        <ol class="tour__steps">
-          {steps.map((s, i) => (
-            <li class="tour__step" data-tour-step={i}>
-              <h3>{s.t}</h3>
-              <p>{s.d}</p>
-            </li>
-          ))}
-        </ol>
-        <p class="tour__note">Визуализация проекта. Прокручивайте, чтобы обойти здание.</p>
-      </div>
-      <div class="tour__progress" aria-hidden="true"><span data-tour-progress></span></div>
-    </div>
+  <div class="tour__copy wrap">
+    <h2 id="tour-title" class="tour__title" data-reveal>Здание со&nbsp;всех сторон</h2>
+    <ol class="tour__steps" data-reveal-group>
+      {steps.map((s) => (
+        <li class="tour__step" data-reveal-item>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="tour__note">Видео: визуализация проекта.</p>
   </div>
 </section>
 
 <style>
   .tour {
     position: relative;
-    background: var(--night-950);
-  }
-  .tour__track {
-    position: relative;
-    height: 340vh;
-  }
-  .tour__stage {
-    position: sticky;
-    top: 0;
-    height: 100svh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     isolation: isolate;
+    background: var(--night-950);
   }
   .tour__media {
     position: absolute;
     inset: 0 0 0 auto;
-    width: min(64vw, 100svh * 1.05);
+    width: min(66vw, 110svh);
     z-index: -1;
-    transform-origin: 70% 50%;
-    will-change: transform;
+    overflow: hidden;
+    /* the frame dissolves into the night ground: no visible edge or seam */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 5%, #000 38%), linear-gradient(0deg, transparent 0%, transparent 3%, #000 20%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent 0%, transparent 5%, #000 38%), linear-gradient(0deg, transparent 0%, transparent 3%, #000 20%);
+    mask-composite: intersect;
   }
   .tour__video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: var(--night-900);
-  }
-  /* the frame melts into the night ground on its left and bottom edges */
-  .tour__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, var(--night-950) 0%, rgb(12 18 32 / 0.6) 14%, rgb(12 18 32 / 0) 38%),
-      linear-gradient(0deg, rgb(12 18 32 / 0.55) 0%, rgb(12 18 32 / 0) 22%);
-    pointer-events: none;
+    will-change: transform;
   }
   .tour__copy {
     position: relative;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 2.5rem;
-    pointer-events: none;
+    padding-block: var(--section-y);
   }
   .tour__title {
     max-width: 9ch;
@@ -103,96 +85,42 @@ const steps = [
     margin: 0;
     padding: 0;
     display: grid;
+    gap: 1.75rem;
     max-width: 24rem;
   }
   .tour__step {
-    grid-area: 1 / 1;
     padding-top: 1.25rem;
     border-top: 1px solid var(--rule-on-night);
   }
-  .tour__step + .tour__step {
-    opacity: 0;
-  }
   .tour__step p {
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
     color: var(--ink-on-night-2);
   }
   .tour__note {
-    position: absolute;
-    bottom: 2rem;
     font-size: var(--step--1);
     color: var(--ink-on-night-2);
   }
-  .tour__progress {
-    position: absolute;
-    right: var(--gutter);
-    top: 50%;
-    width: 1px;
-    height: 32vh;
-    transform: translateY(-50%);
-    background: var(--rule-on-night);
-  }
-  .tour__progress span {
-    position: absolute;
-    inset: 0;
-    background: var(--amber);
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-
-  /* static presentation (no JS or reduced motion): the video plays with its own controls */
-  :global(html:not(.motion)) .tour__track {
-    height: auto;
-  }
-  :global(html:not(.motion)) .tour__stage {
-    position: relative;
-    height: auto;
-    min-height: 100svh;
-  }
-  :global(html:not(.motion)) .tour__copy {
-    padding-block: var(--section-y);
-  }
-  :global(html:not(.motion)) .tour__step {
-    grid-area: auto;
-    opacity: 1 !important;
-  }
-  :global(html:not(.motion)) .tour__steps {
-    gap: 2rem;
-  }
-  :global(html:not(.motion)) .tour__progress {
-    display: none;
-  }
-  :global(html:not(.motion)) .tour__note {
-    position: static;
-  }
 
   @media (max-width: 900px) {
-    .tour__track {
-      height: 280vh;
+    .tour {
+      display: block;
+      min-height: 0;
     }
     .tour__media {
-      inset: 0 0 auto;
+      position: relative;
+      inset: auto;
       width: 100%;
-      height: min(100vw, 62svh);
-      transform-origin: 50% 40%;
-    }
-    .tour__media::after {
-      background: linear-gradient(0deg, var(--night-950) 0%, rgb(12 18 32 / 0) 35%);
+      aspect-ratio: 1;
+      -webkit-mask-image: linear-gradient(0deg, transparent 0%, transparent 4%, #000 30%);
+      mask-image: linear-gradient(0deg, transparent 0%, transparent 4%, #000 30%);
     }
     .tour__copy {
-      justify-content: flex-end;
-      gap: 1.5rem;
-      padding-bottom: 5rem;
+      margin-top: -4rem;
+      padding-top: 0;
+      gap: 1.75rem;
     }
     .tour__title {
       max-width: none;
-      font-size: var(--step-3);
-    }
-    .tour__progress {
-      display: none;
-    }
-    :global(html:not(.motion)) .tour__media {
-      position: relative;
     }
   }
 </style>

@@ -1,28 +1,32 @@
-// Loads the orbit video only when the visitor approaches the block, picking the size for the screen.
-export function loadTourVideo(onReady?: (v: HTMLVideoElement) => void) {
+// The orbit video loads when the visitor approaches the block, plays on its own while visible,
+// and pauses off-screen so it never costs anything elsewhere on the page.
+export function initTourVideo(autoplay: boolean) {
   const section = document.querySelector<HTMLElement>('[data-tour]');
   const video = document.querySelector<HTMLVideoElement>('[data-tour-video]');
   if (!section || !video) return;
-  const io = new IntersectionObserver(
-    (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      const small = window.matchMedia('(max-width: 900px)').matches;
-      video.src = (small ? video.dataset.srcMobile : video.dataset.srcDesktop) || '';
-      video.preload = 'auto';
-      video.addEventListener(
-        'loadeddata',
-        () => {
-          // iOS Safari only allows seeking after the media has been "played" once
-          const p = video.play();
-          if (p) p.then(() => video.pause()).catch(() => {});
-          onReady?.(video);
-        },
-        { once: true },
-      );
-      video.load();
-    },
-    { rootMargin: '150% 0px' },
-  );
-  io.observe(section);
+  if (!autoplay) video.controls = true;
+
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    const small = window.matchMedia('(max-width: 900px)').matches;
+    video.src = (small ? video.dataset.srcMobile : video.dataset.srcDesktop) || '';
+    video.preload = autoplay ? 'auto' : 'metadata';
+    video.load();
+  };
+
+  new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && load(), { rootMargin: '150% 0px' }).observe(section);
+  if (autoplay) {
+    new IntersectionObserver(
+      (entries) => {
+        const on = entries.some((e) => e.isIntersecting);
+        if (on) {
+          load();
+          video.play().catch(() => {});
+        } else video.pause();
+      },
+      { threshold: 0.15 },
+    ).observe(section);
+  }
 }
