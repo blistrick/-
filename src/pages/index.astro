@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Model3D from '../components/Model3D.astro';
+import Offices from '../components/Offices.astro';
+import Infrastructure from '../components/Infrastructure.astro';
+import Gallery from '../components/Gallery.astro';
+import Location from '../components/Location.astro';
+import Request from '../components/Request.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'CAPITAL — бизнес-центр на Левом берегу Астаны';
+const description =
+  'Офисы от 17 м² в чистовой отделке и коммерческие помещения с отдельными входами. Первая линия ул. Бектурова, рядом с ТРЦ «Хан Шатыр». Сдача — I квартал 2028, рассрочка до сдачи.';
+---
+<Base title={title} description={description} ogImage="/og.jpg">
+  <Nav />
+  <main id="main">
+    <Hero />
+    <About />
+    <Model3D />
+    <Offices />
+    <Infrastructure />
+    <Gallery />
+    <Location />
+    <Request />
+  </main>
+  <Footer />
+  <script>
+    import '../scripts/main';
+  </script>
+</Base>

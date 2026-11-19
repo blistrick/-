@@ -1,0 +1,303 @@
+@font-face {
+  font-family: 'Alumni Sans';
+  src: url('/fonts/alumni-sans-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Alumni Sans';
+  src: url('/fonts/alumni-sans-cyrillic-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('/fonts/onest-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Onest';
+  src: url('/fonts/onest-cyrillic-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* metric-matched fallbacks keep the swap from shifting layout */
+@font-face {
+  font-family: 'Onest Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 101%;
+  ascent-override: 95%;
+  descent-override: 25%;
+}
+@font-face {
+  font-family: 'Alumni Fallback';
+  src: local('Arial Narrow'), local('Liberation Sans Narrow'), local('Arial');
+  size-adjust: 76%;
+  ascent-override: 118%;
+  descent-override: 30%;
+}
+
+:root {
+  /* night glass */
+  --night-950: #0c1220;
+  --night-900: #121a2e;
+  --night-800: #1a2440;
+  --night-700: #26314f;
+  /* travertine */
+  --stone-50: #f4f0e9;
+  --stone-100: #ece6db;
+  --stone-200: #ddd5c6;
+  --stone-300: #c9bfad;
+  /* window lamp */
+  --amber: #d6a15c;
+  --amber-strong: #e2b375;
+
+  --ink-on-stone: #151d33;
+  --ink-on-stone-2: #4a5168;
+  --ink-on-night: #ece6db;
+  --ink-on-night-2: #a7aec0;
+  --rule-on-night: rgb(236 230 219 / 0.16);
+  --rule-on-stone: rgb(21 29 51 / 0.16);
+
+  --font-display: 'Alumni Sans', 'Alumni Fallback', 'Arial Narrow', sans-serif;
+  --font-text: 'Onest', 'Onest Fallback', system-ui, sans-serif;
+
+  --gutter: clamp(1rem, 4vw, 4rem);
+  --max: 90rem;
+  --section-y: clamp(5rem, 12vw, 11rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --step--1: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --step-3: clamp(2.5rem, 1.8rem + 3vw, 4.25rem);
+  --step-4: clamp(3.25rem, 2rem + 5vw, 6rem);
+
+  color-scheme: dark light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--night-900);
+  scrollbar-color: var(--night-700) var(--night-950);
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--ink-on-night);
+  background: var(--night-900);
+  font-feature-settings: 'tnum' 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: var(--amber);
+  color: var(--night-950);
+}
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+a {
+  color: inherit;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--step-4);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-2);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+.on-stone {
+  background: var(--stone-100);
+  color: var(--ink-on-stone);
+  --rule: var(--rule-on-stone);
+  --ink-2: var(--ink-on-stone-2);
+  color-scheme: light;
+}
+.on-night {
+  background: var(--night-900);
+  color: var(--ink-on-night);
+  --rule: var(--rule-on-night);
+  --ink-2: var(--ink-on-night-2);
+}
+.muted {
+  color: var(--ink-2);
+}
+.fill {
+  font-family: var(--font-text);
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+  color: var(--amber);
+  white-space: nowrap;
+}
+.on-stone .fill {
+  color: #8a5a1c;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* buttons */
+.btn {
+  --btn-bg: var(--amber);
+  --btn-ink: var(--night-950);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--btn-bg);
+  border-radius: 0;
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  font-weight: 500;
+  font-size: var(--step-0);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.35s var(--ease-out),
+    color 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out);
+}
+.btn svg {
+  transition: transform 0.45s var(--ease-out);
+}
+.btn:hover {
+  --btn-bg: var(--amber-strong);
+}
+.btn:hover svg {
+  transform: translateX(4px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn--line {
+  --btn-bg: transparent;
+  --btn-ink: currentColor;
+  border-color: currentColor;
+}
+.btn--line:hover {
+  --btn-bg: transparent;
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.on-stone .btn--line:hover {
+  border-color: var(--ink-on-stone);
+  color: var(--ink-on-stone);
+  background: rgb(21 29 51 / 0.05);
+}
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.15rem;
+}
+.link-arrow:hover {
+  color: var(--amber);
+}
+.on-stone .link-arrow:hover {
+  color: var(--ink-on-stone-2);
+}
+
+/* motion: content is visible by default; JS adds .motion before animating */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

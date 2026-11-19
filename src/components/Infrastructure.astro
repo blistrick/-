@@ -1,0 +1,153 @@
+---
+import { Picture } from 'astro:assets';
+import reception from '../../images/lobby-reception.jpg';
+import entrance from '../../images/lobby-entrance.jpg';
+import elevators from '../../images/lobby-elevators.jpg';
+import lounge from '../../images/lobby-lounge.jpg';
+import podium from '../../images/podium-street.jpg';
+import aerial from '../../images/aerial.jpg';
+import crossroad from '../../images/facade-crossroad.jpg';
+import Fill from './Fill.astro';
+import { facts } from '../data/site';
+
+const items = [
+  { t: 'Лобби с ресепшен', d: 'Мрамор, дерево и мягкий свет. Гостей встречают у стойки ресепшен.', img: reception, alt: 'Лобби: стойка ресепшен из мрамора и турникеты' },
+  { t: 'Турникеты на входе', d: 'Проход в офисную часть — через турникеты у ресепшен.', img: entrance, alt: 'Вход в лобби с высокими витражами' },
+  { t: 'Лифтовой холл', d: 'Лифты в отделке под медь, светлый камень на полу и стенах.', img: elevators, alt: 'Лифтовой холл с тремя лифтами в медной отделке' },
+  { t: 'Зона ожидания', d: 'Кресла и столики у стены из дерева — место для гостей и коротких встреч.', img: lounge, alt: 'Зона ожидания с креслами в лобби' },
+  { t: 'Коммерция на первом этаже', d: 'Помещения под магазины, услуги, банки, рестораны и шоурумы — с отдельными входами с улицы.', img: podium, alt: 'Первый этаж с витринами, кафе и пешеходной зоной' },
+  { t: 'Парковка', d: 'Въезд с улицы Бектурова.', extra: { k: 'Мест', v: facts.parkingSpaces }, img: aerial, alt: 'Вид сверху на бизнес-центр и прилегающие улицы' },
+  { t: 'Управляющая компания', d: 'Здание обслуживает собственная управляющая компания.', extra: { k: 'Охрана', v: facts.security }, img: crossroad, alt: 'Бизнес-центр на перекрёстке днём' },
+];
+---
+<section class="infra on-night section" id="infrastructure" aria-labelledby="infra-title" data-infra>
+  <div class="wrap infra__grid">
+    <div class="infra__media" aria-hidden="true">
+      <div class="infra__frame">
+        {items.map((it, i) => (
+          <div class="infra__img" data-infra-img={i} style={i === 0 ? '' : 'opacity:0'}>
+            <Picture
+              src={it.img}
+              formats={['avif', 'webp']}
+              widths={[480, 720, 960, 1280]}
+              sizes="(max-width: 900px) 0px, 45vw"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="infra__list">
+      <h2 id="infra-title" data-reveal>Что внутри</h2>
+      <ul>
+        {items.map((it, i) => (
+          <li class="infra__item" data-infra-item={i}>
+            <div class="infra__mobile-img">
+              <Picture
+                src={it.img}
+                formats={['avif', 'webp']}
+                widths={[480, 720, 960]}
+                sizes="(max-width: 900px) 100vw, 0px"
+                alt={it.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3>{it.t}</h3>
+            <p class="muted">{it.d}</p>
+            {it.extra && (
+              <p class="infra__extra">
+                {it.extra.k}: <Fill value={it.extra.v} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .infra__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(2rem, 6vw, 7rem);
+  }
+  .infra__media {
+    position: relative;
+  }
+  .infra__frame {
+    position: sticky;
+    top: 6rem;
+    height: calc(100svh - 8rem);
+    max-height: 56rem;
+    overflow: hidden;
+    background: var(--night-800);
+  }
+  .infra__img {
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.9s var(--ease-out);
+  }
+  .infra__img :global(picture),
+  .infra__img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .infra__list ul {
+    list-style: none;
+    margin: 3rem 0 0;
+    padding: 0;
+  }
+  .infra__item {
+    padding-block: 2.25rem;
+    border-top: 1px solid var(--rule);
+    min-height: 34vh;
+    transition: opacity 0.6s var(--ease-out);
+  }
+  :global(html.motion) .infra__item {
+    opacity: 0.55;
+  }
+  :global(html.motion) .infra__item.is-active {
+    opacity: 1;
+  }
+  .infra__item p {
+    margin-top: 0.75rem;
+    max-width: 38ch;
+  }
+  .infra__extra {
+    font-size: var(--step--1);
+  }
+  .infra__mobile-img {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .infra__grid {
+      grid-template-columns: 1fr;
+    }
+    .infra__media {
+      display: none;
+    }
+    .infra__item {
+      min-height: 0;
+    }
+    :global(html.motion) .infra__item {
+      opacity: 1;
+    }
+    .infra__mobile-img {
+      display: block;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+    .infra__mobile-img :global(picture),
+    .infra__mobile-img :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

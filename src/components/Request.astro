@@ -1,0 +1,225 @@
+---
+import { Picture } from 'astro:assets';
+import tower from '../../images/facade-corner-day.jpg';
+import Arrow from './Arrow.astro';
+import { contacts, formEndpoint, FILL } from '../data/site';
+const wa = contacts.whatsapp ? `https://wa.me/${contacts.whatsapp}?text=${encodeURIComponent('Здравствуйте! Интересует офис в бизнес-центре CAPITAL.')}` : null;
+---
+<section class="req on-stone section" id="request" aria-labelledby="req-title">
+  <div class="wrap req__grid">
+    <div class="req__copy">
+      <h2 id="req-title" data-reveal>Подберём офис под&nbsp;вашу команду</h2>
+      <p class="req__lead muted" data-reveal>
+        Оставьте телефон и нужную площадь — пришлём варианты с планировками и условиями рассрочки.
+      </p>
+
+      <form
+        class="form"
+        name="request"
+        method="POST"
+        action={formEndpoint}
+        data-netlify="true"
+        netlify-honeypot="company"
+        novalidate
+        data-form
+      >
+        <input type="hidden" name="form-name" value="request" />
+        <p class="sr-only"><label>Не заполняйте это поле <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+        <input type="hidden" name="unit" value="" data-form-unit />
+
+        <div class="form__unit" data-form-unit-chip hidden>
+          <span>Помещение: <b data-form-unit-text></b></span>
+          <button type="button" data-form-unit-clear aria-label="Убрать выбранное помещение">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+
+        <div class="field">
+          <label for="f-name">Имя</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="f-name-err" />
+          <p class="field__err" id="f-name-err" data-err-for="name"></p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Телефон</label>
+          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (7__) ___-__-__" aria-describedby="f-phone-err" data-phone />
+          <p class="field__err" id="f-phone-err" data-err-for="phone"></p>
+        </div>
+        <div class="field">
+          <label for="f-area">Нужная площадь</label>
+          <select id="f-area" name="area" required aria-describedby="f-area-err">
+            <option value="">Выберите</option>
+            <option>до 30 м²</option>
+            <option>30–60 м²</option>
+            <option>60–120 м²</option>
+            <option>более 120 м²</option>
+            <option>Коммерция на 1 этаже</option>
+          </select>
+          <p class="field__err" id="f-area-err" data-err-for="area"></p>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn" data-form-submit>
+            <span data-submit-label>Отправить заявку</span> <Arrow />
+          </button>
+          {wa ? (
+            <a class="btn btn--line" href={wa} target="_blank" rel="noopener">Написать в WhatsApp</a>
+          ) : (
+            <span class="btn btn--line" aria-disabled="true">WhatsApp <span class="fill">{FILL}</span></span>
+          )}
+        </div>
+        <p class="form__legal muted">Нажимая «Отправить заявку», вы соглашаетесь на обработку персональных данных.</p>
+        <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+      </form>
+    </div>
+    <div class="req__media">
+      <Picture
+        src={tower}
+        formats={['avif', 'webp']}
+        widths={[480, 720, 960, 1280]}
+        sizes="(max-width: 900px) 100vw, 40vw"
+        alt="Бизнес-центр CAPITAL днём, угловой ракурс"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .req__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(2.5rem, 6vw, 7rem);
+    align-items: stretch;
+  }
+  .req__lead {
+    margin-top: 1.5rem;
+    max-width: 42ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .form {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    display: grid;
+    gap: 1.25rem;
+    max-width: 36rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .field label {
+    font-size: var(--step--1);
+    color: var(--ink-on-stone-2);
+  }
+  .field input,
+  .field select {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--ink-on-stone);
+    border-radius: 0;
+    background: transparent;
+    font-size: var(--step-1);
+    caret-color: #8a5a1c;
+    transition: border-color 0.3s var(--ease-out);
+  }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath d='M4 7.5 10 13.5 16 7.5' fill='none' stroke='%23151d33' stroke-width='1.6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.25rem center;
+    cursor: pointer;
+  }
+  .field input::placeholder {
+    color: #6b7084;
+  }
+  .field input:focus,
+  .field select:focus {
+    outline: none;
+    border-bottom: 2px solid var(--ink-on-stone);
+  }
+  .field input:focus-visible,
+  .field select:focus-visible {
+    outline: 2px solid #8a5a1c;
+    outline-offset: 4px;
+  }
+  .field[data-invalid] input,
+  .field[data-invalid] select {
+    border-bottom-color: #a1361f;
+  }
+  .field__err {
+    min-height: 1.2em;
+    font-size: var(--step--1);
+    color: #a1361f;
+  }
+  .form__unit {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.9rem;
+    background: var(--night-900);
+    color: var(--ink-on-night);
+    font-size: var(--step--1);
+  }
+  .form__unit[hidden] {
+    display: none;
+  }
+  .form__unit button {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin-top: 0.5rem;
+  }
+  .form__legal {
+    font-size: var(--step--1);
+  }
+  .form__status {
+    min-height: 1.5em;
+  }
+  .form__status[data-state='ok'] {
+    color: #2f6b3e;
+  }
+  .form__status[data-state='error'] {
+    color: #a1361f;
+  }
+  .req__media {
+    position: relative;
+    min-height: 28rem;
+    overflow: hidden;
+  }
+  .req__media :global(picture),
+  .req__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 900px) {
+    .req__grid {
+      grid-template-columns: 1fr;
+    }
+    .req__media {
+      min-height: 0;
+      aspect-ratio: 1;
+      order: -1;
+    }
+  }
+  @media (max-width: 520px) {
+    .form__actions > * {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+import { Picture } from 'astro:assets';
+import night from '../../images/facade-night.jpg';
+import Wordmark from './Wordmark.astro';
+import Arrow from './Arrow.astro';
+import { facts } from '../data/site';
+// Vertical fin rules, echoing the facade's crown and the presentation's line motif
+const fins = [62, 74, 58, 86, 70, 94, 66, 80, 100, 72, 88, 60];
+---
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__media" data-parallax="0.18">
+    <Picture
+      src={night}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1280, 1816]}
+      sizes="100vw"
+      alt="Бизнес-центр CAPITAL вечером: две остеклённые секции со светящимися окнами и каменным подиумом"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="hero__img"
+    />
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__fins" aria-hidden="true">
+    {fins.map((h, i) => <span style={`--h:${h}%;--i:${i}`}></span>)}
+  </div>
+
+  <div class="hero__content wrap">
+    <h1 id="hero-title" class="hero__title">
+      <Wordmark class="hero__wm" />
+      <span class="hero__kind">Бизнес-центр · Астана, Левый берег</span>
+    </h1>
+    <p class="hero__lead" data-hero-line>Офисы от {facts.minArea}&nbsp;м² на&nbsp;первой линии Бектурова</p>
+    <div class="hero__actions" data-hero-line>
+      <a href="#offices" class="btn">Подобрать офис <Arrow /></a>
+      <p class="hero__meta num">Сдача — {facts.handover} · {facts.terms.toLowerCase()}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    background: var(--night-950);
+    isolation: isolate;
+  }
+  .hero__media {
+    position: absolute;
+    inset: -8% 0 0;
+    z-index: -2;
+    will-change: transform;
+  }
+  .hero__media :global(picture),
+  .hero__media :global(img) {
+    width: 100%;
+    height: 100%;
+  }
+  .hero__media :global(img) {
+    object-fit: cover;
+    object-position: 42% 40%;
+  }
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgb(12 18 32 / 0.55) 0%, rgb(12 18 32 / 0) 22%),
+      linear-gradient(0deg, rgb(12 18 32 / 0.92) 0%, rgb(12 18 32 / 0.55) 34%, rgb(12 18 32 / 0) 62%);
+  }
+  .hero__fins {
+    position: absolute;
+    top: 0;
+    right: var(--gutter);
+    height: 58%;
+    display: flex;
+    gap: clamp(0.6rem, 1.4vw, 1.4rem);
+    align-items: flex-start;
+    pointer-events: none;
+  }
+  .hero__fins span {
+    width: 1px;
+    height: var(--h);
+    background: linear-gradient(180deg, rgb(236 230 219 / 0), rgb(236 230 219 / 0.55));
+    transform-origin: top;
+  }
+  .hero__content {
+    padding-top: 8rem;
+    padding-bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+  .hero__title {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin: 0;
+    font-weight: 400;
+  }
+  .hero__wm {
+    width: min(62rem, 84vw);
+    height: auto;
+    color: var(--ink-on-night);
+  }
+  .hero__kind {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-on-night-2);
+  }
+  .hero__lead {
+    max-width: 22ch;
+    margin-top: clamp(1.75rem, 4vh, 2.75rem);
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: var(--step-3);
+    line-height: 1;
+    text-wrap: balance;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-top: 2rem;
+  }
+  .hero__meta {
+    font-size: var(--step--1);
+    color: var(--ink-on-night-2);
+  }
+  /* entrance: one orchestrated rise, transform + opacity only */
+  :global(html.motion) .hero__wm,
+  :global(html.motion) .hero__kind,
+  :global(html.motion) [data-hero-line] {
+    animation: hero-rise 1.4s var(--ease-out) both;
+  }
+  :global(html.motion) .hero__kind {
+    animation-delay: 0.15s;
+  }
+  :global(html.motion) .hero__lead {
+    animation-delay: 0.3s;
+  }
+  :global(html.motion) .hero__actions {
+    animation-delay: 0.45s;
+  }
+  :global(html.motion) .hero__fins span {
+    animation: fin-grow 1.8s var(--ease-out) both;
+    animation-delay: calc(0.25s + var(--i) * 0.06s);
+  }
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+  }
+  @keyframes fin-grow {
+    from {
+      transform: scaleY(0);
+    }
+  }
+  @media (max-width: 640px) {
+    .hero__fins {
+      height: 34%;
+      gap: 0.55rem;
+    }
+    .hero__fins span:nth-child(n + 8) {
+      display: none;
+    }
+    .hero__actions .btn {
+      width: 100%;
+    }
+  }
+</style>

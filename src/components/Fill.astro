@@ -1,0 +1,7 @@
+---
+// Prints the value, or a visible gap marker when the materials don't have it.
+import { FILL } from '../data/site';
+interface Props { value?: string | number | null; hint?: string }
+const { value, hint } = Astro.props;
+---
+{value != null && value !== '' ? <>{value}</> : <span class="fill" title={hint}>{FILL}</span>}

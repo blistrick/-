@@ -1,0 +1,402 @@
+---
+import { Picture } from 'astro:assets';
+import planF1 from '../../images/plans/f1.png';
+import planF37 from '../../images/plans/f37.png';
+import planFB from '../../images/plans/fB.png';
+import plans from '../data/plans.json';
+import Arrow from './Arrow.astro';
+import Fill from './Fill.astro';
+import { floorPlans, TOTAL_FLOORS, facts, FILL } from '../data/site';
+
+const images = { f1: planF1, f37: planF37, fB: planFB } as const;
+const fmt = (n: number) => n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const planFor = (floor: number) => floorPlans.find((p) => p.floors.includes(floor));
+const labelSize = { f1: 46, f37: 10.5, fB: 16 } as const;
+
+const floors = Array.from({ length: TOTAL_FLOORS }, (_, i) => TOTAL_FLOORS - i).map((n) => {
+  const p = planFor(n);
+  const units = p ? plans[p.key].units : [];
+  const sold = units.filter((u) => u.status === 'sold').length;
+  return {
+    n,
+    key: p?.key ?? '',
+    summary: p ? `${units.length} помещ.${sold ? ` · ${sold} продано` : ''}` : 'план по запросу',
+  };
+});
+const initial = 5;
+const shown = floorPlans.filter((p) => p.floors.length);
+---
+<section class="offices on-stone section" id="offices" aria-labelledby="offices-title">
+  <div class="wrap">
+    <header class="offices__head">
+      <h2 id="offices-title" data-reveal>Офисы и&nbsp;планировки</h2>
+      <p class="offices__lead muted" data-reveal>
+        Выберите этаж, затем помещение на плане. Офисные этажи — потолки {facts.ceilingTypical} и чистовая отделка;
+        первый этаж — коммерция с отдельными входами и потолками {facts.ceilingGround}.
+      </p>
+    </header>
+
+    <div class="picker" data-picker data-initial={initial}>
+      <div class="floors" role="group" aria-label="Этаж">
+        <p class="floors__label" id="floors-label">Этаж</p>
+        <div class="floors__list" aria-labelledby="floors-label">
+          {floors.map((f) => (
+            <button
+              type="button"
+              class="floor"
+              data-floor={f.n}
+              data-plan={f.key}
+              aria-pressed={f.n === initial ? 'true' : 'false'}
+            >
+              <span class="floor__n num">{f.n}</span>
+              <span class="floor__s">{f.summary}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="plan">
+        {shown.map((p) => {
+          const d = plans[p.key];
+          const areas = d.units.map((u) => u.area).filter((a): a is number => a != null);
+          return (
+            <div class="plan__view" data-plan-view={p.key} hidden={!p.floors.includes(initial)}>
+              <div class="plan__meta">
+                <h3 class="plan__title">{p.title}</h3>
+                <p class="plan__facts num">
+                  <span>{d.units.length} помещений</span>
+                  <span>{fmt(Math.min(...areas))}–{fmt(Math.max(...areas))} м²</span>
+                  <span>потолки {p.ceiling}</span>
+                  <span>отделка {p.finish.toLowerCase()}</span>
+                  {p.floorArea && <span>площадь этажа {p.floorArea}</span>}
+                </p>
+              </div>
+              <div class="plan__scroll" tabindex="-1">
+                <div class="plan__canvas" style={`aspect-ratio:${d.width}/${d.height}`}>
+                  <Picture
+                    src={images[p.key]}
+                    formats={['avif', 'webp']}
+                    widths={[640, 960, 1280, 1600].filter((w) => w <= Math.max(d.width * 2, 640))}
+                    sizes="(max-width: 900px) 100vw, 60vw"
+                    alt={`План: ${p.title}`}
+                    loading="lazy"
+                    decoding="async"
+                    class="plan__img"
+                  />
+                  <svg class="plan__svg" viewBox={`0 0 ${d.width} ${d.height}`} role="group" aria-label={`Помещения, ${p.title}`}>
+                    <defs>
+                      <pattern id={`hatch-${p.key}`} width={labelSize[p.key] / 2.6} height={labelSize[p.key] / 2.6} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2={labelSize[p.key] / 2.6} stroke="#151d33" stroke-opacity="0.35" stroke-width={labelSize[p.key] / 14} />
+                      </pattern>
+                    </defs>
+                    {d.units.map((u) => {
+                      const sold = u.status === 'sold';
+                      const label = u.area != null ? fmt(u.area) : 'Продано';
+                      return (
+                        <g
+                          class:list={['unit', { 'unit--sold': sold }]}
+                          data-unit={u.id}
+                          data-area={u.area ?? ''}
+                          data-status={u.status}
+                          role="button"
+                          tabindex={sold ? -1 : 0}
+                          aria-disabled={sold ? 'true' : undefined}
+                          aria-pressed={sold ? undefined : 'false'}
+                          aria-label={sold ? 'Помещение продано' : `Помещение ${label} м²`}
+                        >
+                          <rect x={u.x} y={u.y} width={u.w} height={u.h} fill={sold ? `url(#hatch-${p.key})` : undefined} />
+                          <text x={u.x + u.w / 2} y={u.y + u.h / 2} font-size={labelSize[p.key] * (sold ? 0.8 : 1)} dominant-baseline="central" text-anchor="middle">{label}</text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+              </div>
+              <p class="plan__hint muted">Схема по плану из презентации. Прокрутите план вбок, если он не помещается.</p>
+            </div>
+          );
+        })}
+        <div class="plan__empty" data-plan-view="none" hidden>
+          <h3 class="plan__title"><span data-empty-floor></span> этаж</h3>
+          <p>
+            Планировки этого этажа нет в материалах — <span class="fill">{FILL}</span>. Типовые параметры офисных этажей:
+            потолки {facts.ceilingTypical}, чистовая отделка, площади от {facts.minArea} м².
+          </p>
+          <a href="#request" class="btn btn--line" data-request-floor>Запросить планировку <Arrow /></a>
+        </div>
+      </div>
+
+      <aside class="unit-card" aria-live="polite" data-unit-card>
+        <div data-card-empty>
+          <p class="unit-card__label">Помещение</p>
+          <p class="unit-card__hint">Нажмите на помещение на плане, чтобы увидеть параметры и оставить заявку.</p>
+        </div>
+        <div data-card-full hidden>
+          <p class="unit-card__label">Помещение</p>
+          <p class="unit-card__area num"><span data-card-area></span>&nbsp;м²</p>
+          <dl class="unit-card__dl">
+            <div><dt>Этаж</dt><dd class="num" data-card-floor></dd></div>
+            <div><dt>Потолки</dt><dd data-card-ceiling></dd></div>
+            <div><dt>Отделка</dt><dd data-card-finish></dd></div>
+            <div><dt>Наличие</dt><dd>уточняйте при заявке</dd></div>
+            <div><dt>Стоимость</dt><dd><Fill value={facts.price} /></dd></div>
+          </dl>
+          <a href="#request" class="btn unit-card__cta" data-card-cta>Оставить заявку <Arrow /></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script type="application/json" data-plan-meta set:html={JSON.stringify(Object.fromEntries(floorPlans.map((p) => [p.key, { ceiling: p.ceiling, finish: p.finish }])))} />
+</section>
+
+<style>
+  .offices__head {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2rem, 7vw, 8rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .offices__lead {
+    max-width: 46ch;
+  }
+  .picker {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr) 17rem;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
+    border-top: 1px solid var(--ink-on-stone);
+    padding-top: 2rem;
+  }
+  .floors__label,
+  .unit-card__label {
+    font-size: var(--step--1);
+    color: var(--ink-on-stone-2);
+    margin-bottom: 0.75rem;
+  }
+  .floors__list {
+    display: flex;
+    flex-direction: column;
+  }
+  .floor {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    align-items: baseline;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color 0.3s var(--ease-out),
+      color 0.3s var(--ease-out);
+  }
+  .floor:first-child {
+    border-top: 1px solid var(--rule);
+  }
+  .floor__n {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .floor__s {
+    font-size: 0.75rem;
+    color: var(--ink-on-stone-2);
+    white-space: nowrap;
+  }
+  .floor:hover {
+    background: var(--stone-200);
+  }
+  .floor[aria-pressed='true'] {
+    background: var(--night-900);
+    color: var(--ink-on-night);
+  }
+  .floor[aria-pressed='true'] .floor__s {
+    color: var(--ink-on-night-2);
+  }
+  .floor[data-plan=''] .floor__n {
+    color: var(--ink-on-stone-2);
+  }
+  .floor[data-plan=''][aria-pressed='true'] .floor__n {
+    color: var(--ink-on-night);
+  }
+
+  .plan__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .plan__title {
+    font-size: var(--step-2);
+  }
+  .plan__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    font-size: var(--step--1);
+    color: var(--ink-on-stone-2);
+  }
+  .plan__scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-color: var(--stone-300) transparent;
+  }
+  .plan__canvas {
+    position: relative;
+    min-width: 40rem;
+    background: var(--stone-50);
+  }
+  .plan__canvas :global(picture),
+  .plan__canvas :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .plan__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .unit rect {
+    fill: var(--amber);
+    fill-opacity: 0;
+    transition: fill-opacity 0.3s var(--ease-out);
+  }
+  .unit text {
+    font-family: var(--font-text);
+    font-weight: 500;
+    fill: var(--ink-on-stone);
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
+  .unit:not(.unit--sold) {
+    cursor: pointer;
+    outline: none;
+  }
+  .unit:not(.unit--sold):hover rect,
+  .unit:not(.unit--sold):focus-visible rect {
+    fill-opacity: 0.35;
+  }
+  .unit:focus-visible rect {
+    stroke: var(--ink-on-stone);
+    stroke-width: 2px;
+    vector-effect: non-scaling-stroke;
+  }
+  .unit[aria-pressed='true'] rect {
+    fill-opacity: 0.85;
+  }
+  .unit--sold rect {
+    fill-opacity: 1;
+  }
+  .unit--sold text {
+    fill: var(--ink-on-stone-2);
+    font-weight: 400;
+  }
+  .plan__hint {
+    margin-top: 0.75rem;
+    font-size: var(--step--1);
+  }
+  .plan__empty {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    max-width: 44ch;
+    padding-block: 2rem;
+  }
+  .plan__empty[hidden],
+  .plan__view[hidden] {
+    display: none;
+  }
+
+  .unit-card {
+    position: sticky;
+    top: 6.5rem;
+    padding: 1.5rem;
+    background: var(--night-900);
+    color: var(--ink-on-night);
+    --rule: var(--rule-on-night);
+  }
+  .unit-card .unit-card__label {
+    color: var(--ink-on-night-2);
+  }
+  .unit-card__hint {
+    color: var(--ink-on-night-2);
+    font-size: var(--step--1);
+  }
+  .unit-card__area {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: var(--step-3);
+    line-height: 1;
+  }
+  .unit-card__dl {
+    margin: 1.5rem 0;
+    font-size: var(--step--1);
+  }
+  .unit-card__dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.55rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .unit-card__dl dt {
+    color: var(--ink-on-night-2);
+  }
+  .unit-card__dl dd {
+    margin: 0;
+    text-align: right;
+  }
+  .unit-card__cta {
+    width: 100%;
+  }
+
+  @media (max-width: 1180px) {
+    .picker {
+      grid-template-columns: 9rem minmax(0, 1fr);
+    }
+    .unit-card {
+      grid-column: 1 / -1;
+      position: static;
+    }
+  }
+  @media (max-width: 900px) {
+    .offices__head {
+      grid-template-columns: 1fr;
+    }
+    .picker {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .floors__list {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      overflow-x: auto;
+      scrollbar-width: none;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+    }
+    .floor {
+      flex: none;
+      width: auto;
+      grid-template-columns: auto;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--rule);
+      margin-left: -1px;
+      text-align: center;
+    }
+    .floor__s {
+      display: none;
+    }
+    .floor:first-child {
+      border-top: 1px solid var(--rule);
+    }
+  }
+</style>

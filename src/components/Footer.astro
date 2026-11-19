@@ -1,0 +1,85 @@
+---
+import Wordmark from './Wordmark.astro';
+import Fill from './Fill.astro';
+import { contacts } from '../data/site';
+const year = new Date().getFullYear();
+const tel = contacts.phone ? `tel:${contacts.phone.replace(/[^\d+]/g, '')}` : null;
+---
+<footer class="foot on-night" aria-labelledby="foot-title">
+  <div class="wrap">
+    <h2 id="foot-title" class="sr-only">Контакты</h2>
+    <Wordmark class="foot__wm" />
+    <div class="foot__grid">
+      <div>
+        <p class="foot__k">Офис продаж</p>
+        <p>{contacts.salesOffice}</p>
+        <p class="muted"><Fill value={contacts.hours} hint="Часы работы" /></p>
+      </div>
+      <div>
+        <p class="foot__k">Объект</p>
+        <p>{contacts.objectAddress}</p>
+      </div>
+      <div>
+        <p class="foot__k">Связаться</p>
+        <p>{tel ? <a href={tel}>{contacts.phone}</a> : <Fill hint="Телефон" />}</p>
+        <p>{contacts.email ? <a href={`mailto:${contacts.email}`}>{contacts.email}</a> : <Fill hint="E-mail" />}</p>
+      </div>
+      <div>
+        <p class="foot__k">Соцсети</p>
+        <p>{contacts.instagram ? <a href={contacts.instagram} target="_blank" rel="noopener">Instagram</a> : <>Instagram <Fill /></>}</p>
+        <p>{contacts.telegram ? <a href={contacts.telegram} target="_blank" rel="noopener">Telegram</a> : <>Telegram <Fill /></>}</p>
+      </div>
+    </div>
+    <div class="foot__base">
+      <p>© {year} CAPITAL. Изображения — визуализации проекта.</p>
+      <a href="#top" class="link-arrow">Наверх</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    padding-block: clamp(4rem, 8vw, 7rem) 2rem;
+    border-top: 1px solid var(--rule-on-night);
+  }
+  .foot__wm {
+    width: min(100%, 40rem);
+    height: auto;
+    opacity: 0.92;
+  }
+  .foot__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    font-size: var(--step--1);
+  }
+  .foot__grid p + p {
+    margin-top: 0.35rem;
+  }
+  .foot__k {
+    color: var(--ink-on-night-2);
+    margin-bottom: 0.6rem;
+  }
+  .foot__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1);
+    color: var(--ink-on-night-2);
+  }
+  @media (max-width: 900px) {
+    .foot__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 480px) {
+    .foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

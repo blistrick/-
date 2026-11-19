@@ -1,0 +1,145 @@
+---
+import { Picture } from 'astro:assets';
+import scheme from '../../images/map-scheme.jpg';
+import Arrow from './Arrow.astro';
+import Fill from './Fill.astro';
+import { travel, contacts } from '../data/site';
+const query = encodeURIComponent('Астана, улица Бектурова');
+const yandexEmbed = `https://yandex.ru/map-widget/v1/?text=${query}&z=16`;
+const yandexLink = `https://yandex.kz/maps/?text=${query}&z=16`;
+const gisLink = `https://2gis.kz/astana/search/${encodeURIComponent('улица Бектурова')}`;
+const points = [
+  'Первая линия улицы Бектурова',
+  'Рядом с ТРЦ «Хан Шатыр»',
+  'Удобный выезд на проспект Туран',
+  'Развитая деловая инфраструктура вокруг',
+];
+---
+<section class="loc on-night" id="location" aria-labelledby="loc-title">
+  <div class="loc__map" data-map>
+    <div class="loc__scheme" data-map-scheme>
+      <Picture
+        src={scheme}
+        formats={['avif', 'webp']}
+        widths={[480, 720, 960, 1243]}
+        sizes="(max-width: 900px) 100vw, 50vw"
+        alt="Схема расположения: участок у проспекта Туран и улицы Сыганак, рядом с ТРЦ «Хан Шатыр»"
+        loading="lazy"
+        decoding="async"
+      />
+      <button type="button" class="btn loc__open" data-map-open data-src={yandexEmbed}>Открыть интерактивную карту</button>
+    </div>
+  </div>
+  <div class="loc__copy">
+    <h2 id="loc-title" data-reveal>Левый берег, у&nbsp;Хан Шатыра</h2>
+    <p class="loc__addr">{contacts.objectAddress}</p>
+    <ul class="loc__points">
+      {points.map((p) => <li>{p}</li>)}
+    </ul>
+    <h3 class="loc__sub">Время в пути на машине</h3>
+    <dl class="loc__times">
+      {travel.map((t) => (
+        <div>
+          <dt>{t.place}</dt>
+          <dd class="num"><Fill value={t.time} /></dd>
+        </div>
+      ))}
+    </dl>
+    <div class="loc__links">
+      <a class="link-arrow" href={gisLink} target="_blank" rel="noopener">Открыть в 2ГИС <Arrow dir="up-right" size={16} /></a>
+      <a class="link-arrow" href={yandexLink} target="_blank" rel="noopener">Яндекс Карты <Arrow dir="up-right" size={16} /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .loc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 100svh;
+  }
+  .loc__map {
+    position: relative;
+    min-height: 32rem;
+    background: var(--night-800);
+  }
+  .loc__scheme,
+  .loc__map :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .loc__scheme :global(picture),
+  .loc__scheme :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 55%;
+  }
+  .loc__open {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--gutter);
+  }
+  .loc__copy {
+    padding: var(--section-y) var(--gutter);
+    max-width: 44rem;
+  }
+  .loc__addr {
+    margin-top: 1.5rem;
+    font-size: var(--step-1);
+  }
+  .loc__points {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .loc__points li {
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .loc__sub {
+    margin-top: 3rem;
+    font-size: var(--step-1);
+    font-family: var(--font-text);
+    font-weight: 500;
+  }
+  .loc__times {
+    margin: 1rem 0 0;
+  }
+  .loc__times div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .loc__times dt {
+    color: var(--ink-on-night-2);
+  }
+  .loc__times dd {
+    margin: 0;
+  }
+  .loc__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 900px) {
+    .loc {
+      grid-template-columns: 1fr;
+    }
+    .loc__map {
+      min-height: 0;
+      aspect-ratio: 4 / 5;
+      order: 2;
+    }
+    .loc__open {
+      right: var(--gutter);
+    }
+  }
+</style>

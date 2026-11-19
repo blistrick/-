@@ -1,0 +1,192 @@
+---
+import Wordmark from './Wordmark.astro';
+const links = [
+  { href: '#about', label: 'О проекте' },
+  { href: '#offices', label: 'Планировки' },
+  { href: '#infrastructure', label: 'Инфраструктура' },
+  { href: '#gallery', label: 'Галерея' },
+  { href: '#location', label: 'Расположение' },
+];
+---
+<header class="nav" data-nav>
+  <div class="nav__bar wrap">
+    <a href="#top" class="nav__brand" aria-label="CAPITAL — в начало страницы">
+      <Wordmark class="nav__wm" label={false} />
+    </a>
+    <nav class="nav__links" aria-label="Разделы">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a href="#offices" class="btn nav__cta">Подобрать офис</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="sr-only" data-menu-label>Открыть меню</span>
+      <span class="nav__burger" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+  <div class="menu" id="menu" data-menu hidden>
+    <nav class="menu__links wrap" aria-label="Разделы">
+      {links.map((l) => <a href={l.href} data-menu-link>{l.label}</a>)}
+      <a href="#offices" class="btn menu__cta" data-menu-link>Подобрать офис</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    color: var(--ink-on-night);
+    transition: transform 0.6s var(--ease-out);
+  }
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--night-950);
+    border-bottom: 1px solid var(--rule-on-night);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+  }
+  .nav.is-solid::before {
+    opacity: 0.94;
+  }
+  .nav.is-hidden {
+    transform: translateY(-100%);
+  }
+  .nav__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    height: 4.75rem;
+  }
+  .nav__brand {
+    display: block;
+    flex: none;
+  }
+  .nav__wm {
+    width: 8.5rem;
+    height: auto;
+  }
+  .nav__links {
+    display: flex;
+    gap: clamp(1rem, 2.2vw, 2.25rem);
+    margin-left: auto;
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+  }
+  .nav__links a {
+    position: relative;
+    text-decoration: none;
+    padding-block: 0.5rem;
+    color: var(--ink-on-night);
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.2rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s var(--ease-out);
+  }
+  .nav__links a:hover::after,
+  .nav__links a[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+  .nav__cta {
+    min-height: 2.75rem;
+    padding: 0.55rem 1.15rem;
+    font-size: var(--step--1);
+  }
+  .nav__toggle {
+    display: none;
+    width: 3rem;
+    height: 3rem;
+    margin-left: auto;
+    margin-right: -0.6rem;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .nav__burger {
+    position: relative;
+    display: block;
+    width: 1.6rem;
+    height: 0.6rem;
+    margin: auto;
+  }
+  .nav__burger i {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.45s var(--ease-out);
+  }
+  .nav__burger i:first-child {
+    top: 0;
+  }
+  .nav__burger i:last-child {
+    bottom: 0;
+  }
+  [aria-expanded='true'] .nav__burger i:first-child {
+    transform: translateY(0.25rem) rotate(45deg);
+  }
+  [aria-expanded='true'] .nav__burger i:last-child {
+    transform: translateY(-0.25rem) rotate(-45deg);
+  }
+  .menu {
+    position: fixed;
+    inset: 4.75rem 0 0;
+    background: var(--night-950);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .menu[hidden] {
+    display: none;
+  }
+  .menu__links {
+    display: flex;
+    flex-direction: column;
+    padding-block: 2rem 3rem;
+  }
+  .menu__links a:not(.btn) {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+    line-height: 1.15;
+    text-decoration: none;
+    padding-block: 0.4rem;
+    border-bottom: 1px solid var(--rule-on-night);
+  }
+  .menu__cta {
+    margin-top: 2rem;
+  }
+  @media (max-width: 1080px) {
+    .nav__links {
+      display: none;
+    }
+    .nav__cta {
+      margin-left: auto;
+    }
+    .nav__toggle {
+      display: block;
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 560px) {
+    .nav__cta {
+      display: none;
+    }
+    .nav__toggle {
+      margin-left: auto;
+    }
+    .nav__wm {
+      width: 7rem;
+    }
+  }
+</style>
